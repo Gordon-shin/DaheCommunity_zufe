@@ -7,6 +7,7 @@ import org.sc.util.EncryptTool;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -39,6 +40,7 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(cookiePassword);
             response.addCookie(cookieName);
             PrintWriter out = response.getWriter();
+            System.out.println(EncryptTool.encodeBase64(user.getPersonname()));
             out.write("true");
         }
         else{

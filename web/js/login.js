@@ -56,12 +56,15 @@ $(function(){
                     $.messager.progress('close');
                     if (result=="true") {
 
-                        $.messager.alert('登录成功','登录成功');
-                        location.href = 'index.html';
+                        $.messager.alert('登录成功','登录成功',"info",function () {
+                            location.href = 'index.jsp';
+
+                        });
+
 
                     }
                     else{
-                        $.messager.alert('登录失败','请检查用户名密码组合');
+                        $.messager.alert('登录失败','请检查用户名密码组合',"error");
                     }
 
 

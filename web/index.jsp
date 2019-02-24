@@ -2,6 +2,7 @@
 
 <html>
 	<head>
+		<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta charset="utf-8" />
 		<title>EasyUI Demo</title>
@@ -12,6 +13,7 @@
 		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/base64.js"></script>
 
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
@@ -19,9 +21,9 @@
 		<div region="north" id="header">
 			<img src="img/logo.png" class="logo" />
 			<div class="top-btns">
-				<span id="welcomeSpan">欢迎您，管理员</span>
+				<span id="welcomeSpan">欢迎您，</span>
 				<a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
-				<a href="login.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
+				<a href="login.jsp" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
 				<select class="easyui-combobox" data-options="editable:false">
 					<option value="0" selected="selected">中文</option>
 					<option value="1">English</option>
@@ -65,15 +67,15 @@
 								<div class="flow-todo">
 									<ul class="todo-list">
 										<li>
-											<span>代办事项 A</span>
+											<span>代办事项 w</span>
 											<a href="#" class="num">5</a>
 										</li>
 										<li>
-											<span>代办事项 B</span>
+											<span>代办事项 g</span>
 											<a href="#" class="num">5</a>
 										</li>
 										<li>
-											<span>代办事项 C</span>
+											<span>代办事项 w</span>
 											<a href="#" class="num">5</a>
 										</li>
 										<li>
@@ -122,7 +124,7 @@
 			</div>
 		</div>
 		
-		<div region="south" id="footer">某某后台管理系统 V1.0</div>
+		<div region="south" id="footer">&copy;大河小区便民服务管理系统 V1.0 Powered by JSP & EasyUI</div>
 
 
 		<!-- 弹出框 -->

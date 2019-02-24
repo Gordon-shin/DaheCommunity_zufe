@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>宁波大河小区</title>
+    <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
     <link href="css/login.css" type="text/css" rel="stylesheet">
-    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
