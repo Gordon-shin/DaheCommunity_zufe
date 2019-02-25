@@ -19,13 +19,10 @@
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
 		<% if((session.getAttribute("User"))==null){
-
-
 			response.sendRedirect("login.jsp");
 		}
 		else{
 			User user = (User) session.getAttribute("User");
-
 			System.out.println(user.getPassword());
 		}
 		%>
