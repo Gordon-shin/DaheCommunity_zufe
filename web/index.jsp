@@ -1,3 +1,4 @@
+<%@ page import="org.sc.bean.User" %>
 <!DOCTYPE html>
 
 <html>
@@ -17,17 +18,27 @@
 
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
-		
+		<% if((session.getAttribute("User"))==null){
+
+
+			response.sendRedirect("login.jsp");
+		}
+		else{
+			User user = (User) session.getAttribute("User");
+
+			System.out.println(user.getPassword());
+		}
+		%>
 		<div region="north" id="header">
 			<img src="img/logo.png" class="logo" />
 			<div class="top-btns">
 				<span id="welcomeSpan">欢迎您，</span>
 				<a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
 				<a href="login.jsp" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
-				<select class="easyui-combobox" data-options="editable:false">
+				<%--<select class="easyui-combobox" data-options="editable:false">
 					<option value="0" selected="selected">中文</option>
 					<option value="1">English</option>
-				</select>
+				</select>--%>
 			</div>
 		</div>
 		
