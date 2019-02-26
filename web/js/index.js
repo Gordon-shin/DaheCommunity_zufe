@@ -1,4 +1,12 @@
 $(function() {
+
+    $('#nav').tree({
+        animate:true,
+        lines:true,
+        url:'NavServlet',
+
+    })
+
     var uname= getCookie('PersonName');
 
     function getCookie(c_name)

@@ -8,6 +8,8 @@ import java.util.Properties;
 
 
 public class DBUtil {
+
+
     private static DBUtil dbUtil = null;
     private static String driver;
     private static String user;

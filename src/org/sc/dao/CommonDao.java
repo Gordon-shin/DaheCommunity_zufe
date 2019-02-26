@@ -24,9 +24,9 @@ public class CommonDao {
             int columnCount = metaData.getColumnCount();//获取列数
             while (rs.next()){
                 JSONObject jsObj = new JSONObject();
-                for (int i=1 ; i< columnCount; i++)
+                for (int i=1 ; i< (columnCount+1); i++)
                 {
-                    System.out.println(metaData.getColumnTypeName(i));
+                    //System.out.println(metaData.getColumnTypeName(i));
                     String type = metaData.getColumnTypeName(i);//获取每一列的类型
                     String columnName = metaData.getColumnLabel(i);//获取每一列的标签
                     if (type=="INT"){

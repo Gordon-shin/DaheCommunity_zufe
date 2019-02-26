@@ -39,25 +39,40 @@
 			</div>
 		</div>
 		
-		<div region="west" split="true" title="导航菜单" id="naver">
+		<div region="west" split="true" title="菜单" id="naver" iconCls="icon-world">
 			<div class="easyui-accordion" fit="true" id="navmenu">
-				<div title="指标体系">
-					<ul class="navmenu">
-						<li class="active"><a href="#">首页</a></li>	
-						<li><a href="#" data-url="html/page01.html">w</a></li>
-						<li><a href="#" data-url="html/page02.html">指标库列表</a></li>
+				<div title="用户信息管理">
+					<ul id="nav">
+					<%--	<li><span>nihao</span>
+							<ul>
+								<li>3</li>
+								<li>3</li>
+								<li>3</li>
+							</ul>
+						</li>
+						<li>
+							<span>nihao</span>
+							<ul><li>3</li>
+								<li>3</li>
+								<li>3</li>
+							</ul>
+						</li>
+--%>
 					</ul>
 				</div>
-				<div title="居民自助服务">
+				<div title="维修报障管理">
 					<ul class="navmenu">
 						<li><a href="#" data-url="html/page01.html">你好</a></li>
 						<li><a href="#" data-url="html/pageRepair.html">自助修理服务</a></li>
 						<li><a href="#" data-url="html/page02.html">指标库列表</a></li>
 					</ul>
 				</div>
-				<div title="报表管理"></div>
-				<div title="系统管理"></div>
-				<div title="组件示例">
+				<div title="二手市场管理">
+				<ul class="navmenu">
+					<li><a href="#" data-url="html/demo01.html">锁定行和列</a></li>
+				</ul>
+			</div>
+				<div title="上月缴费管理">
 					<ul class="navmenu">
 						<li><a href="#" data-url="html/demo01.html">锁定行和列</a></li>
 					</ul>
@@ -68,15 +83,12 @@
 		<div region="center" id="content">
 			<div class="easyui-tabs" fit="true" id="tt">
 				
-				<div title="首页" iconCls="icon-ok">
+				<div title="首页" iconCls="icon-house">
 					<div class="easyui-accordion" data-options="fit:true">
 						<div title="待办事项">
 							<div class="flow-panel">
-								<div class="flow-todo">
-									<ul>
-										欢迎来到后台管理系统
-									</ul>
-								</div>
+								欢迎来到后台管理系统
+
 							</div>
 						</div>
 						<div title="系统公告">
