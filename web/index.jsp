@@ -13,8 +13,8 @@
 	    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="js/base64.js"></script>
+		<script type="text/javascript"  charset="UTF-8" src="js/index.js"></script>
+		<script type="text/javascript"  charset="UTF-8" src="js/base64.js"></script>
 
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
@@ -31,7 +31,7 @@
 			<div class="top-btns">
 				<span id="welcomeSpan">欢迎您，</span>
 				<a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
-				<a href="login.jsp" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
+				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
 				<%--<select class="easyui-combobox" data-options="editable:false">
 					<option value="0" selected="selected">中文</option>
 					<option value="1">English</option>
@@ -73,31 +73,8 @@
 						<div title="待办事项">
 							<div class="flow-panel">
 								<div class="flow-todo">
-									<ul class="todo-list">
-										<li>
-											<span>代办事项 w</span>
-											<a href="#" class="num">5</a>
-										</li>
-										<li>
-											<span>代办事项 g</span>
-											<a href="#" class="num">5</a>
-										</li>
-										<li>
-											<span>代办事项 w</span>
-											<a href="#" class="num">5</a>
-										</li>
-										<li>
-											<span>代办事项 D</span>
-											<a href="#" class="num">5</a>
-										</li>
-										<li>
-											<span>代办事项 E</span>
-											<a href="#" class="num">5</a>
-										</li>
-										<li>
-											<span>代办事项 F</span>
-											<a href="#" class="num">5</a>
-										</li>
+									<ul>
+										欢迎来到后台管理系统
 									</ul>
 								</div>
 							</div>
