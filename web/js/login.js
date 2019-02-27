@@ -6,6 +6,7 @@ $(function(){
         height:220,
         modal:true,
         buttons:'#btn',
+        closable:false
 
 
     });
@@ -30,7 +31,7 @@ $(function(){
         $('#LoginPassword').focus();
     }
     //点击登录
-    $('#btn a').click(function () {
+    $('#loginBtn').click(function () {
         if (!$('#LoginUser').validatebox('isValid'))
         {
             $('#LoginUser').focus();
@@ -73,4 +74,8 @@ $(function(){
             })
         }
     });
+    $('#register').click(function () {
+        alert("nihao");
+
+    })
 })

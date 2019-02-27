@@ -1,10 +1,80 @@
 $(function() {
+    $('#navRepair').tree({
+        animate:true,
+        lines:true,
+        url:'NavServlet',
+        queryParams:{tabid:"2"},
+        onLoadSuccess : function (node, data) {
+            var _this = this;
+
+            if (data) {
+                $(data).each(function (index, value) {
+                    if (this.state == 'closed') {
+                        $(_this).tree('expandAll');
+                    }
+                });
+            }
+
+        },
+        onClick : function (node) {
+            var host= window.location.href;
+
+            if (node.url) {
+                if ($('#tt').tabs('exists', node.text)) {
+                    $('#tt').tabs('select', node.text)
+                } else {
+                    $('#tt').tabs('add', {
+                        title: node.text,
+                        closable: true,
+                        iconCls: node.iconCls,
+                        href: node.url,
+                    });
+                }
+            }
+        }
+    })
 
     $('#nav').tree({
         animate:true,
         lines:true,
         url:'NavServlet',
+        queryParams:{tabid:"1"},
+        onLoadSuccess : function (node, data) {
+            var _this = this;
 
+            if (data) {
+                $(data).each(function (index, value) {
+                    if((this.text=='首页'))
+                    { $('#tt').tabs('add', {
+                        title: this.text,
+                        iconCls: this.iconCls,
+                        href: this.url,
+                    });
+
+                    }
+                 if (this.state == 'closed') {
+                        $(_this).tree('expandAll');
+                    }
+                });
+            }
+
+        },
+        onClick : function (node) {
+            var host= window.location.href;
+
+            if (node.url) {
+                if ($('#tt').tabs('exists', node.text)) {
+                    $('#tt').tabs('select', node.text)
+                } else {
+                    $('#tt').tabs('add', {
+                        title: node.text,
+                        closable: true,
+                        iconCls: node.iconCls,
+                        href: node.url,
+                    });
+                }
+            }
+        }
     })
 
     var uname= getCookie('PersonName');
@@ -26,25 +96,6 @@ $(function() {
     }
     //添加用户名
      $("#welcomeSpan").append(Base64.decode(uname));
-    //添加新的Tab页
-    $("#navmenu").on("click", "a[data-url]", function(e) {
-        e.preventDefault();
-        var tabTitle = $(this).text();
-        var tabUrl = $(this).data("url");
-
-        if($("#tt").tabs("exists", tabTitle)) { //判断该Tab页是否已经存在
-            $("#tt").tabs("select", tabTitle);
-        }else {
-            $("#tt").tabs("add", {
-                title: tabTitle,
-                href: tabUrl,
-                closable: true
-            });
-        }
-        $("#navmenu .active").removeClass("active");
-        $(this).parent().addClass("active");
-    });
-
     //解决闪屏的问题
     window.setTimeout(function() {
         $("#layout").css("visibility", "visible");

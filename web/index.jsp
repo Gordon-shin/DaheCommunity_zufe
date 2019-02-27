@@ -6,7 +6,7 @@
 		<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta charset="utf-8" />
-		<title>EasyUI Demo</title>
+		<title>大河小区便民服务管理系统</title>
 		<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
 	    <link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
 	    <link rel="stylesheet" type="text/css" href="css/common.css" />
@@ -43,38 +43,26 @@
 			<div class="easyui-accordion" fit="true" id="navmenu">
 				<div title="用户信息管理">
 					<ul id="nav">
-					<%--	<li><span>nihao</span>
-							<ul>
-								<li>3</li>
-								<li>3</li>
-								<li>3</li>
-							</ul>
-						</li>
-						<li>
-							<span>nihao</span>
-							<ul><li>3</li>
-								<li>3</li>
-								<li>3</li>
-							</ul>
-						</li>
---%>
+
+
 					</ul>
 				</div>
 				<div title="维修报障管理">
-					<ul class="navmenu">
-						<li><a href="#" data-url="html/page01.html">你好</a></li>
-						<li><a href="#" data-url="html/pageRepair.html">自助修理服务</a></li>
-						<li><a href="#" data-url="html/page02.html">指标库列表</a></li>
+					<ul  id="navRepair">
+
+
 					</ul>
 				</div>
-				<div title="二手市场管理">
-				<ul class="navmenu">
-					<li><a href="#" data-url="html/demo01.html">锁定行和列</a></li>
+				<div title="二手市场管理" >
+				<ul class="navmenu" id="navShop">
+
 				</ul>
 			</div>
-				<div title="上月缴费管理">
-					<ul class="navmenu">
-						<li><a href="#" data-url="html/demo01.html">锁定行和列</a></li>
+				<div title="上月缴费管理" >
+					<ul class="navmenu" id="navFee">
+
+
+
 					</ul>
 				</div>
 			</div>
@@ -82,46 +70,13 @@
 		
 		<div region="center" id="content">
 			<div class="easyui-tabs" fit="true" id="tt">
-				
-				<div title="首页" iconCls="icon-house">
-					<div class="easyui-accordion" data-options="fit:true">
-						<div title="待办事项">
-							<div class="flow-panel">
-								欢迎来到后台管理系统
 
-							</div>
-						</div>
-						<div title="系统公告">
-							<ul class="notice-list">
-								<li>
-									<span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-									<span class="date">2015-10-30</span>
-								</li>
-								<li>
-									<span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-									<span class="date">2015-10-30</span>
-								</li>
-								<li>
-									<span>这是一条很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的系统公告</span>
-									<span class="date">2015-10-30</span>
-								</li>
-								<li>
-									<span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-									<span class="date">2015-10-30</span>
-								</li>
-								<li>
-									<span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-									<span class="date">2015-10-30</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				
+
+
 			</div>
 		</div>
 		
-		<div region="south" id="footer">&copy;大河小区便民服务管理系统 V1.0 Powered by JSP & EasyUI</div>
+		<div region="south" id="footer">&copy;大河小区便民服务管理系统 V1.0</div>
 
 
 		<!-- 弹出框 -->

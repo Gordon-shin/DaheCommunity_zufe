@@ -25,10 +25,11 @@
     </div>
     </div>
 <div id="btn">
-    <a href="#" class="easyui-linkbutton">登录</a>
-    <a href="#" class="easyui-linkbutton">登录</a>
-    <a href="#" class="easyui-linkbutton">登录</a>
+    <a href="#" class="easyui-linkbutton" id="loginBtn">登录</a>
+     <a href="#" class="easyui-linkbutton" id="register">注册</a>
 </div>
+
+
   </body>
 
 
