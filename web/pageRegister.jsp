@@ -5,6 +5,7 @@
   Time: 13:43
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +20,9 @@
     <script type="text/javascript" src="js/register.js"></script>
 </head>
 <body>
-<div id="layout">
+<form >
+
+
     <div id="form" >
         <div id="left" >
             <table cellpadding="5" >
@@ -32,11 +35,11 @@
                     <td><input class="easyui-textbox" type="password"  data-options="required:true"></td>
                 </tr>
                 <tr>
-                <td>性别:</td>
-                <td><select class="easyui-combobox" name="language" style="width: 100px">
-                    <option value="man">男</option>
-                    <option value="female">女</option>
-                </select></td>
+                    <td>性别:</td>
+                    <td><select class="easyui-combobox" name="language" style="width: 100px">
+                        <option value="man">男</option>
+                        <option value="female">女</option>
+                    </select></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
@@ -69,16 +72,15 @@
         </div>
         <div id="right">
             <div id="imgReview">
-                <img>
+                <img id="img" src="" style="width: 150px;height: 150px">
             </div>
             <div>File1:</div>
-            <input class="easyui-filebox" id="file1" data-options="prompt:'请选择'" style="width:100%">
+            <input  id="file1"  name="file2" data-options="prompt:'请选择'" style="width:100%">
         </div>
-
     </div>
 
-    </div>
 
+</form>
 
 
 

@@ -24,5 +24,37 @@ $(function() {
             }
         }
     })
-    $('#file1').filebox({buttonAlign:'right'});
+
+    $('#file1').filebox({
+        onChange:function () {
+           console.log($("input[name='file2']")[0].files[0]) ;
+
+            var reader = new FileReader();
+            reader.readAsDataURL($("input[name='file2']")[0].files[0])
+            reader.onload=function (result) {
+               console.log(result.target.result);
+               document.getElementById("img").src = result.target.result;
+            }
+
+          // $('#img').attr("src",$("input[name='file2']")[0].files[0]);
+        }
+    })
+    function fileName(_obj) {
+        var _file = $(_obj).context.ownerDocument.activeElement.files[0];
+        console.log(_file);
+    }
+    function getObjectUrl(file) {
+            var url = null;
+            if (window.createObjectURL!=undefined){
+                url= window.createObjectURL(file);
+            }
+            else if(window.URL!=undefined){
+                url = window.URL.createObjectURL(file);
+            }
+            else if(window.webkitURL.createObjectURL(file))
+            {
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+    }
 })
