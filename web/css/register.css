@@ -1,0 +1,33 @@
+#form {
+    width: 700px;
+    height: 900px;
+    margin: 0 auto;
+    border: 1px solid red;
+    display: -webkit-box;
+}
+
+*{
+    font-size:12px;
+}
+#right{
+    width: 200px;
+    height: 450px;
+   // border: 1px solid red;
+}
+#left{
+    padding: 20px 0px 0px 10px;
+    width: 280px;
+    height: 450px;
+   // border: 1px solid red;
+}
+#imgReview{
+    margin: auto;
+    width: 150px;
+    height: 150px;
+}
+#buttons{
+
+    width: 100px;
+    margin: auto;
+ //   border: 1px solid red;
+}

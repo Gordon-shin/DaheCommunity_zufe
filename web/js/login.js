@@ -75,7 +75,6 @@ $(function(){
         }
     });
     $('#register').click(function () {
-        alert("nihao");
-
+        location.href ="pageRegister.jsp"
     })
 })

@@ -2,8 +2,8 @@ $(function() {
 
     $('#form').panel({
         width:500,
-        height:550,
-        title:'注册',
+        height:590,
+        title:'修改个人信息',
         onBeforeOpen:function () {
             var self = $(this);
             var parentWidth = self.parent().parent().width();
@@ -24,5 +24,5 @@ $(function() {
             }
         }
     })
-    $('#file1').filebox({buttonAlign:'right'});
+
 })

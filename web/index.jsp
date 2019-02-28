@@ -10,12 +10,11 @@
 		<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
 	    <link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
 	    <link rel="stylesheet" type="text/css" href="css/common.css" />
-	    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	    <script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
 		<script type="text/javascript"  charset="UTF-8" src="js/index.js"></script>
 		<script type="text/javascript"  charset="UTF-8" src="js/base64.js"></script>
-
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
 		<% if((session.getAttribute("User"))==null){
@@ -32,10 +31,6 @@
 				<span id="welcomeSpan">欢迎您，</span>
 				<a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
 				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
-				<%--<select class="easyui-combobox" data-options="editable:false">
-					<option value="0" selected="selected">中文</option>
-					<option value="1">English</option>
-				</select>--%>
 			</div>
 		</div>
 		
