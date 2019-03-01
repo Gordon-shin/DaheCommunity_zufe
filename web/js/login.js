@@ -24,6 +24,7 @@ $(function(){
     //加载时验证
     if (!$('#LoginUser').validatebox('isValid'))
     {
+        console.log($('#LoginUser').validatebox('isValid'));
         $('#LoginUser').focus();
     }
     else if(!$('#LoginPassword').validatebox('isValid'))

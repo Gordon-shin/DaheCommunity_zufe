@@ -20,7 +20,7 @@
     <script type="text/javascript" src="js/register.js"></script>
 </head>
 <body>
-<form >
+<form  id="ff">
 
 
     <div id="form" >
@@ -28,46 +28,46 @@
             <table cellpadding="5" >
                 <tr>
                     <td>用户名:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
+                    <td><input class="textbox" type="text"  id="username" ></td>
                 </tr>
                 <tr>
                     <td>密码:</td>
-                    <td><input class="easyui-textbox" type="password"  data-options="required:true"></td>
+                    <td><input class="textbox" type="password" id="password"></td>
                 </tr>
                 <tr>
                     <td>性别:</td>
-                    <td><select class="easyui-combobox" name="language" style="width: 100px">
+                    <td><select class="easyui-combobox" name="language" id="sex" style="width: 100px">
                         <option value="man">男</option>
                         <option value="female">女</option>
                     </select></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true,validType:'email'"></td>
+                    <td><input class="textbox" type="text"  id="email" ></td>
                 </tr>
 
                 <tr>
                     <td>电话号码:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
+                    <td><input class="textbox" type="text" id="phone" ></td>
                 </tr>
 
                 <tr>
                     <td>真实姓名:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
+                    <td><input class="textbox" type="text" id="realname" ></td>
                 </tr>
                 <tr>
                     <td>身份证号:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
+                    <td><input class="textbox" type="text" id="idcard"></td>
                 </tr>
                 <tr>
                     <td>家庭住址:</td>
-                    <td><input class="easyui-textbox"  data-options="multiline:true" style="height:60px"></td>
+                    <td><input class="easyui-textbox"  id="address" data-options="multiline:true" style="height:60px"></td>
                 </tr>
 
             </table>
             <div id="buttons">
-                <a href="javascript:void(0)" class="easyui-linkbutton">Submit</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton">Clear</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" id="tijiao">提交</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" id="reset">重置</a>
             </div>
         </div>
         <div id="right">

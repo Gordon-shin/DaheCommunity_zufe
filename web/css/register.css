@@ -5,7 +5,9 @@
     border: 1px solid red;
     display: -webkit-box;
 }
-
+.textbox{
+    height: 22px;
+}
 *{
     font-size:12px;
 }

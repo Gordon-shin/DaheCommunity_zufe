@@ -57,10 +57,32 @@ public class CommonDao {
         return "";
     }
 
-    public String CommonAdd(String sql){
+    public JSONObject CommonAdd(String sql) {
 
-        return "";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        JSONObject json =new JSONObject();
+        int result = 0;
+        try {
+            pStatement = connection.prepareStatement(sql);
+
+            result = pStatement.executeUpdate();
+            json.put("result",result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            if (e.getMessage()!=null)
+            json.put("error",e.getMessage());
+        } finally {
+            DBUtil.closeJDBC(null, pStatement, connection);
+        }
+
+
+            return json;
+
     }
+
+
     public String CommonChange(String sql){
 
         return "";
