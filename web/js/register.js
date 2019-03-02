@@ -60,10 +60,11 @@ $(function() {
         }
     })
     $('#tijiao').linkbutton({
-        onClick:function () {
-            var a =validate()
-            if (a==true)
-            {
+        onClick: function () {
+           uploadImg($("input[name='file2']")[0].files[0],'你好',8888)
+
+            var a=validate()
+            if (a == true) {
                 var data={};
                 data['username']=$('#username').val();
                 data['password']=$('#password').val();
@@ -73,38 +74,36 @@ $(function() {
                 data['idcard']=$('#idcard').val();
                 data['address']=$('#address').val();
                 data['sex']=$('#sex').combobox("getText");
-
                 var jsonobj=JSON.stringify(data);
                 console.log(data);
                 console.log(jsonobj);
                 $.ajax({
-                    url:"RegisterServlet",
-                    type:"post",
-                    data:{data:jsonobj},
-                    beforeSend: function(){
+                    url: "RegisterServlet",
+                    type: "post",
+                    data: {data: jsonobj},
+                    beforeSend: function () {
                         $.messager.progress({
-                            text:'正在注册中...',
+                            text: '正在注册中...',
                         });
                     },
-                    success:function (result) {
+                    success: function (result) {
                         $.messager.progress('close');
-                        if (result=="true") {
+                        if (result == "true") {
 
-                            $.messager.alert('注册','恭喜你注册成功',"info",function () {
-                                location.href = 'index.jsp';
+                            $.messager.alert('注册', '恭喜你注册成功', "info", function () {
+                                location.href='index.jsp';
                             });
-                        }
-                        else{
-                            $.messager.alert('注册',result,"error");
+                        } else {
+                            $.messager.alert('注册', result, "error");
                         }
                     }
                 })
-            }
-            else {
-                var b = '#'+a // 选择器字段拼接
+            } else {
+                var b='#' + a // 选择器字段拼接
                 $(b).focus();
 
             }
+        }
     })
     $('#reset').linkbutton({
         onClick:function () {
@@ -120,7 +119,6 @@ $(function() {
             var reader = new FileReader();
             reader.readAsDataURL($("input[name='file2']")[0].files[0])
             reader.onload=function (result) {
-               console.log(result.target.result);
                document.getElementById("img").src = result.target.result;
             }
 

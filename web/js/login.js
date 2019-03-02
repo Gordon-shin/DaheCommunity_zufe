@@ -7,8 +7,6 @@ $(function(){
         modal:true,
         buttons:'#btn',
         closable:false
-
-
     });
     //客户端验证 账号
     $('#LoginUser').validatebox({

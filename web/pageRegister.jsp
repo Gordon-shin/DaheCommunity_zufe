@@ -18,6 +18,7 @@
     <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="js/register.js"></script>
+    <script type="text/javascript" src="js/upload.js"></script>
 </head>
 <body>
 <form  id="ff">
