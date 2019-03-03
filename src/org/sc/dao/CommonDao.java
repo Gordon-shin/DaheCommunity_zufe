@@ -2,6 +2,7 @@ package org.sc.dao;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.dbutils.QueryRunner;
 import org.sc.util.DBUtil;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -81,6 +82,44 @@ public class CommonDao {
             return json;
 
     }
+
+    public String JSONQuery(PreparedStatement sql){
+        JSONArray array =new JSONArray();
+        ResultSet rs;
+        ResultSetMetaData metaData= null;
+        try {
+            rs =sql.executeQuery();
+            int columnCount = metaData.getColumnCount();//获取列数
+            metaData=rs.getMetaData();
+            while (rs.next()){
+                JSONObject jsObj = new JSONObject();
+                for (int i=1 ; i< (columnCount+1); i++)
+                {   String columnName = metaData.getColumnLabel(i);//获取每一列的标签
+                    String type = metaData.getColumnTypeName(i);//获取每一列的类型
+
+                    if (type=="INT"){
+                        jsObj.put(columnName, rs.getInt(i));//若该列是INT类型
+                        System.out.println("!");
+                    }
+                    else if(type=="DECIMAL"){
+                        jsObj.put(columnName,rs.getShort(i));//若该列是"DECIMAL"类型
+                    }
+                    else {
+                        jsObj.put(columnName, rs.getString(i));//其他类型就直接转换
+                    }
+                 }//一列遍历完成 向json数据添加记录
+                array.add(jsObj);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return array.toString();
+    }
+
 
 
     public String CommonChange(String sql){
