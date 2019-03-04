@@ -2,7 +2,13 @@ package org.sc.dao;
 
 import org.sc.bean.User;
 import org.sc.util.DBUtil;
+import org.sc.util.EncryptTool;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,5 +44,21 @@ public class UserDao {
             DBUtil.closeJDBC(null, pStatement, connection);
         }
         return user;
+    }
+    public void addCookie(String username, HttpServletRequest request, HttpServletResponse response){
+        User user = new User();
+        user = query(username);
+        response.setContentType("text/html;charset=utf-8");
+        HttpSession session = request.getSession(true);
+        user.setPassword("");
+        session.setAttribute("User", user);
+        Cookie cookieId = new Cookie("username", EncryptTool.encodeBase64(user.getUsername()));
+        Cookie cookiePassword = new Cookie("password",EncryptTool.encodeBase64(user.getPassword()));
+        Cookie cookieName = new Cookie("PersonName", EncryptTool.encodeBase64(user.getPersonname()));
+        cookieId.setMaxAge(3600*24*365);
+        cookiePassword.setMaxAge(3600*24*365);
+        response.addCookie(cookieId);
+        response.addCookie(cookieName);
+        response.addCookie(cookiePassword);
     }
 }

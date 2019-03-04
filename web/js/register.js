@@ -61,10 +61,11 @@ $(function() {
     })
     $('#tijiao').linkbutton({
         onClick: function () {
-           uploadImg($("input[name='file2']")[0].files[0],'你好',8888)
+
 
             var a=validate()
             if (a == true) {
+                uploadImg($("input[name='file2']")[0].files[0],$('#username').val(),$('#username').val())
                 var data={};
                 data['username']=$('#username').val();
                 data['password']=$('#password').val();
@@ -121,8 +122,6 @@ $(function() {
             reader.onload=function (result) {
                document.getElementById("img").src = result.target.result;
             }
-
-          // $('#img').attr("src",$("input[name='file2']")[0].files[0]);
         }
     })
     function validate() {

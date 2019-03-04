@@ -1,4 +1,3 @@
-
 function uploadImg(file,type,username)
 {
     let formData = new FormData();
@@ -15,7 +14,7 @@ function uploadImg(file,type,username)
         processData: false,
         contentType: false,
         success:function (result) {
-            alert("success");
+
         }
 
     })

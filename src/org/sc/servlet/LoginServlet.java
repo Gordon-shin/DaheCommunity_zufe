@@ -18,29 +18,12 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean result = false;
         UserDao userDao = new UserDao();
         User user = userDao.query(username);
         if (user!=null && user.getPassword().equals(password)){
-
-            result = true;
             response.setContentType("text/html;charset=utf-8");
-
-            // 设置session
-            HttpSession session = request.getSession(true);
-            user.setPassword("");
-            session.setAttribute("User", user);
-            // 存取cookie
-            Cookie cookieId = new Cookie("username", EncryptTool.encodeBase64(username));
-            Cookie cookiePassword = new Cookie("password",EncryptTool.encodeBase64(password));
-            Cookie cookieName = new Cookie("PersonName", EncryptTool.encodeBase64(user.getPersonname()));
-            cookieId.setMaxAge(3600*24*365);
-            cookiePassword.setMaxAge(3600*24*365);
-            response.addCookie(cookieId);
-            response.addCookie(cookiePassword);
-            response.addCookie(cookieName);
+            userDao.addCookie(username,request,response);
             PrintWriter out = response.getWriter();
-            System.out.println(EncryptTool.encodeBase64(user.getPersonname()));
             out.write("true");
         }
         else{

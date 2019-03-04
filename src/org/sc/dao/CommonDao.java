@@ -89,8 +89,9 @@ public class CommonDao {
         ResultSetMetaData metaData= null;
         try {
             rs =sql.executeQuery();
-            int columnCount = metaData.getColumnCount();//获取列数
             metaData=rs.getMetaData();
+            int columnCount = metaData.getColumnCount();//获取列数
+
             while (rs.next()){
                 JSONObject jsObj = new JSONObject();
                 for (int i=1 ; i< (columnCount+1); i++)
@@ -125,6 +126,26 @@ public class CommonDao {
     public String CommonChange(String sql){
 
         return "";
+    }
+    public String UpdateQuery(PreparedStatement sql)
+    {
+        int result =0;
+        String error ="插入查询执行失败";
+        try {
+            result = sql.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (e.getMessage()!=null)
+               error = (e.getMessage());
+        }
+        if (result>0)
+        {
+            return "true";
+        }
+        else{
+            return error;
+        }
     }
 
 }

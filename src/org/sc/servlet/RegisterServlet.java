@@ -2,6 +2,7 @@ package org.sc.servlet;
 
 import net.sf.json.JSONObject;
 import org.sc.dao.CommonDao;
+import org.sc.dao.UserDao;
 import org.sc.util.DBUtil;
 
 import javax.servlet.ServletException;
@@ -30,11 +31,16 @@ public class RegisterServlet extends HttpServlet {
          String idcard = jsonObject.get("idcard").toString();
          String address = jsonObject.get("address").toString();
          String sex = jsonObject.get("sex").toString();
-
          String sql = new StringBuilder().append("INSERT INTO tb_users ").append("(LoginUserName, LoginPassword,UserPersonName,UserAuth,UserEmail,UserGender,UserPhoneNumber,UserAddress) ").append("VALUES ('").append(username).append("'").append(",'").append(password).append("','").append(realname).append("',").append("'用户','").append(email).append("','").append(sex).append("','").append(phone).append("','").append(address).append("')").toString();
          System.out.println(sql);
+
         CommonDao add =  new CommonDao();
+        UserDao userDao = new UserDao();
+
         JSONObject result = add.CommonAdd(sql);
+
+        userDao.addCookie(username,request,response);
+
         PrintWriter out = response.getWriter();
         if ( !result.has("error")){
             out.write("true");
