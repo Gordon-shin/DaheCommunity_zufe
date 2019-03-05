@@ -1,5 +1,5 @@
 <!-- 指标库列表 -->
-
+<%@ page contentType="text/html;charset=UTF-8"%>
 <!-- 数据表 -->
 <table class="easyui-datagrid" title="指标库列表" fit="true" fitColumns="true"
 	url="data/griddata.json" method="get" toolbar="#toolbar" 

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- 组织机构管理 -->
 <div class="easyui-layout" data-options="fit:true">
 	<div class="inner-header" data-options="region:'north'">

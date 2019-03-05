@@ -56,9 +56,6 @@ public class UploadImgServlet extends HttpServlet {
             part.write(filePath + "/" + newFileName);
            // System.out.println(newFileName);
             avatar = newFileName;
-
-
-
         }
         String result;
         Connection connection = DBUtil.getConnection();
@@ -68,7 +65,6 @@ public class UploadImgServlet extends HttpServlet {
             pStatement=connection.prepareStatement(sql);
             pStatement.setString(1, avatar);
             pStatement.setString(2,uname);
-
             CommonDao commonDao = new CommonDao();
             result= commonDao.UpdateQuery(pStatement);
 
