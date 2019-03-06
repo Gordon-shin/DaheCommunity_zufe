@@ -1,9 +1,14 @@
 $(function () {
     var duty;
     var datetime;
+    var rows ;
+    console.log(sessionname);
+    console.log(sessionid);
+
     $('#orderTable').datagrid({
         toolbar:$('#toolbarOrder'),
         columns:[[
+            {field:'ck',title:'选择',checkbox:true},
             {field:'Id',title:'员工编码',width:50},
             {field:'StaffName',title:'维修人员姓名',width:100},
             {field:'Duties',title:'从事工种',width:100},
@@ -18,7 +23,35 @@ $(function () {
         pagination:true,
         fit:true,
         remoteSort:false,
-        fitColumns:true
+        fitColumns:true,
+        loadMsg:true,
+        singleSelect: true,
+        checkOnSelect : true,
+        selectOnCheck:true,
+        onCheck:function (index,rowdata) {
+          //  $('#orderTable').datagrid('selectRow',index);
+            //rows =  $('#orderTable').datagrid('getChecked');
+            rows=rowdata.Id;
+            console.log(rows);
+        },
+    })
+    $('#yuyue').linkbutton({
+        onClick:function () {
+            $.messager.confirm('预约确认','请问您是否要确认预约',function (r) {
+                if (r==true) {
+                   $.ajax({
+                       type: "POST",
+                       url:"RepairOrderServlet",
+                        data:{data:JSON.stringify(rows)},
+                       success:function () {
+                           $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info");
+
+                    }
+                   })
+                }
+            })
+
+        }
     })
     $('#chooseType').combobox({
         editable:false,
@@ -28,10 +61,15 @@ $(function () {
 
     })
     $('#riqi').datetimebox({
-
-
+        editable: false
     })
+
     $('#orderSearch').linkbutton({
+        beforeSend: function(){
+            $.messager.progress({
+                text:'正在查询中',
+            });
+        },
         onClick: function () {
             if((($('#chooseType').combobox("getValue"))=="")&&($('#riqi').datetimebox("getValue")=="")){
                 $.messager.alert('信息','请填写相关信息',"info");
@@ -51,7 +89,17 @@ $(function () {
                     url:"RepairManInfoServlet",
                     data:{duty:duty,datetime:datetime},
                     success:function (result) {
-                        $('#orderTable').datagrid('loadData',result.rows)
+                        //alert(result.total)
+                        $.messager.progress('close');
+                        if(result.total==0)
+                        {
+                            $.messager.alert('信息','没有相关信息',"error")
+                        }
+                        else{
+                            $.messager.alert('信息','查到'+result.total+'条信息',"info")
+                            $('#orderTable').datagrid('loadData',result.rows);
+                        }
+
                     }
                 })
             }

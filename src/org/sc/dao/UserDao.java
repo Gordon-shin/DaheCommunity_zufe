@@ -19,7 +19,7 @@ public class UserDao {
         Connection connection = DBUtil.getConnection();
         String sql = "SELECT * From tb_users WHERE LoginUserName=?";
         PreparedStatement pStatement = null;
-        ResultSet rs = null;
+        ResultSet rs ;
         User user = null;
         try {
             pStatement = connection.prepareStatement(sql);
@@ -46,12 +46,14 @@ public class UserDao {
         return user;
     }
     public void addCookie(String username, HttpServletRequest request, HttpServletResponse response){
-        User user = new User();
+        User user ;
         user = query(username);
         response.setContentType("text/html;charset=utf-8");
         HttpSession session = request.getSession(true);
         user.setPassword("");
         session.setAttribute("User", user);
+        session.setAttribute("username", user.getUsername());
+        session.setAttribute("userid", user.getUserid());
         Cookie cookieId = new Cookie("username", EncryptTool.encodeBase64(user.getUsername()));
         Cookie cookiePassword = new Cookie("password",EncryptTool.encodeBase64(user.getPassword()));
         Cookie cookieName = new Cookie("PersonName", EncryptTool.encodeBase64(user.getPersonname()));

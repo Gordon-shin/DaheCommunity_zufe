@@ -22,7 +22,7 @@ public class RepairManServlet extends HttpServlet {
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
-        String sql = "Select duties from tb_repair_staff_info";
+        String sql = "Select DISTINCT(duties) from tb_repair_staff_info";
         try {
             pStatement=connection.prepareStatement(sql);
             CommonDao commonDao = new CommonDao();

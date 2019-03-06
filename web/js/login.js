@@ -76,4 +76,7 @@ $(function(){
     $('#register').click(function () {
         location.href ="pageRegister.jsp"
     })
+    $('#yuyue').click(function () {
+
+    })
 })
