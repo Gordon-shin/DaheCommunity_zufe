@@ -35,22 +35,53 @@ $(function () {
             console.log(rows);
         },
     })
+
     $('#yuyue').linkbutton({
         onClick:function () {
-            $.messager.confirm('预约确认','请问您是否要确认预约',function (r) {
+            if (rows==null)
+            {
+                $.messager.alert('信息','请选择相应的维修人员',"info")
+            }
+            else{
+                var chooseTime;
+                chooseTime=$('#riqi').datetimebox("getValue");
+                var data = {userid:sessionid,repairmanid:rows,chooseTime:chooseTime}
+                console.log(data);
+                $.messager.confirm('预约确认','请问您是否要确认预约',function (r) {
                 if (r==true) {
                    $.ajax({
                        type: "POST",
                        url:"RepairOrderServlet",
-                        data:{data:JSON.stringify(rows)},
+                        data:{data:JSON.stringify(data)},
                        success:function () {
-                           $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info");
 
+                           $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info");
+                           duty=($('#chooseType').combobox("getValue"));
+                           datetime=($('#riqi').datetimebox("getValue"));
+                           $.ajax({
+                               type: "POST",
+                               dataType: 'JSON',
+                               url:"RepairManInfoServlet",
+                               data:{duty:duty,datetime:datetime},
+                               success:function (result) {
+                                   //alert(result.total)
+                                   $.messager.progress('close');
+                                   if(result.total==0)
+                                   {
+                                       $.messager.alert('信息','没有相关信息',"error")
+                                   }
+                                   else{
+                                       $.messager.alert('信息','查到'+result.total+'条信息',"info")
+                                       $('#orderTable').datagrid('loadData',result.rows);
+                                   }
+                               }
+                           })
                     }
                    })
                 }
             })
 
+        }
         }
     })
     $('#chooseType').combobox({
@@ -99,7 +130,6 @@ $(function () {
                             $.messager.alert('信息','查到'+result.total+'条信息',"info")
                             $('#orderTable').datagrid('loadData',result.rows);
                         }
-
                     }
                 })
             }

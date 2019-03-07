@@ -1,5 +1,6 @@
 package org.sc.dao;
 
+import org.sc.bean.RepairMan;
 import org.sc.bean.RepairOrder;
 import org.sc.bean.RepairOrderSheet;
 import org.sc.util.DBUtil;
@@ -30,7 +31,7 @@ public class RepairDao {
         return result;
     }
     public  String repairOrder(RepairOrderSheet repairOrderSheet){
-        String sql = "Insert into tb_repair_order(userid,repairmanid,repairtime,finishtime,state) values(?,?,?,?,'进行中') ";
+        String sql = "Insert into tb_repair_order(userid,repairmanid,repairtime,finishtime,state,starttime) values(?,?,?,?,?,?)";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -40,8 +41,26 @@ public class RepairDao {
             pStatement.setString(2,repairOrderSheet.getRepairId());
             pStatement.setString(3,repairOrderSheet.getRepairTime());
             pStatement.setString(4,repairOrderSheet.getFinishTime());
+            pStatement.setString(5,repairOrderSheet.getState());
+            pStatement.setString(6,repairOrderSheet.getStartTime());
             CommonDao commonDao = new CommonDao();
             result=commonDao.UpdateQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    public String repairInfoUpdate(RepairMan repairMan){
+        String sql = "update tb_repair_staff_info set state='0' where id=? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,repairMan.getId());
+            CommonDao commonDao = new CommonDao();
+            result =commonDao.UpdateQuery(pStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package org.sc.servlet;
 
 import org.sc.dao.CommonDao;
 import org.sc.util.DBUtil;
+import org.sc.util.FunctionUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,20 +18,9 @@ import java.sql.SQLException;
 @WebServlet(name = "TestServlet" , value="/TestServlet")
 public class TestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String sql = "select * from tb_users where loginusername = ?";
-        String json = null;
-
-        Connection connection = DBUtil.getConnection();
-        try {
-            PreparedStatement pStatement = connection.prepareStatement(sql);
-             pStatement.setString(1,"zhangsan");
-             CommonDao commonDao = new CommonDao();
-              json = commonDao.JSONQuery(pStatement);
-             System.out.println(json);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        FunctionUtil functionUtil =       new FunctionUtil();
+        String a = functionUtil.addTime("2019-03-07 10:19:51",24);
+        System.out.println(a);
 
     }
 
