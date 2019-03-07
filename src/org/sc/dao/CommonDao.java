@@ -4,11 +4,16 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.dbutils.QueryRunner;
 import org.sc.util.DBUtil;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.ResultSetMetaData;
+import java.util.Iterator;
 
 public class CommonDao {
     public String CommonQuery(String sql){
@@ -147,5 +152,49 @@ public class CommonDao {
             return error;
         }
     }
+   public String  DataTableToJson(PreparedStatement sql)
+   {   JSONArray jsonArray ;
+       String jsonString =JSONQuery(sql);
+       jsonArray = JSONArray.fromObject(jsonString);
+       JSONObject jsonobj;
+        if (jsonArray.size()<1)
+        {
+            return "[]";
+        }
+        else{
+
+               int count = jsonArray.size();
+               StringBuilder jsonBuilder = new StringBuilder();
+               jsonBuilder.append("{\"total\"");
+               jsonBuilder.append(":");
+               jsonBuilder.append(count);
+               jsonBuilder.append(",\"rows");
+               jsonBuilder.append("\":");
+               jsonBuilder.append(jsonString);
+               jsonBuilder.append(",\"title");
+               jsonBuilder.append("\":");
+               JSONDao jsonDao =new JSONDao();
+               int i =jsonDao.JudgeSize(jsonArray);
+               System.out.println(i);
+               jsonobj =jsonArray.getJSONObject(i);
+               jsonobj.size();
+               Iterator<String> jsonobj_Iterator = jsonobj.keys();
+               JSONArray titlearray = new JSONArray();
+
+               while(jsonobj_Iterator.hasNext()){
+                    JSONObject jsObj = new JSONObject();// 获得key
+                    String key = jsonobj_Iterator.next();
+                    jsObj.put("field",key);
+                    jsObj.put("title",key);
+                    jsObj.put("width",100);
+                    titlearray.add(jsObj);
+               }
+               jsonBuilder.append(titlearray.toString());
+               jsonBuilder.append("}");
+               return jsonBuilder.toString();
+        }
+   }
 
 }
+
+

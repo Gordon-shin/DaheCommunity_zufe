@@ -67,4 +67,19 @@ public class RepairDao {
 
         return result;
     }
+    public String OrderQuery(String userid){
+        String sql = "select * from tb_repair_order where userid=?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result = null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result=commonDao.DataTableToJson(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
