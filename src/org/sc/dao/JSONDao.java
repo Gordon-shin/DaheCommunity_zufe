@@ -3,6 +3,8 @@ package org.sc.dao;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import java.util.Iterator;
+
 public class JSONDao {
     public String JSONAndDataGrid(String jsonString){
         JSONArray jsonArray ;
@@ -42,5 +44,16 @@ public class JSONDao {
             }
         }
         return index_max;
+    }
+    private void iteratorJson(JSONObject jsonObject) {
+        Iterator<String> keys = jsonObject.keys();
+        for (;keys.hasNext();)
+        {
+            System.out.println("key");
+            System.out.println(keys.next());
+            System.out.println("value");
+            System.out.println(jsonObject.getString(keys.next()));
+
+        }
     }
 }

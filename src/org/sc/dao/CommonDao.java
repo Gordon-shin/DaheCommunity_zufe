@@ -195,6 +195,13 @@ public class CommonDao {
         }
    }
 
+
+    public static void out(HttpServletResponse response, String result) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out =  response.getWriter();
+        out.write(result);
+    }
 }
 
 

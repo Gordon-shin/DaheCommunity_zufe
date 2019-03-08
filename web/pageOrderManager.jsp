@@ -18,7 +18,7 @@
 
 <div class="toolbar" id="toolbarpom">
     <div class="ctrl-div">
-        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="yuyue">预约</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" id="Cancelyuyue">取消预约</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
     </div>
 </div>

@@ -55,28 +55,37 @@ $(function () {
                         data:{data:JSON.stringify(data)},
                        success:function () {
 
-                           $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info");
+                           $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info",function () {
+                               setTimeout(function () {
+                                   loaddata();
+
+                               },500);
+                           });
                            duty=($('#chooseType').combobox("getValue"));
                            datetime=($('#riqi').datetimebox("getValue"));
-                           $.ajax({
-                               type: "POST",
-                               dataType: 'JSON',
-                               url:"RepairManInfoServlet",
-                               data:{duty:duty,datetime:datetime},
-                               success:function (result) {
-                                   //alert(result.total)
-                                   $.messager.progress('close');
-                                   if(result.total==0)
-                                   {
-                                       $.messager.alert('信息','没有相关信息',"error")
+
+                           function loaddata() {
+                               $.ajax({
+                                   type: "POST",
+                                   dataType: 'JSON',
+                                   url: "RepairManInfoServlet",
+                                   data: {duty: duty, datetime: datetime},
+                                   success: function (result) {
+                                       //alert(result.total)
+                                       $.messager.progress('close');
+                                       if (result.total == 0) {
+                                           $.messager.alert('信息', '没有相关信息', "error", function () {
+                                               $('#orderTable').datagrid('loadData', result.rows);
+                                           })
+                                       } else {
+                                           $.messager.alert('信息', '查到' + result.total + '条信息', "info")
+                                           $('#orderTable').datagrid('loadData', result.rows);
+                                       }
                                    }
-                                   else{
-                                       $.messager.alert('信息','查到'+result.total+'条信息',"info")
-                                       $('#orderTable').datagrid('loadData',result.rows);
-                                   }
-                               }
-                           })
-                    }
+                               })
+                           }
+
+                       }
                    })
                 }
             })
@@ -94,7 +103,6 @@ $(function () {
     $('#riqi').datetimebox({
         editable: false
     })
-
     $('#orderSearch').linkbutton({
         beforeSend: function(){
             $.messager.progress({
