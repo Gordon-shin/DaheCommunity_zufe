@@ -16,6 +16,7 @@
 <table id="orderTable">
 
 
+
 <div class="toolbar" id="toolbarOrder">
 <div class="search-div">
     <label>所需要维修的工种：</label>
@@ -37,3 +38,4 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true">导出</a>--%>
 </div>
 </div>
+</table>

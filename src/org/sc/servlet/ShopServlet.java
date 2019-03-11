@@ -1,0 +1,35 @@
+package org.sc.servlet;
+
+import net.sf.json.JSONObject;
+import org.sc.dao.CommonDao;
+import org.sc.dao.RepairDao;
+import org.sc.dao.ShopDao;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(name = "ShopServlet",value = "/ShopServlet")
+public class ShopServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String method =request.getParameter("method");
+        if ("query".equals(method)) {
+            String result = null;
+            String key = request.getParameter("data");
+            ShopDao shopDao = new ShopDao();
+            result =  shopDao.ShopQuery(key);
+            System.out.println(result);
+            CommonDao.out(response,result);
+        } else if (method == "") {
+
+        }
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
+    }
+}

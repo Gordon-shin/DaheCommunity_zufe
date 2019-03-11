@@ -54,7 +54,7 @@
 					</ul>
 				</div>
 				<div title="二手市场管理" >
-				<ul class="navmenu" id="navShop">
+				<ul id="navShop">
 
 				</ul>
 			</div>
