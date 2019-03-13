@@ -43,26 +43,18 @@
 			<div class="easyui-accordion" fit="true" id="navmenu">
 				<div title="用户信息管理">
 					<ul id="nav">
-
-
 					</ul>
 				</div>
 				<div title="维修报障管理">
 					<ul  id="navRepair">
-
-
 					</ul>
 				</div>
 				<div title="二手市场管理" >
 				<ul id="navShop">
-
 				</ul>
 			</div>
 				<div title="上月缴费管理" >
 					<ul class="navmenu" id="navFee">
-
-
-
 					</ul>
 				</div>
 			</div>

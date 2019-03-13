@@ -16,7 +16,6 @@
     <div id="login">
       <p>账号：<input type="text" class="textbox" id="LoginUser"></p>
       <p>密码：<input type="password" class="textbox" id="LoginPassword"></p>
-
       <div id="identification">
         <select class="easyui-combobox" name="identification"  style="width: 70px">
         <option value="user">用户</option>

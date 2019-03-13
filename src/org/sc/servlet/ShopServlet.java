@@ -2,6 +2,7 @@ package org.sc.servlet;
 
 import net.sf.json.JSONObject;
 import org.sc.dao.CommonDao;
+import org.sc.dao.JSONDao;
 import org.sc.dao.RepairDao;
 import org.sc.dao.ShopDao;
 
@@ -23,8 +24,22 @@ public class ShopServlet extends HttpServlet {
             result =  shopDao.ShopQuery(key);
             System.out.println(result);
             CommonDao.out(response,result);
-        } else if (method == "") {
-
+        } else if ("queryiteminfo".equals(method)) {
+            String result = null;
+            String key = request.getParameter("itemid");
+            ShopDao shopDao = new ShopDao();
+            result =  shopDao.getDetail(key);
+            result= JSONDao.JSONArrayToObject(result);
+            System.out.println(result);
+            CommonDao.out(response,result);
+        }
+        else if ("addgouwuche".equals(method)){
+            String data = request.getParameter("data");
+            System.out.println(request.getParameter("data"));
+            JSONObject jsonObject =  JSONObject.fromObject(data);
+            ShopDao shopDao = new ShopDao();
+            String result = shopDao.addGouWuChe(jsonObject);
+            CommonDao.out(response,result);
         }
 
     }

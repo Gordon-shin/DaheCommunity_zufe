@@ -1,5 +1,7 @@
 package org.sc.dao;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.sc.bean.ShopQuery;
 import org.sc.util.DBUtil;
 
@@ -10,7 +12,7 @@ import java.sql.SQLException;
 public class ShopDao {
     public String ShopQuery(String value){
         ShopQuery shopQuery = new ShopQuery();
-        String sql = "select  itemid 物品ID,ItemName 物品名称, class 物品分类, itemprice 物品单价,itemunit 单位,itemstock 库存,offeruserid 供货人ID,userPersonname 供货人姓名 from tb_shop_items,tb_users where itemname  like ? and offeruserid =userid";
+        String sql = "select  itemid 物品ID,ItemName 物品名称, itemclass 物品分类, itemprice 物品单价,itemunit 单位,itemstock 库存,offeruserid 供货人ID,userPersonname 供货人姓名 from tb_shop_items,tb_users where itemname  like ? and offeruserid =userid";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -25,5 +27,39 @@ public class ShopDao {
         }
         return result;
     }
+    public String getDetail(String itemid){
+        String sql = "select * from tb_shop_items where itemid = ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,itemid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.JSONQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String addGouWuChe(JSONObject jsonObject){
+        String sql = "Insert into tb_shop_items_order(itemid,userid,itemnumber,orderdate,paystatus) values(?,?,?,?,?)";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,jsonObject.getString("itemid"));
+            pStatement.setString(2,jsonObject.getString("userid"));
+            pStatement.setString(3,jsonObject.getString("number"));
+            pStatement.setString(4,jsonObject.getString("orderdate"));
+            pStatement.setString(5,"购物车中");
 
+            CommonDao commonDao = new CommonDao();
+            result=commonDao.UpdateQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

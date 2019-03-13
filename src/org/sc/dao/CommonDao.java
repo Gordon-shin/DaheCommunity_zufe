@@ -96,13 +96,11 @@ public class CommonDao {
             rs =sql.executeQuery();
             metaData=rs.getMetaData();
             int columnCount = metaData.getColumnCount();//获取列数
-
             while (rs.next()){
                 JSONObject jsObj = new JSONObject();
                 for (int i=1 ; i< (columnCount+1); i++)
                 {   String columnName = metaData.getColumnLabel(i);//获取每一列的标签
                     String type = metaData.getColumnTypeName(i);//获取每一列的类型
-
                     if (type=="INT"){
                         jsObj.put(columnName, rs.getInt(i));//若该列是INT类型
                         System.out.println("!");
@@ -115,7 +113,6 @@ public class CommonDao {
                     }
                  }//一列遍历完成 向json数据添加记录
                 array.add(jsObj);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -201,6 +198,9 @@ public class CommonDao {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out =  response.getWriter();
         out.write(result);
+    }
+    public static void println(String result) {
+        System.out.println(result);
     }
 }
 
