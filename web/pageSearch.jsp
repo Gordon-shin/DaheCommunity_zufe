@@ -20,8 +20,8 @@
         <input  style="width: 300px;height:28px " id="wupinsousuo" >
 
 
-        <label>所需要维修的工种：</label>
-        <a class="easyui-linkbutton" iconcls="icon-add"></a>
+
+
     </div>
     <div class="ctrl-div">
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addgouwuche">加入购物车</a>

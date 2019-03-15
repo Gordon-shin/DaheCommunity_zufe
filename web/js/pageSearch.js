@@ -124,18 +124,29 @@ $(function () {
             else {
                 $.messager.confirm('信息','请问您是否要将该商品加入购物车',function (r) {
                     if (r==true) {
+                        let judge = false;
                         $.ajax({
                             type: "POST",
                             url:"ShopServlet",
-                            data:{data:JSON.stringify(data),method:"addgouwuche"},
+                            data:{itemid:itemid,userid:sessionid,method:"panduangouwuche"},
                             success:function (result) {
-
-
-                                    $.messager.alert('信息','加入购物车成功',"info");
-
-
+                                if (result=="yes")
+                                {
+                                    $.ajax({
+                                        type: "POST",
+                                        url:"ShopServlet",
+                                        data:{data:JSON.stringify(data),method:"addgouwuche"},
+                                        success:function (result) {
+                                            $.messager.alert('信息','加入购物车成功',"info");
+                                        }
+                                    })
+                                }
+                                else{
+                                    $.messager.alert('信息','该商品已经存在于购物车中请去购物车中修改信息',"error");
+                                }
                             }
                         })
+
                     }
                 })
 

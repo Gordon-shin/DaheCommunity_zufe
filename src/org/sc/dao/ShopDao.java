@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import org.sc.bean.ShopQuery;
 import org.sc.util.DBUtil;
 
+import javax.management.Query;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -42,6 +43,30 @@ public class ShopDao {
         }
         return result;
     }
+    public Boolean QueryExistGouwuche(String itemid,String userid){
+        String sql = "select * from tb_shop_items_order where ItemId=? and UserId=? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,itemid);
+            pStatement.setString(2,userid);
+            CommonDao commonDao = new CommonDao();
+            result=commonDao.JSONQuery(pStatement);
+            System.out.println(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if ("[]".equals(result))
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
     public String addGouWuChe(JSONObject jsonObject){
         String sql = "Insert into tb_shop_items_order(itemid,userid,itemnumber,orderdate,paystatus) values(?,?,?,?,?)";
         Connection connection = DBUtil.getConnection();
@@ -61,5 +86,21 @@ public class ShopDao {
             e.printStackTrace();
         }
         return result;
+    }
+    public String QueryGWC(String userid){
+        String sql = "select tb_shop_items.ItemId 物品编号,ItemName 物品名称,ItemPrice 物品单价,ItemNumber 物品数量,CONVERT(CONVERT((ItemNumber*ItemPrice),DECIMAL(10,2)),char) 总价,OrderDate 加入购物车日期 from tb_shop_items_order,tb_shop_items where tb_shop_items_order.ItemId=tb_shop_items.ItemId and UserId =?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.DataTableToJson(pStatement);
+            System.out.println(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  result;
     }
 }

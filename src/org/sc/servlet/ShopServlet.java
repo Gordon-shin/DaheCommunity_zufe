@@ -41,6 +41,25 @@ public class ShopServlet extends HttpServlet {
             String result = shopDao.addGouWuChe(jsonObject);
             CommonDao.out(response,result);
         }
+        else if ("panduangouwuche".equals(method)){
+            String itemid = request.getParameter("itemid");
+            String userid = request.getParameter("userid");
+            ShopDao shopDao = new ShopDao();
+            boolean result = shopDao.QueryExistGouwuche(itemid,userid);
+            if (result==true)
+            {
+                CommonDao.out(response,"yes");
+            }
+            else{
+                CommonDao.out(response,"no");
+            }
+        }
+        else if ("querygwc".equals(method)){
+            String userid = request.getParameter("data");
+            ShopDao shopDao = new ShopDao();
+            String result = shopDao.QueryGWC(userid);
+            CommonDao.out(response,result);
+        }
 
     }
 
