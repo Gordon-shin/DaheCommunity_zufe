@@ -72,7 +72,6 @@ $(function () {
         $('#zong').append(zongjia);
     }
     $('#bianjigouwuche').linkbutton({
-
         onClick:function () {
           var shuliang = new Array();
            shuliang  = $('#gwcManagerTable').datagrid('getChecked')

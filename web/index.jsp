@@ -3,6 +3,8 @@
 
 <html>
 	<head>
+		<%@page isELIgnored="false" %>
+		<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
 		<script type="text/javascript">
 
 				var sessionname='<%=session.getAttribute("username")%>';

@@ -18,5 +18,7 @@ function uploadImg(file,type,username)
         }
 
     })
+}
+function uploadItemImg(file) {
 
 }

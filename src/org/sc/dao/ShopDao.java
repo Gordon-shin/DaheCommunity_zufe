@@ -103,4 +103,33 @@ public class ShopDao {
         }
         return  result;
     }
+    public String ItemInfoCreate(JSONObject jsonObject){
+        String sql = "Insert into tb_shop_items(itemname, itemclass, itemprice, itemunit, itemserialno, itemstock, offeruserid, state, description, addtime,phone)  values(?,?,?,?,?,?,?,?,?,?,?)";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement=connection.prepareStatement(sql);
+            pStatement.setString(1,jsonObject.getString("itemtitle"));
+            pStatement.setString(2,jsonObject.getString("itemclass"));
+            pStatement.setString(3,jsonObject.getString("price"));
+            pStatement.setString(4,jsonObject.getString("itemunit"));
+            pStatement.setString(5,jsonObject.getString("barcode"));
+            pStatement.setString(6,jsonObject.getString("stock"));
+            pStatement.setString(7,jsonObject.getString("userid"));
+            pStatement.setString(8,jsonObject.getString("state"));
+            pStatement.setString(9,jsonObject.getString("itemdesc"));
+            pStatement.setString(10,jsonObject.getString("addTime"));
+            pStatement.setString(11,jsonObject.getString("phone"));
+            CommonDao commonDao = new CommonDao();
+            commonDao.UpdateQuery(pStatement);
+            sql = "select last_insert_id()";
+            pStatement=connection.prepareStatement(sql);
+            result = commonDao.JSONQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
 }

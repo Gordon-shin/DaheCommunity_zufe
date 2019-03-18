@@ -1,5 +1,6 @@
 package org.sc.servlet;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.sc.dao.CommonDao;
 import org.sc.dao.JSONDao;
@@ -59,6 +60,14 @@ public class ShopServlet extends HttpServlet {
             ShopDao shopDao = new ShopDao();
             String result = shopDao.QueryGWC(userid);
             CommonDao.out(response,result);
+        }
+        else if ("iteminfo".equals(method)){
+            JSONObject jsonObject;
+            jsonObject = JSONObject.fromObject(request.getParameter("data"));
+            ShopDao shopDao = new ShopDao();
+            String result = shopDao.ItemInfoCreate(jsonObject);
+            CommonDao.out(response,result);
+
         }
 
     }
