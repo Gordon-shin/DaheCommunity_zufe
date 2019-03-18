@@ -25,16 +25,7 @@
                         <input class="easyui-filebox" id="fileitem"  name="file3" data-options="prompt:'请选择'" style="width:100%">
                     </div>
                     <table>
-                        <tr>
-                            <td>商品类目:</td>
-                            <td>
-                                <input class="easyui-textbox" type="text" id="itemclass" data-options="validType:'length[1,30]'" />
 
-                            <td>
-                                <%--  <a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a>
-                                  <input type="hidden" name="cid" style="width: 280px;"></input>--%>
-                            </td>
-                        </tr>
                         <tr>
                             <td>商品标题:</td>
                             <td><input class="easyui-textbox" type="text" id="itemtitle" data-options="required:true" style="width: 280px;"></input></td>
@@ -50,6 +41,16 @@
                             <td><input class="easyui-numberbox" type="text" id="num" data-options="min:1,max:99999999,precision:0,required:true" /></td>
                         </tr>
                         <tr>
+                            <td>商品类目:</td>
+                            <td>
+                                <input class="easyui-textbox" type="text" id="itemclass" data-options="validType:'length[1,30]'" />
+
+                            <td>
+                                <%--  <a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a>
+                                  <input type="hidden" name="cid" style="width: 280px;"></input>--%>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>序列号:</td>
                             <td>
                                 <input class="easyui-textbox" type="text" id="barcode" data-options="validType:'length[1,30]'" />
@@ -62,7 +63,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>商品单位:</td>
+                            <td>联系电话:</td>
                             <td>
                                 <input class="easyui-textbox" type="text" id="phone" data-options="validType:'length[1,30]'" />
                             </td>

@@ -2,24 +2,7 @@ $(function () {
     var itemid
     var kucun
     var detail
-    $('#itemSearch').datagrid({
-        toolbar:$('#toolbarItemSearch'),
-        title:"商品搜索",
-        striped:true,
-        rownumbers:true,
-        pagination:true,
-        fit:true,
-        remoteSort:false,
-        fitColumns:true,
-        loadMsg:true,
-        singleSelect: true,
-        checkOnSelect : true,
-        selectOnCheck:true,
-        onSelect:function (index,rowdata) {
-            itemid = rowdata.物品ID;
-            kucun = rowdata.库存;
-        },
-    })
+
     $('#wupinsousuo').searchbox({
         prompt:'请输入您希望购买的物品',
         searcher:function (value) {
@@ -73,6 +56,25 @@ $(function () {
             })
         }
     })
+    $('#itemSearch').datagrid({
+        toolbar:$('#toolbarItemSearch'),
+        title:"商品搜索",
+        striped:true,
+        rownumbers:true,
+        pagination:true,
+        fit:true,
+        remoteSort:false,
+        fitColumns:true,
+        loadMsg:true,
+        singleSelect: true,
+        checkOnSelect : true,
+        selectOnCheck:true,
+        onSelect:function (index,rowdata) {
+            itemid = rowdata.物品ID;
+            kucun = rowdata.库存;
+            console.log(itemid);
+        },
+    })
     $('#addgouwuche').linkbutton({
         onClick:function () {
             if (itemid==null){
@@ -114,6 +116,16 @@ $(function () {
     })
     $('#gouwuchesaveBtn').linkbutton({
         onClick:function () {
+            $.ajax({
+                type: "POST",
+                dataType: 'JSON',
+                url: "ShopServlet",
+                data: {itemid: itemid,method:"queryiteminfo"},
+                success:function (result) {
+                    detail = result;
+
+                }
+            })
             var shuliang = $('#weitiao').numberspinner('getValue');
             var date = getNowFormatDate();
             var data = {userid:sessionid,itemid:detail.ItemId,number:shuliang,orderdate:date}

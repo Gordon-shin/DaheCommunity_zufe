@@ -34,6 +34,7 @@ $(function () {
                 data: {data: JSON.stringify(data),method:"iteminfo"},
                 success:function (result) {
                     alert(result);
+
                 }
             })
 
