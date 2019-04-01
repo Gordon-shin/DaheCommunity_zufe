@@ -76,8 +76,6 @@
             <td>商品描述:</td>
             </tr>
             <tr>
-
-
                 <td>
                     <textarea  id="desc123" style="width:800px;height:300px;visibility: hidden" ></textarea>
                 </td>

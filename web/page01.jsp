@@ -1,79 +1,76 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- 组织机构管理 -->
-<div class="easyui-layout" data-options="fit:true">
-	<div class="inner-header" data-options="region:'north'">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-back">导入</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add">新增</a>
-   		<a href="#" class="easyui-linkbutton" iconCls="icon-edit">编辑</a>
-    	<a href="#" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
-	</div>
-	<div class="tree-div" data-options="region:'west'">
-		<div class="easyui-panel" title="部门列表" data-options="fit:true">
-			<ul class="easyui-tree">
-				<li>
-					<span>某某总公司</span>
-					<ul>
-						<li>
-							<span>职能部门</span>
-							<ul>
-								<li><span>人力资源部</span></li>
-								<li><span>业务系统部</span></li>
-								<li><span>财务部</span></li>
-								<li><span>董事会</span></li>
-							</ul>
-						</li>
-						<li>
-							<span>国内事业部</span>
-							<ul>
-								<li><span>北京分公司</span></li>
-								<li><span>上海分公司</span></li>
-								<li><span>杭州分公司</span></li>
-							</ul>
-						</li>
-						<li>
-							<span>海外事业部</span>
-							<ul>
-								<li><span>纽约事业部</span></li>
-								<li><span>硅谷事业部</span></li>
-								<li><span>欧盟事业部</span></li>
-								<li><span>东南亚事业部</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="inner-content" data-options="region:'center'">
-		<!-- 数据表 -->
-		<table class="easyui-datagrid" title="人员列表" fit="true" fitColumns="true"
-			url="data/griddata2.json" method="get" toolbar="#toolbar2" 
-			striped="true" rownumbers="true" pagination="true" remoteSort="false">
-			<thead>
-				<tr>
-					<th field="number" width="30" align="center" sortable="true">员工编号</th>
-					<th field="username" width="20" align="center" sortable="true">用户名</th>
-					<th field="role" width="50" align="center" sortable="true">角色</th>
-				</tr>
-			</thead>
-		</table>
-		<!-- /数据表 -->
-		
-		<!-- 数据表工具栏 -->
-		<div class="toolbar" id="toolbar2">
-			<div class="search-div">
-				<label>员工编号：</label>
-				<input type="text" class="easyui-textbox" />
-				<label>用户名称：</label>
-				<input type="text" class="easyui-textbox" />
-				<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
-	        </div>
-			<div class="ctrl-div">
-				<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true">新增</a>
-	       		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
-	        	<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">批量删除</a>
-			</div>
-	    </div>
-	    <!-- /数据表工具栏 -->
-	</div>
+<!-- 评论列表 -->
+<script src="js/Newdate.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugin/kindeditor/kindeditor-all.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugin/kindeditor/lang/zh-CN.js"></script>
+<div>
+    <textarea id="commentbox" style="width:100%;height:200px;visibility: hidden"></textarea>
 </div>
+
+<div id="upitemReview">
+    <button type="button" class="btn btn-danger" id="submitcomment" @click="submit">提交评论</button>
+</div>
+<div id="replybox">
+    <ul class="list-group">
+        <li class="list-group-item" v-for="item in list" :key="item.id">
+            <span class="badge">评论人： {{item.user}}</span>
+            {{item.content}}
+        </li>
+    </ul>
+</div>
+<script>
+    var editor=KindEditor.create('#commentbox', {
+        allowPreviewEmoticons: false,
+        uploadJson: 'jspFunction/upload_json.jsp',
+        urlType: 'absolute',
+        resizeType: 0,  //文本框不可拖动
+        items: [
+            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+            'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+    });
+</script>
+<script>
+    var vm2=new Vue({
+        el: '#upitemReview',
+        methods: {
+            submit: () => {
+                let data={}
+                data['author']=sessionid;
+                data['content']=editor.text();
+                $.ajax({
+                    url:"ShopServlet",
+                    type:"post",
+                    data:{
+                        data:{data:JSON.stringify(data),method:"tijiaoComment"},
+                        success:function (result) {
+
+                        }
+                    }
+                })
+            }
+        }
+    })
+    var vm=new Vue({
+        el: '#replybox',
+        data: {
+            list: [
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+                {id: getNowFormatDate(), user: '李白', content: '天生我才必有用'},
+            ]
+        }
+    })
+</script>

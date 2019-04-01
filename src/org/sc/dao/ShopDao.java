@@ -79,7 +79,6 @@ public class ShopDao {
             pStatement.setString(3,jsonObject.getString("number"));
             pStatement.setString(4,jsonObject.getString("orderdate"));
             pStatement.setString(5,"购物车中");
-
             CommonDao commonDao = new CommonDao();
             result=commonDao.UpdateQuery(pStatement);
         } catch (SQLException e) {
@@ -126,9 +125,11 @@ public class ShopDao {
             sql = "select last_insert_id()";
             pStatement=connection.prepareStatement(sql);
             result = commonDao.JSONQuery(pStatement);
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return result;
 
     }

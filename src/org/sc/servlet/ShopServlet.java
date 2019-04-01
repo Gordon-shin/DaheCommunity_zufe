@@ -69,7 +69,9 @@ public class ShopServlet extends HttpServlet {
             CommonDao.out(response,result);
 
         }
+        else if("tijiaoComment".equals(method)){
 
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

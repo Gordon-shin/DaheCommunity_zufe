@@ -22,7 +22,7 @@ $(function() {
 
             if (node.url) {
                 var tab = $('#tt').tabs('getSelected');
-                console.log(tab);
+         //       console.log(tab);
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
                     var tab = $('#tt').tabs('getSelected');  // 获取选择的面板

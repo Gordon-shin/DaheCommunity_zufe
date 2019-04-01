@@ -11,8 +11,18 @@ $(function () {
                 dataType: 'JSON',
                 url: "ShopServlet",
                 data: {data: value, method: "query"},
-
                 success: function (result) {
+                    var title =[]
+                    title = result.title
+                    title[0]["width"] = 30
+                    title[1]["width"] = 150
+                    title[1]["formatter"] =function(value,row,index){
+                        return  '<span style="color:navy">'+value+'</span>';
+                    }
+                    title[3]["formatter"]=function(value,row,index){
+                        return  '<span style="color:red">'+value+'</span>';
+                    }
+                    console.log(title)
                     $.messager.progress('close');
                     if (result.total == 0) {
                         $.messager.alert('信息', '没有相关信息', "error", function () {
@@ -25,10 +35,14 @@ $(function () {
                         })
                     }
                      else {
-                        console.log(result)
+
+
+
                         $('#itemSearch').datagrid({
-                            columns: [eval(result.title)],
+                            columns: [title],
                         })
+                        var columns = $('#itemSearch').datagrid("options").columns;
+                        console.log(columns)
                         $.messager.alert('信息', '查到' + result.total + '条信息', "info")
 
                         $('#itemSearch').datagrid({
@@ -73,6 +87,7 @@ $(function () {
             itemid = rowdata.物品ID;
             kucun = rowdata.库存;
             console.log(itemid);
+            console.log(rowdata.物品单价);
         },
     })
     $('#addgouwuche').linkbutton({

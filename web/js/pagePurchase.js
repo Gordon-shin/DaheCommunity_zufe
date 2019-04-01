@@ -1,6 +1,8 @@
 $(function () {
     var zongjia = 0;
     var singlejiage=0;
+    $('.prev').linkbutton()
+    $('.next right').linkbutton()
     $('#gwcManagerTable').datagrid({
         toolbar: $('#toolbargouwuche'),
         title:"购物车",
@@ -35,6 +37,20 @@ $(function () {
                 columns: [eval(title)]
             });
             $('#gwcManagerTable').datagrid('loadData', result.rows);
+        }
+    })
+    $("#wizard").scrollable({
+        onSeek:function (event,i) {
+            $("#status li").removeClass("active").eq(i).addClass("active");
+        }
+    });
+    $('#zhifujiesuan').linkbutton({
+        onClick:function () {
+            $('#zhifujiesuanform').dialog({
+                closed:false,
+            })
+            console.log($('#gwcManagerTable').datagrid('getChecked'))
+            console.log(zongjia)
         }
     })
     $('#gwcManagerTable').datagrid({
