@@ -32,27 +32,26 @@ public class RepairDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (int i=0;i<array.size();i++)
-        {
-            judge = false;
-           JSONObject timeobj =  JSONObject.fromObject(array.get(i));
-           String repairtime = timeobj.getString("RepairTime");
-           String finishTime = timeobj.getString("FinishTime");
-           if (compareTime(chooseTime,finishTime)<0&&compareTime(chooseTimeAfter,finishTime)>0){
-                break;
-           }
-           else if(compareTime(chooseTime,repairtime)<0&&compareTime(chooseTimeAfter,finishTime)<0){
-               break;
-           }
-           else if (compareTime(chooseTime,repairtime)<0&&compareTime(chooseTimeAfter,finishTime)>0){
-               break;
-           }
-           else if (compareTime(chooseTime,repairtime)>0&&compareTime(chooseTimeAfter,finishTime)<0){
-               break;
-           }
-           else {
+        if (array.size()>0) {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject timeobj = JSONObject.fromObject(array.get(i));
+                String repairtime = timeobj.getString("RepairTime");
+                String finishTime = timeobj.getString("FinishTime");
+                if (compareTime(chooseTime, finishTime) < 0 && compareTime(chooseTimeAfter, finishTime) > 0) {
+                    break;
+                } else if (compareTime(chooseTime, repairtime) < 0 && compareTime(chooseTimeAfter, finishTime) < 0) {
+                    break;
+                } else if (compareTime(chooseTime, repairtime) < 0 && compareTime(chooseTimeAfter, finishTime) > 0) {
+                    break;
+                } else if (compareTime(chooseTime, repairtime) > 0 && compareTime(chooseTimeAfter, finishTime) < 0) {
+                    break;
+                } else {
+                    judge = true;
+                }
+            }
+        }
+        else {
             judge = true;
-           }
         }
         return judge;
     }
@@ -82,8 +81,8 @@ public class RepairDao {
         {
             JSONObject id = JSONObject.fromObject(idArry.get(i));
            String idNum = id.getString("Id");//获取符合职位的id
-           Boolean judge =  RepairTimeJudge(idNum,sparetime,datetimeAfter);
-           if (judge)
+
+           if (RepairTimeJudge(idNum,sparetime,datetimeAfter).equals(true))
              {
                 allowid.add(idNum);
            }
@@ -135,6 +134,7 @@ public class RepairDao {
             e.printStackTrace();
         }
         return result;*/
+
        return result;
     }
     public  String repairOrder(RepairOrderSheet repairOrderSheet){
