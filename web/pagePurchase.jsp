@@ -49,9 +49,10 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
 <div class="toolbar" id="toolbargouwuche">
 
     <div class="ctrl-div">
-        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" id="zhifu">取消预约</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" id="cgwcsc">从购物车删除</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="bianjigouwuche">编辑</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" id="zhifujiesuan">支付结算</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true" id="qingkonggouwuche">清空购物车</a>
     </div>
 </div>
 

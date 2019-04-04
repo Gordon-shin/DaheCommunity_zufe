@@ -116,7 +116,6 @@ $(function () {
                     closed:false
                 })
             }
-
         }
     })
     $('#cancelBtn').linkbutton({
@@ -138,7 +137,6 @@ $(function () {
                 data: {itemid: itemid,method:"queryiteminfo"},
                 success:function (result) {
                     detail = result;
-
                 }
             })
             var shuliang = $('#weitiao').numberspinner('getValue');

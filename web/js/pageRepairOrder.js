@@ -54,11 +54,9 @@ $(function () {
                        url:"RepairOrderServlet",
                         data:{data:JSON.stringify(data)},
                        success:function () {
-
                            $.messager.alert('信息','预约成功，请在预约管理中查看信息',"info",function () {
                                setTimeout(function () {
                                    loaddata();
-
                                },500);
                            });
                            duty=($('#chooseType').combobox("getValue"));

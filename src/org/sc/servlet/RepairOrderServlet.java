@@ -19,9 +19,7 @@ import java.io.IOException;
 public class RepairOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String json =request.getParameter("data");
-        System.out.println(json);
         JSONObject jsobj = JSONObject.fromObject(json);
-        System.out.println(jsobj.getString("userid"));
         FunctionUtil functionUtil = new FunctionUtil();
         RepairMan repairMan = new RepairMan();
         repairMan.setId(jsobj.getString("repairmanid"));
@@ -35,8 +33,11 @@ public class RepairOrderServlet extends HttpServlet {
         repairOrderSheet.setFinishTime(functionUtil.addTime(jsobj.getString("chooseTime"),3));
 
         RepairDao repairDao=new RepairDao();
-        repairDao.repairOrder(repairOrderSheet);
-        repairDao.repairInfoUpdate(repairMan);
+
+            repairDao.repairOrder(repairOrderSheet);
+            repairDao.repairInfoUpdate(repairMan);
+
+
 
     }
 

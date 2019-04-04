@@ -9,6 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class FunctionUtil {
+        public  static int compareTime(String time1,String time2){
+                int res= time1.compareTo(time2);
+                return  res;
+        }
         public  String getNow(){
                 Date date = new Date();
                 SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

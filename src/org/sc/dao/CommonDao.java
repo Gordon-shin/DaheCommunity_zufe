@@ -45,7 +45,7 @@ public class CommonDao {
                         jsObj.put(columnName, rs.getString(i));//其他类型就直接转换
                     }
                 }//一列遍历完成 向json数据添加记录
-                array.add(jsObj);
+                array.add(jsObj);//返回Json数组
             }
 
         } catch (SQLException e) {
