@@ -12,12 +12,12 @@
     <script type="text/javascript" src="js/login.js"></script>
 
   </head>
-  <body>
-    <div id="login">
+  <body background="img/loginbg.jpg">
+    <div id="login" style="top:200px; left:70%;">
       <p>账号：<input type="text" class="textbox" id="LoginUser"></p>
       <p>密码：<input type="password" class="textbox" id="LoginPassword"></p>
       <div id="identification">
-        <select class="easyui-combobox" name="identification"  style="width: 70px">
+        <select class="easyui-combobox"  id="authselect" name="identification"  style="width: 70px">
         <option value="user">用户</option>
         <option value="manager">管理员</option>
         </select>
@@ -30,6 +30,5 @@
 
 
   </body>
-
 
 </html>

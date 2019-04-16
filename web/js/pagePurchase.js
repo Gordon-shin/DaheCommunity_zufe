@@ -1,6 +1,7 @@
 $(function () {
     var zongjia = 0;
     var singlejiage=0;
+    var gwcitemid=[];
     $('.prev').linkbutton()
     $('.next right').linkbutton()
     $('#gwcManagerTable').datagrid({
@@ -57,28 +58,36 @@ $(function () {
         onCheck:function (index,row) {
             singlejiage=parseFloat(row.总价);
             zongjia=FloatAdd(singlejiage,zongjia)
-            console.log(zongjia)
+            gwcitemid.push({id:row.物品编号,key:row.物品编号})
+            console.log(gwcitemid)
             zongjiage();
         },
         onUncheck:function(index,row){
             singlejiage=parseFloat(row.总价);
             console.log(singlejiage);
             zongjia=FloatSub(zongjia,singlejiage);
-            console.log(zongjia)
+            gwcitemid = JSONArrayDelete(row.物品编号,gwcitemid)
+            console.log(gwcitemid)
+
             zongjiage();
         },
         onCheckAll:function (rows) {
             var array = new Array();
             array = rows;
             zongjia=0;
+            gwcitemid = [];
             for (i=0;i<array.length;i++)
             {
-                zongjia= FloatAdd(parseFloat(array[i].总价),zongjia);
+                gwcitemid.push({id:array.物品编号,key:array.物品编号})
+                    zongjia= FloatAdd(parseFloat(array[i].总价),zongjia);
             }
+            console.log(gwcitemid)
+
            zongjiage();
         },
         onUncheckAll(rows){
             zongjia=0.00;
+            gwcitemid=[];
             zongjiage();
         }
     })
@@ -145,5 +154,16 @@ $(function () {
         }
     })
 
+    function JSONArrayDelete(id,array) {
+        var newArr = new Array();
+        for (let i = 0 ; i < array.length;i++){
+            let j = array[i];
+            if (j.id!=id)
+            {
+                newArr.push(j);
+            }
+        }
+        return newArr;
+    }
 })
 
