@@ -1,7 +1,24 @@
+function chaxunChart() {
+    $.ajax({
+        type: "POST",
+        url: "ShopServlet",
+        data: {data: sessionid, method: "querygwc"},
+        success: function (result) {
+            var result=JSON.parse(result)
+            var title=result.title;
+            title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
+            $('#gwcManagerTable').datagrid({
+                columns: [eval(title)]
+            });
+            $('#gwcManagerTable').datagrid('loadData', result.rows);
+        }
+    })
+}
+
 $(function () {
     var zongjia = 0;
     var singlejiage=0;
-    var gwcitemid=[];
+    var gwcitemid=[];//记录选择的商品
     $('.prev').linkbutton()
     $('.next right').linkbutton()
     $('#gwcManagerTable').datagrid({
@@ -26,20 +43,7 @@ $(function () {
     $('#xiugaiweitiao').numberspinner({
 
     })
-    $.ajax({
-        type: "POST",
-        url:"ShopServlet",
-        data:{data:sessionid,method:"querygwc"},
-        success:function (result) {
-            var result = JSON.parse(result)
-            var title =result.title;
-            title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
-            $('#gwcManagerTable').datagrid({
-                columns: [eval(title)]
-            });
-            $('#gwcManagerTable').datagrid('loadData', result.rows);
-        }
-    })
+    chaxunChart();
     $("#wizard").scrollable({
         onSeek:function (event,i) {
             $("#status li").removeClass("active").eq(i).addClass("active");
@@ -59,7 +63,6 @@ $(function () {
             singlejiage=parseFloat(row.总价);
             zongjia=FloatAdd(singlejiage,zongjia)
             gwcitemid.push({id:row.物品编号,key:row.物品编号})
-            console.log(gwcitemid)
             zongjiage();
         },
         onUncheck:function(index,row){
@@ -153,7 +156,37 @@ $(function () {
            })
         }
     })
+    $('#cgwcsc').linkbutton({
+        onClick:function () {
+            $.messager.confirm('删除确认','请问您是否要删除相关物品',function (r){
+                if (r==true) {
+                    if (gwcitemid.length!=0)
+                    {$.ajax({
+                        type: "POST",
+                        url:"ShopServlet",
+                        data:{data:JSON.stringify(gwcitemid),userid:sessionid,method:"deletewgc"},
+                        success:function (result) {
+                            if (result=="true")
+                            {
+                                $.messager.alert('删除成功','删除成功',"info");
+                                chaxunChart();
+                            }
+                            else{
+                                $.messager.alert('删除失败',result,"error");
+                            }
+                        }
+                    })}
+                    else {
+                        $.messager.alert('错误','请选择要移除的物品',"error");
+                    }
+                }
+                else{
+                }
+            })
 
+
+        }
+    })
     function JSONArrayDelete(id,array) {
         var newArr = new Array();
         for (let i = 0 ; i < array.length;i++){
@@ -165,5 +198,15 @@ $(function () {
         }
         return newArr;
     }
+    $('#zhifujiesuan').linkbutton({
+        onClick:function () {
+            if (gwcitemid.length==0){
+                $.messager.alert('信息','请选择需要支付的商品',"error")
+            }
+            else{
+                gwcitemid
+            }
+        }
+    })
 })
 

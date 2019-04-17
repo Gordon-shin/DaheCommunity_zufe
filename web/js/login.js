@@ -1,6 +1,64 @@
+function jslogin() {
+        if (!$('#LoginUser').validatebox('isValid')) {
+            $('#LoginUser').focus();
+        } else if (!$('#LoginPassword').validatebox('isValid')) {
+            $('#LoginPassword').focus();
+        } else if ($('#authselect').combobox('getValue') == 'user') {
+            $.ajax({
+                url: "LoginServlet",
+                type: "post",
+                data: {
+                    username: $('#LoginUser').val(),
+                    password: $('#LoginPassword').val(),
+                },
+                beforeSend: function () {
+                    $.messager.progress({
+                        text: '正在登录中',
+                    });
+                },
+                success: function (result) {
+                    $.messager.progress('close');
+                    if (result == "true") {
+                        $.messager.alert('登录成功', '登录成功', "info", function () {
+                            location.href='index.jsp';
+                        });
+                    } else {
+                        $.messager.alert('登录失败', '请检查用户名密码组合', "error");
+                    }
+                }
+            })
+        } else {
+            $.ajax({
+                url: "LoginServlet",
+                type: "post",
+                data: {
+                    username: $('#LoginUser').val(),
+                    password: $('#LoginPassword').val(),
+                    method: 'manager'
+                },
+                beforeSend: function () {
+                    $.messager.progress({
+                        text: '正在登录中',
+                    });
+                },
+                success: function (result) {
+                    $.messager.progress('close');
+                    if (result == "true") {
+                        $.messager.alert('登录成功', '登录成功,欢迎您管理员', "info", function () {
+                            location.href='index_admin.jsp';
+                        });
+                    } else {
+                        $.messager.alert('登录失败', '请检查用户名密码组合', "error");
+                    }
+                }
+            })
+        }
+}
+var dragduge = false;
 $(function(){
+
     //登录界面
-    $('#login').dialog({
+   /* $('#login').dialog({
         title:'登录',
         width:300,
         height:220,
@@ -8,7 +66,12 @@ $(function(){
         buttons:'#btn',
         closable:false,
 
-    });
+    });*/
+    $('#loginBtn').click(function () {
+        if (dragduge == true) { jslogin();}
+        else { $.messager.alert('登录失败', '请先完成验证码验证', "error");}
+
+      })
     //客户端验证 账号
     $('#LoginUser').validatebox({
         required:true,
@@ -94,69 +157,7 @@ $(function(){
         })
         }
     });*/
-  $('#loginBtn').click(function () {
-      if (!$('#LoginUser').validatebox('isValid'))
-      {
-          $('#LoginUser').focus();
-      }
-      else if(!$('#LoginPassword').validatebox('isValid'))
-      {
-          $('#LoginPassword').focus();
-      }
-      else if ($('#authselect').combobox('getValue')=='user') {
-          $.ajax({
-              url:"LoginServlet",
-              type:"post",
-              data:{
-                  username:$('#LoginUser').val(),
-                  password:$('#LoginPassword').val(),
-              },
-              beforeSend: function(){
-                  $.messager.progress({
-                      text:'正在登录中',
-                  });
-              },
-              success:function(result){
-                  $.messager.progress('close');
-                  if (result=="true") {
-                      $.messager.alert('登录成功','登录成功',"info",function () {
-                          location.href = 'index.jsp';
-                      });
-                  }
-                  else{
-                      $.messager.alert('登录失败','请检查用户名密码组合',"error");
-                  }
-              }
-          })
-      }
-      else{
-          $.ajax({
-              url:"LoginServlet",
-              type:"post",
-              data:{
-                  username:$('#LoginUser').val(),
-                  password:$('#LoginPassword').val(),
-                  method:'manager'
-              },
-              beforeSend: function(){
-                  $.messager.progress({
-                      text:'正在登录中',
-                  });
-              },
-              success:function(result){
-                  $.messager.progress('close');
-                  if (result=="true") {
-                      $.messager.alert('登录成功','登录成功,欢迎您管理员',"info",function () {
-                          location.href = 'index_admin.jsp';
-                      });
-                  }
-                  else{
-                      $.messager.alert('登录失败','请检查用户名密码组合',"error");
-                  }
-              }
-          })
-      }
-  })
+/*  jslogin();*/
     $('#register').click(function () {
         location.href ="pageRegister.jsp"
     })

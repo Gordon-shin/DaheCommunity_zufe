@@ -15,14 +15,16 @@
 
 </table>
 <div class="toolbar" id="toolbarItemSearch">
-    <div class="search-div"  style="padding: 10px 350px" id="searchbarbar">
+  <div style="background-color: white">
+      <div class="search-div"  style="margin: auto; width: 300px" id="searchbarbar">
 
-        <input  style="width: 300px;height:28px " id="wupinsousuo" >
+          <input  style="width: 300px;height:28px " id="wupinsousuo" >
 
 
 
 
-    </div>
+      </div>
+  </div>
     <div class="ctrl-div">
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addgouwuche">加入购物车</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>

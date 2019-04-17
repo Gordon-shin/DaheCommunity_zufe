@@ -47,7 +47,7 @@
 			<div class="top-btns">
 				<span id="welcomeSpan">欢迎您，</span>
 				<a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
-				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'">退出系统</a>
+				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'" id="logoutjs">退出系统</a>
 			</div>
 		</div>
 		

@@ -37,7 +37,6 @@ public class UserDao {
                 user.setAddress(rs.getString(2));
                 user.setAvatar(rs.getString(2));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

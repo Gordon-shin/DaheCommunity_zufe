@@ -1,6 +1,7 @@
 package org.sc.dao;
 
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.sc.bean.ShopQuery;
 import org.sc.util.DBUtil;
@@ -129,8 +130,28 @@ public class ShopDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return result;
-
+    }
+    public String deletegwc(JSONArray jsonArray,String userid){
+        String result="false";
+        for (int i = 0; i< jsonArray.size();i++){
+            String sql = "delete from  tb_shop_items_order where ItemId=? and userid = ?";
+            Connection connection = DBUtil.getConnection();
+            PreparedStatement pStatement = null;
+            System.out.println(jsonArray.toString());
+            JSONObject jsonobj = JSONObject.fromObject(jsonArray.get(i).toString());
+              result ="编号"+jsonobj.getString("id")+"的物品无法删除请联系管理员";
+            try {
+                pStatement=connection.prepareStatement(sql);
+                pStatement.setString(1,jsonobj.getString("id"));
+                pStatement.setString(2,userid);
+                CommonDao commonDao = new CommonDao();
+                result = commonDao.UpdateQuery(pStatement);
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

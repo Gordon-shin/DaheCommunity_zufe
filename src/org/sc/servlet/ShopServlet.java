@@ -1,6 +1,7 @@
 package org.sc.servlet;
 
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.sc.dao.CommonDao;
 import org.sc.dao.JSONDao;
@@ -66,6 +67,17 @@ public class ShopServlet extends HttpServlet {
             jsonObject = JSONObject.fromObject(request.getParameter("data"));
             ShopDao shopDao = new ShopDao();
             String result = shopDao.ItemInfoCreate(jsonObject);
+            CommonDao.out(response,result);
+
+        }
+        else if ("deletewgc".equals(method)){
+            JSONArray jsonArray;
+            System.out.println(request.getParameter("data"));
+            jsonArray = JSONArray.fromObject(request.getParameter("data"));
+            System.out.println(jsonArray);
+            String userid = request.getParameter("userid");
+            ShopDao shopDao = new ShopDao();
+            String result = shopDao.deletegwc(jsonArray,userid);
             CommonDao.out(response,result);
 
         }

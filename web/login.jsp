@@ -7,13 +7,27 @@
       <link href="css/login1.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
+      <link rel="stylesheet" type="text/css" href="css/drag/drag.css" />
 
 
-      <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+      <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
       <script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
+      <script type="text/javascript" src="css/drag/drag.js"></script>
+<script type="text/javascript">
+    $(function () {
+    $(document).keyup(function (e) {
+        let key = e.which;
+        if (key ==13)
+        {
+            jslogin();
+        }
+    })
+        $('#drag').drag();
 
+    })
+</script>
   </head>
   <body background="img/loginbg.jpg">
   <div class="second_body">
@@ -34,6 +48,14 @@
 
               </tr>
               <tr>
+                  <td style="white-space:nowrap; padding-bottom: 5px;width:55px;">验证码：</td>
+                  <td colspan="3" style="text-align:center">
+                      <%--  <input type="button" value="登录" class="login_button" id="loginBtn"  />
+                        <input type="button" value="注册" class="reset_botton" id="register" />--%>
+                      <div id="drag"></div>
+                  </td>
+              </tr>
+              <tr>
                   <td></td>
                   <td colspan="2">
                       <div id="identification">
@@ -44,6 +66,7 @@
                       </div>
                     <%--  <input type="checkbox" data-bind="checked:form.remember" /><span>系统记住我</span>--%></td>
               </tr>
+
               <tr>
                   <td colspan="3" style="text-align:center">
                     <%--  <input type="button" value="登录" class="login_button" id="loginBtn"  />
