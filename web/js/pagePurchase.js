@@ -6,11 +6,20 @@ function chaxunChart() {
         success: function (result) {
             var result=JSON.parse(result)
             var title=result.title;
-            title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
-            $('#gwcManagerTable').datagrid({
-                columns: [eval(title)]
-            });
-            $('#gwcManagerTable').datagrid('loadData', result.rows);
+            console.log(result)
+            console.log(result.toString()!="")
+            if (result.toString()!="")
+            {title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
+                $('#gwcManagerTable').datagrid({
+                    columns: [eval(title)]
+                });
+                $('#gwcManagerTable').datagrid('loadData', result.rows);
+
+            }
+            else {
+                $('#gwcManagerTable').datagrid('loadData', []);
+            }
+
         }
     })
 }
@@ -81,7 +90,7 @@ $(function () {
             gwcitemid = [];
             for (i=0;i<array.length;i++)
             {
-                gwcitemid.push({id:array.物品编号,key:array.物品编号})
+                gwcitemid.push({id:array[i].物品编号,key:array[i].物品编号})
                     zongjia= FloatAdd(parseFloat(array[i].总价),zongjia);
             }
             console.log(gwcitemid)

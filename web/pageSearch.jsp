@@ -42,16 +42,17 @@
      closed="true" buttons="#dlg-btns" id="addPurchase" style="width: 400px;height: 400px">
     <div style="text-align: center">请选择加入购物车的数量</div>
   <div style="height: 160px;margin: 40px 0px">
-   <img src="" id="gouwuyulan" style="width: 100px; height: 100px;margin:40px;float: left">
-      <div style="margin: 0px 30px;padding-top:20px;padding-left:20px;width: 100px; height: 20px;float: right">商品名称:</div>
-      <div style="margin: 0px 30px;padding-top:20px;padding-left:20px;width: 100px; height: 20px;float: right">商品编码:</div>
-      <div style="margin: 0px 30px;padding-top:20px;padding-left:20px;width: 100px; height: 20px;float: right">
-        <%-- <div class="easyui-slider" data-options="min:10,max:50,step:10" style="width:40px"></div>--%>
-          <label>数量:</label>  <input id="weitiao" value="1" style="width:80px;">
-      </div>
-      <div>
+   <div style="margin: 0px 0px 0px 40px;float: left"><img src="" id="gouwuyulan" style="width: 100px; height: 100px;"></div>
+     <div style="margin: 0px 0px 0px 30px;width: 180px; height: 20px;display:inline-block">
+         <div style="margin: 0px 30px;width: 100px; height: 20px;">商品名称:</div>
+         <div style="margin: 0px 30px;padding-top:20px;width: 100px; height: 20px">商品编码:</div>
+         <div style="margin: 0px 30px;padding-top:20px;width: 100px; height: 20px">
+             <%-- <div class="easyui-slider" data-options="min:10,max:50,step:10" style="width:40px"></div>--%>
+             <label>数量:</label>  <input id="weitiao" value="1" style="width:80px;">
+         </div>
+     </div>
 
-      </div>
+
     </div>
 </div>
 

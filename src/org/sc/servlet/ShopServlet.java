@@ -29,6 +29,7 @@ public class ShopServlet extends HttpServlet {
         } else if ("queryiteminfo".equals(method)) {
             String result = null;
             String key = request.getParameter("itemid");
+            System.out.println(key);
             ShopDao shopDao = new ShopDao();
             result =  shopDao.getDetail(key);
             result= JSONDao.JSONArrayToObject(result);

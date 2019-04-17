@@ -75,7 +75,11 @@ public class JSONDao {
     public static String JSONArrayToObject(String result)
     {
         JSONArray jsonarray = JSONArray.fromObject(result);
-        JSONObject jsonobj = jsonarray.getJSONObject(0);
+        JSONObject jsonobj = new JSONObject();
+        if (jsonarray.size()>0){
+            jsonobj = jsonarray.getJSONObject(0);
+        }
+
         return jsonobj.toString();
     }
 }

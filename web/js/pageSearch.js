@@ -85,9 +85,9 @@ $(function () {
         selectOnCheck:true,
         onSelect:function (index,rowdata) {
             itemid = rowdata.物品ID;
+            console.log(itemid)
             kucun = rowdata.库存;
-            console.log(itemid);
-            console.log(rowdata.物品单价);
+
         },
     })
     $('#addgouwuche').linkbutton({
@@ -137,6 +137,7 @@ $(function () {
                 data: {itemid: itemid,method:"queryiteminfo"},
                 success:function (result) {
                     detail = result;
+                    console.log(detail)
                 }
             })
             var shuliang = $('#weitiao').numberspinner('getValue');
@@ -162,7 +163,12 @@ $(function () {
                                         url:"ShopServlet",
                                         data:{data:JSON.stringify(data),method:"addgouwuche"},
                                         success:function (result) {
-                                            $.messager.alert('信息','加入购物车成功',"info");
+                                            $.messager.alert('信息','加入购物车成功',"info",function () {
+                                                $('#addPurchase').dialog({
+                                                    closed:true
+                                                })
+                                            });
+
                                         }
                                     })
                                 }
