@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/datagrid-detailview.js"></script>
 <script type="text/javascript" src="js/Newdate.js"></script>
 
+
 <table id="itemSearch">
 
 
@@ -51,13 +52,16 @@
              <label>数量:</label>  <input id="weitiao" value="1" style="width:80px;">
          </div>
      </div>
-
-
     </div>
 </div>
 
+<div class="easyui-dialog" title="添加进购物车" iconCls="icon-save" modal="true" closed="false" id="ChatSeller" style="width: 450px;height: 600px">
+    <div>
+    </div>
+</div>
 
 <div id="dlg-btns">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="gouwuchesaveBtn">添加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" id="cancelBtn">取消</a>
+</div>></div>
 </div>

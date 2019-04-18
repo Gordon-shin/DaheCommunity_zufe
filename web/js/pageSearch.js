@@ -2,7 +2,6 @@ $(function () {
     var itemid
     var kucun
     var detail
-
     $('#wupinsousuo').searchbox({
         prompt:'请输入您希望购买的物品',
         searcher:function (value) {
@@ -184,5 +183,7 @@ $(function () {
             }
         }
     })
+
+
 })
 
