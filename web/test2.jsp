@@ -87,6 +87,13 @@
             border-bottom: 10px solid #6F83FF;
             border-right: 10px solid transparent;
         }
+        .doctor-head {
+            width: 4rem;
+            box-sizing: border-box;
+            position: absolute;
+            height: 4rem;
+            top: 2rem;
+        }
         .doctor-head img {
             width: 100%;
             border-radius: 50rem;
@@ -111,6 +118,7 @@
 <body>
 <div class="easyui-dialog" title="与***聊天中" iconCls="icon-save" modal="true" closed="false" id="ChatSeller" style="width: 450px;height: 600px">
     <div class="chat-bg" >
+      <%--  <div class="header-title"></div>--%>
         <div class="chat-box">
             <div class="bubbleDiv"></div>
         </div>
@@ -123,71 +131,35 @@
 </div>
 <script>
      var liaotianeditor
-     var chatNoAnime = (element,Content)=>{
-         var $user = element;
-         var $content = Content;
-         var $box = $('.bubbleDiv');
-         var $boxHeght = $box.height();
-         var $sectionHeght = $(".chat-box").height();
-         var $elvHeght = Math.abs($boxHeght-$sectionHeght);
-         if ($user === "leftBubble") {
-             $box.append(createdoct($content))
-         }
-         else if ($user ==="rightBubble") {
-             $box.append(createuser($content))
-         }
-         else{
-             console.log("出错了!")
-         }
-         function createdoct($doctextContent) {
-             var $textContent = $doctextContent;
-             /*var $imgSrc = imgSrc;*/
-             var block;
-             if($textContent == ''|| $textContent == 'null'){
-                 return;
-             }
-             block= '<div class="bubbleItem">' +
-                 '<span class="bubble leftBubble">' + $textContent + '<span class="topLevel"></span></span>' +
-                 '</div>';
-             return block;
-         }
-         function createuser($textContent ) {
-             var $textContent = $textContent;
-             var block;
-             if($textContent == ''|| $textContent == 'null'){
-                 return;
-             }
-             block = '<div class="bubbleItem clearfix">' +
-                 '<span class="bubble rightBubble">' + $textContent + '<span class="topLevel"></span></span>' +
-                 '</div>';
-             return block;
-         };
 
-     }
-     var chat = (element,Content)=>{
-        var $user = element;
-        var $content = Content;
-        var $box = $('.bubbleDiv');
-        var $boxHeght = $box.height();
-        var $sectionHeght = $(".chat-box").height();
-        var $elvHeght = Math.abs($boxHeght-$sectionHeght);
-        if ($user === "leftBubble") {
-            $box.append(createdoct($content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
-            console.log($box.height())
-        }
-        else if ($user ==="rightBubble") {
-            $box.append(createuser($content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
-        }
-        else{
-            console.log("出错了!")
-        }
+         function chatNoAnime(element,imgSrc,Content) {
+             var $user=element;
+             var $imgHead=imgSrc;
+             var $content=Content;
+             var $box=$('.bubbleDiv');
+             var $boxHeght=$box.height();
+             var $sectionHeght=$(".chat-box").height();
+             var $elvHeght=Math.abs($boxHeght - $sectionHeght);
+             if ($user === "leftBubble") {
+                 $box.append(createdoct($imgHead, $content));
+                 console.log($box.height())
+             } else if ($user === "rightBubble") {
+                 $box.append(createuser($content));
+             } else {
+                 console.log("出错了!")
+             }
+         }
         function createdoct($doctextContent) {
             var $textContent = $doctextContent;
+            /*var $imgSrc = imgSrc;*/
             var block;
             if($textContent == ''|| $textContent == 'null'){
                 return;
             }
             block= '<div class="bubbleItem">' +
+               /* '<div class="doctor-head">' +
+                '<img src="'+ imgSrc +'" alt="doctor"/>' +
+                '</div>' +*/
                 '<span class="bubble leftBubble">' + $textContent + '<span class="topLevel"></span></span>' +
                 '</div>';
             return block;
@@ -203,7 +175,27 @@
                  '</div>';
              return block;
          };
-    }
+
+     function chat (element,imgSrc,Content){
+         var $user = element;
+         var $imgHead = imgSrc;
+         var $content = Content;
+         var $box = $('.bubbleDiv');
+         var $boxHeght = $box.height();
+         var $sectionHeght = $(".chat-box").height();
+         var $elvHeght = Math.abs($boxHeght-$sectionHeght);
+         if ($user === "leftBubble") {
+             $box.append(createdoct($imgHead,$content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
+             console.log($box.height())
+         }
+         else if ($user ==="rightBubble") {
+             $box.append(createuser($content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
+         }
+         else{
+             console.log("出错了!")
+         }
+
+     }
     $(function () {
         $('.send-btn').click(function () {
             let text = liaotianeditor.text()
@@ -231,24 +223,20 @@
 
 
 
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-       chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
 
 
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
 
     })
 

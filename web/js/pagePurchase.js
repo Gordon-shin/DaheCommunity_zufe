@@ -23,11 +23,11 @@ function chaxunChart() {
         }
     })
 }
-
+var gwcitemid=[];//记录选择的商品
 $(function () {
     var zongjia = 0;
     var singlejiage=0;
-    var gwcitemid=[];//记录选择的商品
+
     $('.prev').linkbutton()
     $('.next right').linkbutton()
     $('#gwcManagerTable').datagrid({
@@ -58,20 +58,11 @@ $(function () {
             $("#status li").removeClass("active").eq(i).addClass("active");
         }
     });
-    $('#zhifujiesuan').linkbutton({
-        onClick:function () {
-            $('#zhifujiesuanform').dialog({
-                closed:false,
-            })
-            console.log($('#gwcManagerTable').datagrid('getChecked'))
-            console.log(zongjia)
-        }
-    })
     $('#gwcManagerTable').datagrid({
         onCheck:function (index,row) {
             singlejiage=parseFloat(row.总价);
             zongjia=FloatAdd(singlejiage,zongjia)
-            gwcitemid.push({id:row.物品编号,key:row.物品编号})
+            gwcitemid.push({id:row.物品编号,itemname:row.物品名称,key:row.物品编号,xiaoji:row.总价,number:row.物品数量})
             zongjiage();
         },
         onUncheck:function(index,row){
@@ -88,7 +79,7 @@ $(function () {
             array = rows;
             zongjia=0;
             gwcitemid = [];
-            for (i=0;i<array.length;i++)
+            for (let i=0;i<array.length;i++)
             {
                 gwcitemid.push({id:array[i].物品编号,key:array[i].物品编号})
                     zongjia= FloatAdd(parseFloat(array[i].总价),zongjia);
@@ -192,8 +183,6 @@ $(function () {
                 else{
                 }
             })
-
-
         }
     })
     function JSONArrayDelete(id,array) {
@@ -207,13 +196,33 @@ $(function () {
         }
         return newArr;
     }
+
+    var dingdan = new Vue({
+        el:'#querendingdan',
+        data:{
+            list: gwcitemid
+        },
+        methods:{
+        }
+    })
+
+    $('#sub').click(function () {
+
+        console.log(dingdan)
+        $.messager.confirm('删除确认','请问您是否要删除相关物品',function (r){
+        })
+
+    })
+
     $('#zhifujiesuan').linkbutton({
         onClick:function () {
             if (gwcitemid.length==0){
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
-                gwcitemid
+                $('#zhifujiesuanform').dialog({
+                    closed:false,
+                })
             }
         }
     })

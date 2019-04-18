@@ -13,8 +13,8 @@
 <div id="replybox">
     <ul class="list-group">
         <li class="list-group-item" v-for="item in list" :key="item.id">
-            <span class="badge">评论人： {{item.user}}</span>
-            {{item.content}}
+            <span class="badge">评论人: {{item.id}}</span>
+            {{item.id}}
         </li>
     </ul>
 </div>
