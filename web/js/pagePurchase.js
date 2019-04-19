@@ -208,7 +208,6 @@ $(function () {
 
     $('#sub').click(function () {
 
-        console.log(dingdan)
         $.messager.confirm('删除确认','请问您是否要删除相关物品',function (r){
         })
 
@@ -216,7 +215,7 @@ $(function () {
 
     $('#zhifujiesuan').linkbutton({
         onClick:function () {
-            if (gwcitemid.length==0){
+            if (gwcitemid.length===0){
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
