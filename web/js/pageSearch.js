@@ -1,3 +1,37 @@
+var itemSellerid
+var liaotianeditor
+var DiagId
+function queryDiagId(data){
+    var result = null
+    $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        async:false,
+        url: "MessageServlet",
+        data: {data: JSON.stringify(data),method: "queryDiagId"},
+        success:function (e) {
+            console.log(e)
+            result = e[0].Id;
+        }
+    })
+    return result
+}
+function queryMessageById(data){
+    var result = null
+    $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        async:false,
+        url: "MessageServlet",
+        data: {digid: data,method: "queryMessageById"},
+        success:function (e) {
+            result =e
+        }
+    })
+    return result
+}
+
+
 $(function () {
     var itemid
     var kucun
@@ -84,15 +118,15 @@ $(function () {
         selectOnCheck:true,
         onSelect:function (index,rowdata) {
             itemid = rowdata.物品ID;
-            console.log(itemid)
             kucun = rowdata.库存;
-
+            itemSellerid = rowdata.供货人ID;
+            var data = {userid:sessionid,seller:itemSellerid}
+             DiagId = queryDiagId(data);
         },
     })
     $('#addgouwuche').linkbutton({
         onClick:function () {
             if (itemid==null){
-
             }
             else{
                 $.ajax({
@@ -110,7 +144,6 @@ $(function () {
                         });
                     }
                 })
-
                 $('#addPurchase').dialog({
                     closed:false
                 })
@@ -184,6 +217,104 @@ $(function () {
         }
     })
 
+    $('#contactSeller').linkbutton({
+        onClick:function () {
+            liaotianeditor=KindEditor.create('#liaotiankuang', {
+                allowPreviewEmoticons: false,
+                uploadJson: 'jspFunction/upload_json.jsp',
+                urlType: 'absolute',
+                width:"99%",
+                resizeType: 0,  //文本框不可拖动
+                items: [
+                    /* 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                     'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                     'insertunorderedlist', '|', 'emoticons', 'image', 'link']*/
+                    'emoticons', 'image']
+            });
+            if (itemSellerid===undefined) {
+                $.messager.alert('信息','请选择需要联系的卖家',"error");
+            }
+            else if (itemSellerid==sessionid) {
+                $.messager.alert('信息','请不要选择自己的商品',"error");
+            }
+            else{
+                var message =new Array();
+                message  =queryMessageById(DiagId)
+                console.log(message)
+                for (let i = 0; i < message.length;i++ ) 
+                {
+                    if (message[i].MessageUser.toString()==sessionid)
+                    {
+                        chatNoAnime("rightBubble","",message[i].MessageText)
+                    }
+                    else {
+                        chatNoAnime("leftBubble",message[i].MessageText)
+                    }
+                }
+                $('#ChatSeller').dialog({
+                    closed:false,
+                    onOpen:function () {
 
+                    },
+                    onBeforeClose:function () {
+                        liaotianeditor.text("")
+                        KindEditor.remove($('#liaotiankuang'))
+                        $('.bubbleItem').remove()
+                    }
+                })
+            }
+            /*{
+
+                var data = {seller:itemSellerid,userid:sessionid}
+                $.ajax({
+                    type: "POST",
+                    dataType: 'JSON',
+                    url: "MessageServlet",
+                    data: {data: JSON.stringify(data),method: "queryMessageExist"},
+                    success: function (result) {
+                        if ("true"===result.toString()){
+                           data={seller:itemSellerid,userid:sessionid}
+                            queryDiagId(data);
+
+                        }
+                       else{
+                           data = {seller:itemSellerid,userid:sessionid,time:getNowFormatDate()}
+                           $.ajax({
+                               type: "POST",
+                               dataType: 'JSON',
+                               url: "MessageServlet",
+                               data: {data: JSON.stringify(data),method: "insertDiag"},
+                               success: function (result){
+                                   data={seller:itemSellerid,userid:sessionid}
+                                   queryDiagId(data);
+                               }
+                           })
+                       }
+                    }
+                })
+                $('#ChatSeller').dialog({
+                    closed:false,
+                    onOpen:function () {
+
+                    },
+                    onBeforeClose:function () {
+                        liaotianeditor.text("")
+                        KindEditor.remove($('#liaotiankuang'))
+                        $('.bubbleItem').remove()
+                    }
+                })
+
+
+            }*/
+
+        }
+    })
+    $('.send-btn').click(function () {
+
+        let text = liaotianeditor.text()
+        let user = "rightBubble";
+        chat(user,"",text)
+
+    })
 })
 

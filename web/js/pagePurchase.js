@@ -196,7 +196,6 @@ $(function () {
         }
         return newArr;
     }
-
     var dingdan = new Vue({
         el:'#querendingdan',
         data:{
@@ -205,14 +204,11 @@ $(function () {
         methods:{
         }
     })
-
     $('#sub').click(function () {
+        $.messager.confirm('确认','确认付款',function (r){
 
-        $.messager.confirm('删除确认','请问您是否要删除相关物品',function (r){
         })
-
     })
-
     $('#zhifujiesuan').linkbutton({
         onClick:function () {
             if (gwcitemid.length===0){

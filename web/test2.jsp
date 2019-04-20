@@ -131,7 +131,6 @@
 </div>
 <script>
      var liaotianeditor
-
          function chatNoAnime(element,imgSrc,Content) {
              var $user=element;
              var $imgHead=imgSrc;
@@ -204,7 +203,7 @@
         })
         $('#ChatSeller').dialog({
             onOpen:function () {
-                    liaotianeditor=KindEditor.create('#liaotiankuang', {
+                liaotianeditor=KindEditor.create('#liaotiankuang', {
                     allowPreviewEmoticons: false,
                     uploadJson: 'jspFunction/upload_json.jsp',
                     urlType: 'absolute',
@@ -216,7 +215,6 @@
                          'insertunorderedlist', '|', 'emoticons', 'image', 'link']*/
                         'emoticons', 'image']
                 });
-            }
         })
 
 

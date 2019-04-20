@@ -31,6 +31,101 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
         background-color: red;
         border-color: red;
     }
+.chat-bg{
+    width: 435px;
+}
+.header-title{
+    background: #6F83FF;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 15px;
+    color: #fff;
+    z-index: 3;
+}
+.bubbleDiv {
+    width: 435px;
+    margin: 0 auto;
+    overflow: auto;
+    height: 94%;
+    /*padding: 0 3%;*/
+}
+
+.chat-box {
+    width: 435px;
+    height: 69%;
+    /*background-color: red;*/
+    overflow-y: hidden;
+    position: relative;
+}
+.send-btn{
+    padding: 0.6rem 1rem;
+    border: 0;
+    background: red;
+    color: #fff;
+    min-width: 4rem;
+    border-radius: 0.4rem;
+    margin-left: 3%;
+    position: absolute;
+    left: 0.1rem;
+    bottom: 0.5rem;
+}
+.bubble {
+    line-height: 19px;
+    border-radius: 0.8rem;
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    font-size: 11px;
+    margin-left: 15rem;
+}
+.rightBubble {
+    position: relative;
+    margin-right: 0.5rem;
+    float: right;
+    background-color: #6F83FF;
+    color: #fff;
+}
+#qkltk{
+    position: absolute;
+    left: 4.5rem;
+    bottom: 0.5rem;
+    background: #6F83FF;
+}
+.rightBubble .topLevel {
+    position: absolute;
+    top: 1rem;
+    right: -8px;
+    border-bottom: 10px solid #6F83FF;
+    border-right: 10px solid transparent;
+}
+.doctor-head {
+    width: 4rem;
+    box-sizing: border-box;
+    position: absolute;
+    height: 4rem;
+    top: 2rem;
+}
+.doctor-head img {
+    width: 100%;
+    border-radius: 50rem;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    height: 100%;
+}
+.leftBubble .topLevel {
+    position: absolute;
+    top: 1rem;
+    left: -9px;
+    border-bottom: 10px solid #EFF6F9;
+    border-left: 10px solid transparent;
+}
+.leftBubble {
+    position: relative;
+    background-color: #EFF6F9;
+    margin-left: 1rem;
+}
 </style>
 <script type="text/javascript" src="js/pagePurchase.js"></script>
 <div class="easyui-layout" data-options="fit:true" id="tb">
@@ -101,7 +196,6 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
                             <li class="list-group-item"  v-for="item in list" :key="item.id">
                                 <span class="badge" style="color: red">小计： {{item.xiaoji}}</span>
                                 <span class="badge">数量： {{item.number}}</span>
-
                                 {{item.itemname}}
                             </li>
                         </ul>
