@@ -98,9 +98,7 @@
             }
         })
 */
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
-        chatNoAnime("leftBubble","images/head_portrait.png","您好，欢迎关注博客：http://write.blog.csdn.net/postlist");
+
     })
 
 
@@ -246,7 +244,7 @@
     </div>
 </div>
 
-<div class="easyui-dialog" title="与***聊天中" iconCls="icon-save" modal="true" closed="true" id="ChatSeller" style="width: 450px;height: 600px">
+<%--<div class="easyui-dialog" title="与***聊天中" iconCls="icon-save" modal="true" closed="true" id="ChatSeller" style="width: 450px;height: 600px">
     <div class="chat-bg" >
         <div class="chat-box">
             <div class="bubbleDiv"></div>
@@ -257,7 +255,7 @@
             <button class="send-btn fr" id="qkltk">清空</button>
         </div>
     </div>
-</div>
+</div>--%>
 <div id="dlg-btns">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="gouwuchesaveBtn">添加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" id="cancelBtn">取消</a>

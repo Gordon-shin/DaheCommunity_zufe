@@ -66,7 +66,7 @@ public class MessageDao {
         return result;
     }
     public String queryDiagId(JSONObject jsonObject){
-        String sql = "select * from tb_dialog where diaguser =? and contactUserid =? or contactUserid =? and diaguser =?";
+        String sql = "select * from tb_dialog where diaguser =? and contactUserid =? or diaguser =? and contactUserid =?  ";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement ;
         String result=null;
@@ -76,6 +76,41 @@ public class MessageDao {
             pStatement.setString(2,jsonObject.getString("seller"));
             pStatement.setString(3,jsonObject.getString("seller"));
             pStatement.setString(4,jsonObject.getString("userid"));
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.JSONQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String addmessage(JSONObject jsonObject){
+        String sql = "insert  into  tb_message (messagetext, messageuser, addtime,diaglogId) values (?,?,?,?)";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement ;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,jsonObject.getString("text"));
+            pStatement.setString(2,jsonObject.getString("user"));
+            pStatement.setString(3,jsonObject.getString("time"));
+            pStatement.setString(4,jsonObject.getString("dialogid"));
+            int i =pStatement.executeUpdate();
+            if (i>0){
+                return "true";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "false";
+    }
+    public String queryliaotianshi(JSONObject jsonObject){
+        String sql = "select * from messagemain where diaguser =? or contactuserid =?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement ;
+        String result = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,jsonObject.getString("id"));
+            pStatement.setString(2,jsonObject.getString("id"));
             CommonDao commonDao = new CommonDao();
             result = commonDao.JSONQuery(pStatement);
         } catch (SQLException e) {

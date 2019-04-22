@@ -1,6 +1,7 @@
 var itemSellerid
 var liaotianeditor
 var DiagId
+var data
 function queryDiagId(data){
     var result = null
     $.ajax({
@@ -30,7 +31,32 @@ function queryMessageById(data){
     })
     return result
 }
-
+function queryDiagExists(data){
+    var result = null
+    $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        async:false,
+        url: "MessageServlet",
+        data: {data: JSON.stringify(data),method: "queryMessageExist"},
+        success:function (e) {
+            result =e
+        }
+    })
+    return result
+}
+function insertDiag(data){
+    $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        async:false,
+        url: "MessageServlet",
+        data: {data: JSON.stringify(data),method: "insertDiag"},
+        success:function (e) {
+            result =e
+        }
+    })
+}
 
 $(function () {
     var itemid
@@ -120,8 +146,16 @@ $(function () {
             itemid = rowdata.物品ID;
             kucun = rowdata.库存;
             itemSellerid = rowdata.供货人ID;
-            var data = {userid:sessionid,seller:itemSellerid}
-             DiagId = queryDiagId(data);
+            data = {userid:sessionid,seller:itemSellerid.toString(),time:getNowFormatDate()}
+            console.log(data)
+            if (true===queryDiagExists(data)) {
+                DiagId = queryDiagId(data);
+            }
+            else {
+                insertDiag(data)
+                DiagId = queryDiagId(data);
+            }
+
         },
     })
     $('#addgouwuche').linkbutton({
@@ -216,7 +250,6 @@ $(function () {
             }
         }
     })
-
     $('#contactSeller').linkbutton({
         onClick:function () {
             liaotianeditor=KindEditor.create('#liaotiankuang', {
@@ -253,9 +286,6 @@ $(function () {
                 }
                 $('#ChatSeller').dialog({
                     closed:false,
-                    onOpen:function () {
-
-                    },
                     onBeforeClose:function () {
                         liaotianeditor.text("")
                         KindEditor.remove($('#liaotiankuang'))
@@ -306,14 +336,22 @@ $(function () {
 
 
             }*/
-
         }
     })
     $('.send-btn').click(function () {
-
         let text = liaotianeditor.text()
         let user = "rightBubble";
         chat(user,"",text)
+        let messagedata={text:text,user:sessionid,time:getNowFormatDate(),dialogid:DiagId}
+        $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            url: "MessageServlet",
+            data: {data: JSON.stringify(messagedata),method: "addmessage"},
+            success: function (result) {
+
+            }
+        })
 
     })
 })

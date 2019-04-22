@@ -1,7 +1,6 @@
 $(function() {
 
     var datenow= getNowFormatDate();
-
     $('#navShop').tree({
         animate:true,
         lines:true,
@@ -74,7 +73,6 @@ $(function() {
             }
         }
     })
-
     $('#nav').tree({
         animate:true,
         lines:true,
@@ -102,7 +100,6 @@ $(function() {
         },
         onClick : function (node) {
             var host= window.location.href;
-
             if (node.url) {
                 if ($('#tt').tabs('exists', node.text)) {
 
@@ -125,9 +122,7 @@ $(function() {
             }
         }
     })
-
     var uname= getCookie('PersonName');
-
     function getCookie(c_name)
     {
         if (document.cookie.length>0)
@@ -166,9 +161,94 @@ $(function() {
     window.setTimeout(function() {
         $("#layout").css("visibility", "visible");
     }, 800);
-    $("#changePassword").click(function (e) {
-        e.preventDefault();
-        $("#dlg").dialog("open");
+    $("#openChatZone").click(function () {
+        $("#dlg").dialog({
+            closed:false,
+            onBeforeOpen:function () {
+
+                selectLiaotian1.getDiag(sessionid);
+                console.log(selectLiaotian1)
+            }
+        });
+    })
+    var selectLiaotian1 = new Vue({
+        el:'#selectLiaotian',
+        data:{
+            list:""
+
+        },
+        methods:{
+            queryMessageById(data){
+             var result = null
+             $.ajax({
+            type: "POST",
+            dataType: 'JSON',
+            async:false,
+            url: "MessageServlet",
+            data: {digid: data,method: "queryMessageById"},
+            success:function (e) {
+                result =e
+            }
+        })
+             return result
+            },
+            chatcontinue(id){
+                console.log(id)
+
+                let message =new Array();
+                message  =this.queryMessageById(id)
+                console.log(message)
+                for (let i = 0; i < message.length;i++ )
+                {
+                    if (message[i].MessageUser.toString()==sessionid)
+                    {
+                        chatNoAnime("rightBubble","",message[i].MessageText)
+                    }
+                    else {
+                        chatNoAnime("leftBubble",message[i].MessageText)
+                    }
+                }
+                $('#ChatSeller').dialog({
+                    closed:false,
+                    onBeforeOpen:function(){
+                        liaotianeditor=KindEditor.create('#liaotiankuang', {
+                            allowPreviewEmoticons: false,
+                            uploadJson: 'jspFunction/upload_json.jsp',
+                            urlType: 'absolute',
+                            width:"99%",
+                            resizeType: 0,  //文本框不可拖动
+                            items: [
+                                /* 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                                 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                                 'insertunorderedlist', '|', 'emoticons', 'image', 'link']*/
+                                'emoticons', 'image']
+                        });
+                    },
+                    onBeforeClose:function () {
+                        liaotianeditor.text("")
+                        KindEditor.remove($('#liaotiankuang'))
+                        $('.bubbleItem').remove()
+                    }
+                })
+
+            },
+            getDiag(id){
+                let result
+                let data = {id:id}
+                $.ajax({
+                    type: "POST",
+                    dataType: 'JSON',
+                    async:false,
+                    url: "MessageServlet",
+                    data: {data: JSON.stringify(data),method: "queryliaotianshi"},
+                    success:function (e) {
+                        console.log(e)
+                        result=e
+                    }
+                })
+                this.list = result
+            }
+        }
     })
     function getNowFormatDate() {
         var date = new Date();

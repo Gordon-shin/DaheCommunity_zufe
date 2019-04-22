@@ -55,6 +55,20 @@ public class MessageServlet extends HttpServlet {
            CommonDao.out(response,result);
 
        }
+       else if ("addmessage".equals(method)){
+           MessageDao messageDao  = new MessageDao();
+           String result = messageDao.addmessage(jsonObject);
+           CommonDao.out(response,result);
+       }
+       else if ("queryDiagByUserid".equals(method)){
+           String userid = request.getParameter("userid");
+           MessageDao messageDao = new MessageDao();
+       }
+       else if ("queryliaotianshi".equals(method)){
+            MessageDao messageDao = new MessageDao();
+            String result = messageDao.queryliaotianshi(jsonObject);
+            CommonDao.out(response,result);
+       }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

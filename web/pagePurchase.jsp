@@ -23,6 +23,20 @@
 .page h3 em{font-size:12px; font-weight:500; font-style:normal}
 .page p{line-height:24px;}
 .page p label{font-size:14px; display:block;}
+.dingdanquerenzongjia{
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: red;
+    border-radius: 10px
+}
 .btn_nav{height:36px; line-height:36px; margin:20px auto;}
 .prev,.next{width:100px; height:32px; line-height:32px; background:url(btn_bg.gif)
 repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
@@ -186,19 +200,20 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
         <div id="wizard">
             <ul id="status">
                 <li class="active"><strong>1.</strong>确认订单信息</li>
-                <li><strong>2.</strong>付款</li>
-                <li><strong>3.</strong>完成</li>
+                <li><strong>2.</strong>填写相关信息</li>
+                <li><strong>3.</strong>付款</li>
             </ul>
             <div class="items">
                 <div class="page">
                     <div id="querendingdan">
                         <ul class="list-group">
-                            <li class="list-group-item"  v-for="item in list" :key="item.id">
+                            <li class="list-group-item" id="displaylist" v-for="item in list" :key="item.id">
                                 <span class="badge" style="color: red">小计： {{item.xiaoji}}</span>
                                 <span class="badge">数量： {{item.number}}</span>
                                 {{item.itemname}}
                             </li>
                         </ul>
+                        <span class="dingdanquerenzongjia">总价{{zongjia}}</span>
                     </div>
                     <div class="btn_nav">
                         <input type="button" class="next right"  value="下一步»" />

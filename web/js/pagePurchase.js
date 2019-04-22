@@ -196,18 +196,31 @@ $(function () {
         }
         return newArr;
     }
-    var dingdan = new Vue({
-        el:'#querendingdan',
-        data:{
-            list: gwcitemid
-        },
-        methods:{
-        }
-    })
+
     $('#sub').click(function () {
         $.messager.confirm('确认','确认付款',function (r){
 
         })
+    })
+    var dingdan = new Vue({
+        el:'#querendingdan',
+        data:{
+            zongjia:"",
+            list: gwcitemid
+        },
+        methods:{
+            zongjiage(){
+                this.zongjia = zongjia
+            },
+            add(){
+                this.list = gwcitemid
+            },
+            del(){
+                this.list.some((item,i)=>{
+                    this.list.splice(i,1)
+                })
+            }
+        }
     })
     $('#zhifujiesuan').linkbutton({
         onClick:function () {
@@ -215,11 +228,20 @@ $(function () {
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
+
+                console.log(dingdan)
                 $('#zhifujiesuanform').dialog({
+                    onBeforeOpen:function(){
+                        dingdan.add();
+                        dingdan.zongjiage()
+                    },
                     closed:false,
+                    onBeforeClose:function () {
+
+                    }
                 })
             }
-        }
+        },
     })
 })
 
