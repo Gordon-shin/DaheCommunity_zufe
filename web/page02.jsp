@@ -1,3 +1,4 @@
+<%--
 <!-- 指标库列表 -->
 <%@ page contentType="text/html;charset=UTF-8"%>
 <
@@ -478,7 +479,7 @@
 
 
 
-<%--
+&lt;%&ndash;
 <div title="系统公告">
 	<ul class="notice-list">
 		<li>
@@ -503,4 +504,5 @@
 		</li>
 	</ul>
 </div>
+&ndash;%&gt;
 --%>

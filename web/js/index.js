@@ -1,6 +1,61 @@
+function addmessage(data){
+    $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        async:false,
+        url: "MessageServlet",
+        data: {data: JSON.stringify(data),method: "addmessage"},
+        success:function (e) {
+            result=e
+        }
+        })
+}
 $(function() {
+    $('.send-btn').click(function () {
+        let text = liaotianeditor.text()
+        let user = "rightBubble";
+        chat(user,"",text)
+        data = {text:text,user:sessionid,time:getNowFormatDate(),dialogid:DiagId}
+        addmessage(data);
 
+    })
     var datenow= getNowFormatDate();
+    $('#navliuyan').tree({
+        animate:true,
+        lines:true,
+        url:'NavServlet',
+        queryParams:{tabid:"4"},
+        onLoadSuccess : function (node, data) {
+            var _this = this;
+            if (data) {
+                $(data).each(function (index, value) {
+                    if (this.state == 'closed') {
+                        $(_this).tree('expandAll');
+                    }
+                });
+            }
+        },
+        onClick : function (node) {
+            var host= window.location.href;
+
+            if (node.url) {
+                var tab = $('#tt').tabs('getSelected');
+                console.log(tab);
+                if ($('#tt').tabs('exists', node.text)) {
+                    $('#tt').tabs('select', node.text)
+                    var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
+                    tab.panel('refresh');
+                } else {
+                    $('#tt').tabs('add', {
+                        title: node.text,
+                        closable: true,
+                        iconCls: node.iconCls,
+                        href: node.url,
+                    });
+                }
+            }
+        }
+    })
     $('#navShop').tree({
         animate:true,
         lines:true,
@@ -189,12 +244,31 @@ $(function() {
             success:function (e) {
                 result =e
             }
-        })
+                })
              return result
             },
             chatcontinue(id){
                 console.log(id)
-
+                DiagId = id;
+                $('#ChatSeller').dialog({
+                    closed:false,
+                    onBeforeOpen:function(){
+                        liaotianeditor=KindEditor.create('#liaotiankuang', {
+                            allowPreviewEmoticons: false,
+                            uploadJson: 'jspFunction/upload_json.jsp',
+                            urlType: 'absolute',
+                            width:"99%",
+                            resizeType: 0,  //文本框不可拖动
+                            items: [
+                                'emoticons', 'image']
+                        });
+                    },
+                    onBeforeClose:function () {
+                        liaotianeditor.text("")
+                        KindEditor.remove($('#liaotiankuang'))
+                        $('.bubbleItem').remove()
+                    }
+                })
                 let message =new Array();
                 message  =this.queryMessageById(id)
                 console.log(message)
@@ -208,28 +282,7 @@ $(function() {
                         chatNoAnime("leftBubble",message[i].MessageText)
                     }
                 }
-                $('#ChatSeller').dialog({
-                    closed:false,
-                    onBeforeOpen:function(){
-                        liaotianeditor=KindEditor.create('#liaotiankuang', {
-                            allowPreviewEmoticons: false,
-                            uploadJson: 'jspFunction/upload_json.jsp',
-                            urlType: 'absolute',
-                            width:"99%",
-                            resizeType: 0,  //文本框不可拖动
-                            items: [
-                                /* 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                                 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                                 'insertunorderedlist', '|', 'emoticons', 'image', 'link']*/
-                                'emoticons', 'image']
-                        });
-                    },
-                    onBeforeClose:function () {
-                        liaotianeditor.text("")
-                        KindEditor.remove($('#liaotiankuang'))
-                        $('.bubbleItem').remove()
-                    }
-                })
+
 
             },
             getDiag(id){
@@ -242,7 +295,6 @@ $(function() {
                     url: "MessageServlet",
                     data: {data: JSON.stringify(data),method: "queryliaotianshi"},
                     success:function (e) {
-                        console.log(e)
                         result=e
                     }
                 })

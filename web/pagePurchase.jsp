@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/FloatSiZe.js"></script>
 <script type="text/javascript" src="js/scrollable.js"></script>
 <style type="text/css">#wizard {border:5px solid #789;font-size:12px;height:415px;margin: auto;
-    width:65%px;overflow:hidden;position:relative;}
+    overflow:hidden;position:relative;}
 #wizard .items{width:20000px; clear:both; position:absolute;}
 #wizard .right{float:right;}
 #wizard #status{height:35px;background:#123;padding-left:25px !important;}
@@ -38,14 +38,14 @@
     border-radius: 10px
 }
 .btn_nav{height:36px; line-height:36px; margin:20px auto;}
-.prev,.next{width:100px; height:32px; line-height:32px; background:url(btn_bg.gif)
+.prev,.next{width:100px; height:32px; line-height:32px;
 repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
     #sub{
         color: #fff;
         background-color: red;
         border-color: red;
     }
-.chat-bg{
+/*.chat-bg{
     width: 435px;
 }
 .header-title{
@@ -63,16 +63,10 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
     margin: 0 auto;
     overflow: auto;
     height: 94%;
-    /*padding: 0 3%;*/
+    !*padding: 0 3%;*!
 }
 
-.chat-box {
-    width: 435px;
-    height: 69%;
-    /*background-color: red;*/
-    overflow-y: hidden;
-    position: relative;
-}
+
 .send-btn{
     padding: 0.6rem 1rem;
     border: 0;
@@ -139,7 +133,7 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
     position: relative;
     background-color: #EFF6F9;
     margin-left: 1rem;
-}
+}*/
 </style>
 <script type="text/javascript" src="js/pagePurchase.js"></script>
 <div class="easyui-layout" data-options="fit:true" id="tb">
@@ -200,8 +194,8 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
         <div id="wizard">
             <ul id="status">
                 <li class="active"><strong>1.</strong>确认订单信息</li>
-                <li><strong>2.</strong>填写相关信息</li>
-                <li><strong>3.</strong>付款</li>
+                <%--<li><strong>2.</strong>填写相关信息</li>--%>
+                <li><strong>2.</strong>付款</li>
             </ul>
             <div class="items">
                 <div class="page">
@@ -219,15 +213,15 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
                         <input type="button" class="next right"  value="下一步»" />
                     </div>
                 </div>
-                <div class="page">
-                    -----任意html内容-----
+              <%--  <div class="page">
+
                     <div class="btn_nav">
                         <input type="button" class="prev" style="float:left" value="«上一步" />
                         <input type="button" class="next right"  value="下一步»" />
                     </div>
-                </div>
+                </div>--%>
                 <div class="page">
-                    -----任意html内容-----
+                    将从您的账户中扣除 <span class="dingdanquerenzongjia2"></span>
                     <div class="btn_nav">
                         <input type="button" class="prev" style="float:left" value="«上一步" />
                         <input type="button" class="next right" id="sub" value="付款" />

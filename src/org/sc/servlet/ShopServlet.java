@@ -3,10 +3,7 @@ package org.sc.servlet;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.sc.dao.CommonDao;
-import org.sc.dao.JSONDao;
-import org.sc.dao.RepairDao;
-import org.sc.dao.ShopDao;
+import org.sc.dao.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +23,8 @@ public class ShopServlet extends HttpServlet {
             result =  shopDao.ShopQuery(key);
             System.out.println(result);
             CommonDao.out(response,result);
-        } else if ("queryiteminfo".equals(method)) {
+        }
+        else if ("queryiteminfo".equals(method)) {
             String result = null;
             String key = request.getParameter("itemid");
             System.out.println(key);
@@ -83,7 +81,17 @@ public class ShopServlet extends HttpServlet {
 
         }
         else if("tijiaoComment".equals(method)){
-
+        }
+        else if ("querenfukuan".equals(method)){
+            ShopDao shopDao = new ShopDao();
+            JSONObject jsonObject ;
+            jsonObject = JSONObject.fromObject(request.getParameter("data"));
+            shopDao.querenfukuan(jsonObject);
+        }
+        else if ("queryalldingdan".equals(method)){
+           JSONObject jsonObject = JSONObject.fromObject(request.getParameter("data"));
+           ShopDao shopDao = new ShopDao();
+           shopDao.queryalldingdan(jsonObject);
         }
     }
 

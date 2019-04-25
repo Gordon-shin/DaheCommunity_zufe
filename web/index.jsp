@@ -3,6 +3,8 @@
 
 <html>
 	<head>
+		<script src="js/Newdate.js"></script>
+
 		<script>
 			function chatNoAnime(element,imgSrc,Content) {
 				var $user=element;
@@ -255,6 +257,7 @@
 			System.out.println(user.getPassword());
 		}
 		%>
+
 		<div region="north" id="header">
 			<img src="img/logo.png" class="logo" />
 			<div class="top-btns">
@@ -278,8 +281,8 @@
 				<ul id="navShop">
 				</ul>
 			</div>
-				<div title="上月缴费管理" >
-					<ul class="navmenu" id="navFee">
+				<div title="留言表单管理" >
+					<ul id="navliuyan">
 					</ul>
 				</div>
 			</div>

@@ -154,4 +154,48 @@ public class ShopDao {
         }
         return result;
     }
+    public String querenfukuan(JSONObject jsonObject){
+        JSONArray jsonArray ;
+        jsonArray = JSONArray.fromObject(jsonObject.get("itemdetail"));
+        String zongjia =jsonObject.get("zongjia").toString();
+        String goumairen = jsonObject.get("goumairen").toString();
+        String invoicedate = jsonObject.get("invoicedate").toString();
+        System.out.println(jsonArray);
+        for (int i =0 ;i<jsonArray.size();i++){
+            String sql = "insert into tb_shop_items_invoices(invoiceDate, userId, itemId, itemNumber, total, state) values (?,?,?,?,?,?) ";
+            Connection connection = DBUtil.getConnection();
+            PreparedStatement pStatement = null;
+            try {
+               pStatement =  connection.prepareStatement(sql);
+               pStatement.setString(1,invoicedate);
+               pStatement.setString(2,goumairen);
+               pStatement.setString(3,jsonArray.getJSONObject(i).getString("id"));
+               pStatement.setString(4,jsonArray.getJSONObject(i).getString("number"));
+               pStatement.setString(5,jsonArray.getJSONObject(i).getString("xiaoji"));
+               pStatement.setString(6,"支付完毕");
+               int j = pStatement.executeUpdate();
+               if (j<=0){
+                   return "false";
+               }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            sql ="update tb_shop_items set ItemStock = ItemStock-? where  ItemId = ?";
+            try {
+                pStatement =  connection.prepareStatement(sql);
+                pStatement.setString(1, jsonArray.getJSONObject(i).getString("number"));
+                pStatement.setString(2,jsonArray.getJSONObject(i).getString("id"));
+                int j = pStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return "true";
+    }
+    public String queryalldingdan(JSONObject jsonObject){
+
+        return "";
+    }
 }

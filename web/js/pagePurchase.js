@@ -199,7 +199,20 @@ $(function () {
 
     $('#sub').click(function () {
         $.messager.confirm('确认','确认付款',function (r){
+            if (r==true) {
+                var wupingdata = {itemdetail:gwcitemid,zongjia:zongjia,goumairen:sessionid,invoicedate:getNowFormatDate()}
+                $.ajax({
+                    type: "POST",
+                    url: "ShopServlet",
+                    data: {data: JSON.stringify(wupingdata), method: "querenfukuan"},
+                    success: function (result) {
+                        if (result)
+                        $.messager.alert('成功',null,"info")
 
+                    }
+                })
+
+            }
         })
     })
     var dingdan = new Vue({
@@ -228,16 +241,16 @@ $(function () {
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
-
                 console.log(dingdan)
                 $('#zhifujiesuanform').dialog({
                     onBeforeOpen:function(){
                         dingdan.add();
                         dingdan.zongjiage()
+                        $('.dingdanquerenzongjia2').append(zongjia)
                     },
                     closed:false,
                     onBeforeClose:function () {
-
+                        $('.dingdanquerenzongjia2').empty();
                     }
                 })
             }

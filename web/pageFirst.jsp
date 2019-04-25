@@ -9,9 +9,9 @@ else{
 }
 %>
     <div class="easyui-accordion" data-options="fit:true">
-        <div title="待办事项">
+        <div title="欢迎界面">
             <div class="flow-panel">
-                欢迎来到后台管理系统
+                欢迎来到大河小区便民服务系统
             </div>
         </div>
         <div title="系统公告">

@@ -39,13 +39,15 @@ html {
 
 /* iPad Input Shadows */
 
+/*
 input[type="text"],
 input[type="email"],
 input[type="search"],
 input[type="password"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  /* mobile firefox too! */
+!*  -webkit-appearance: none;
+  -moz-appearance: none;*!
+  !* mobile firefox too! *!
+*/
 }
 
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="DaheCommunity:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/DaheCommunity_war</output-path>
+    <root id="archive" name="DaheCommunity_war.war">
+      <element id="artifact" artifact-name="DaheCommunity:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -76,11 +76,15 @@
         }
     }
     $(function () {
-        /*$('.send-btn').click(function () {
+      /*  $('.send-btn').click(function () {
             let text = liaotianeditor.text()
             let user = "rightBubble";
             chat(user,"",text)
-        })
+            data = {text:text,user:sessionid,time:getNowFormatDate(),dialogid:DiagId}
+            addmessage(data);
+            liaotianeditor.text("")
+        })*/
+        /*
         $('#ChatSeller').dialog({
             onOpen:function () {
                 liaotianeditor=KindEditor.create('#liaotiankuang', {
@@ -219,9 +223,6 @@
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addgouwuche">加入购物车</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="contactSeller">联系卖家</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-print" plain="true">打印</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-back" plain="true">导入</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true">导出</a>
     </div>
 </div>
 
@@ -234,9 +235,9 @@
   <div style="height: 160px;margin: 40px 0px">
    <div style="margin: 0px 0px 0px 40px;float: left"><img src="" id="gouwuyulan" style="width: 100px; height: 100px;"></div>
      <div style="margin: 0px 0px 0px 30px;width: 180px; height: 20px;display:inline-block">
-         <div style="margin: 0px 30px;width: 100px; height: 20px;">商品名称:</div>
-         <div style="margin: 0px 30px;padding-top:20px;width: 100px; height: 20px">商品编码:</div>
-         <div style="margin: 0px 30px;padding-top:20px;width: 100px; height: 20px">
+         <div style="margin: 0px 30px;width: 180px; ">商品名称:<span id="shangpingmingcheng"></span></div>
+         <div style="margin: 0px 30px;padding-top:20px;width: 180px; ">商品编码:<span id="shangpingbianma"></span></div>
+         <div style="margin: 0px 30px;padding-top:20px;width: 180px;">
              <%-- <div class="easyui-slider" data-options="min:10,max:50,step:10" style="width:40px"></div>--%>
              <label>数量:</label>  <input id="weitiao" value="1" style="width:80px;">
          </div>
