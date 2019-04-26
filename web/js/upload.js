@@ -20,5 +20,17 @@ function uploadImg(file,type,username)
     })
 }
 function uploadItemImg(file) {
+    let formData = new FormData();
+    formData.append("File",file);
+    $.ajax({
+        url:"UploadImgServlet",
+        type:'post',
+        data:{formData:formData,method:"itemImg"},
+        processData: false,
+        contentType: false,
+        success:function (result) {
 
+        }
+
+    })
 }

@@ -61,8 +61,6 @@ $(function() {
     })
     $('#tijiao').linkbutton({
         onClick: function () {
-
-
             var a=validate()
             if (a == true) {
                 uploadImg($("input[name='file2']")[0].files[0],$('#username').val(),$('#username').val())

@@ -123,7 +123,7 @@ public class ShopDao {
             pStatement.setString(11,jsonObject.getString("phone"));
             CommonDao commonDao = new CommonDao();
             commonDao.UpdateQuery(pStatement);
-            sql = "select last_insert_id()";
+            sql = "select last_insert_id() as lastid";
             pStatement=connection.prepareStatement(sql);
             result = commonDao.JSONQuery(pStatement);
             connection.close();

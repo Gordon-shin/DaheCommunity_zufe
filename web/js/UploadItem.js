@@ -25,21 +25,42 @@ $(function () {
             data['state']="审核中";
             data['addTime']=getNowFormatDate();
             data['phone']=$('#phone').val();
-            /* console.log(data)*/
+            var lastitemid
             $.ajax({
                 url: "ShopServlet",
                 type: "post",
+                async:false,
                 data: {data: JSON.stringify(data), method: "iteminfo"},
                 success: function (result) {
-                    alert(result);
+                    console.log(result)
+                    var arr = JSON.parse(result)
+                    alert(arr[0].lastid);
+                     lastitemid = arr[0].lastid;
+
                 }
             })
+            let formData = new FormData();
+            let jsonobj ={method:"itemPic",lastitemid:lastitemid}
+
+            if ($("input[name='file3']")[0].files[0].size>0) {
+                formData.append("File",$("input[name='file3']")[0].files[0]);
+                formData.append("JSON",JSON.stringify(jsonobj))
+                $.ajax({
+                    url:"upItemImgServlet",
+                    type:'post',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success:function (result) {
+
+                    }
+                })
+            }
         }
     })
-
     $('#fileitem').filebox({
         onChange: function () {
-            console.log($("input[name='file3']")[0].files[0]);
+          //  console.log($("input[name='file3']")[0].files[0]);
             var reader=new FileReader();
             reader.readAsDataURL($("input[name='file3']")[0].files[0])
             reader.onload=function (result) {
@@ -47,7 +68,6 @@ $(function () {
             }
         }
     })
-
     function getObjectUrl(file) {
         var url=null;
         if (window.createObjectURL != undefined) {
