@@ -58,10 +58,10 @@
                     <td>真实姓名:</td>
                     <td><input class="textbox" type="text" id="realname" ></td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <td>身份证号:</td>
                     <td><input class="textbox" type="text" id="idcard"></td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>家庭住址:</td>
                     <td><input class="easyui-textbox"  id="address" data-options="multiline:true" style="height:60px"></td>

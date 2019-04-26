@@ -198,4 +198,21 @@ public class ShopDao {
 
         return "";
     }
+    public String shopchaxundingdan(JSONObject jsonObject){
+        String userid =  jsonObject.get("userid").toString();
+        String sql = "select * from  view_shop_invoice where userid =? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result =  commonDao.DataTableToJson(pStatement);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

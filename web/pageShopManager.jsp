@@ -7,19 +7,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script  type="text/javascript">
+    function queryshopdingdan() {
+        let data={userid: sessionid}
+        let result = null
+        $.ajax({
+            url: "ShopServlet",
+            async:false,
+            type: "post",
+            data: {data: JSON.stringify(data), method: "shopchaxundingdan"},
+            success: function (e) {
+                result = e;
+            }
+        })
+        return result;
+    }
+    var shuju
     $(function () {
+        shuju =  JSON.parse(queryshopdingdan());
         $('#invoiceManager').datagrid({
             toolbar:$('#invoiceManagerToolBar'),
-            columns:[[
-                {field:'ck',title:'选择',checkbox:true},
-                {field:'Id',title:'员工编码',width:50},
-                {field:'StaffName',title:'维修人员姓名',width:100},
-                {field:'Duties',title:'从事工种',width:100},
-                {field:'Email',title:'电子邮箱',width:100},
-                {field:'Phone',title:'电话',width:100},
-                {field:'Company',title:'所属物业公司',width:100},
-            ]],
-            //  url:"data/data.json",
+            columns:[shuju.title],
             title:"维修预约",
             striped:true,
             rownumbers:true,
@@ -31,6 +38,9 @@
             singleSelect: true,
             checkOnSelect : true,
             selectOnCheck:true,
+            onBeforeOpen:function(){
+
+            },
             onCheck:function (index,rowdata) {
                 //  $('#orderTable').datagrid('selectRow',index);
                 //rows =  $('#orderTable').datagrid('getChecked');
@@ -38,14 +48,21 @@
                 console.log(rows);
             },
         })
-        $('#querydingdanriqi').datetimebox({
+        $('#invoiceManager').datagrid('loadData', shuju.rows);
+        $('#shopdingdanriqichaxun').datetimebox({
           editable:false
         })
         $('#dingdanguanjianci').searchbox({
             prompt:'请输入订单的关键词',
             searcher:function (value) {
+            if ($('#shopdingdanriqichaxun').datetimebox('getValue').length<5) {
 
-            }})
+            }
+            else {
+
+            }
+        }
+        })
         var data = {userid:sessionid};
         $.ajax({
             type: "POST",
@@ -69,9 +86,9 @@
 
 
             <label>按时间查询：</label>
-            <input   id="querydingdanriqi">
+            <input   id="shopdingdanriqichaxun">
 
-            <a href="#" iconCls="icon-search" id="#">搜索</a>
+
 
         </div>
         <div class="ctrl-div">

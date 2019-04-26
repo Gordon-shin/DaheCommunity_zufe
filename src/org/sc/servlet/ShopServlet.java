@@ -93,6 +93,13 @@ public class ShopServlet extends HttpServlet {
            ShopDao shopDao = new ShopDao();
            shopDao.queryalldingdan(jsonObject);
         }
+        else if ("shopchaxundingdan".equals(method)){
+            String result = null;
+            JSONObject jsonObject =JSONObject.fromObject(request.getParameter("data")) ;
+            ShopDao shopDao =new ShopDao();
+            result =  shopDao.shopchaxundingdan(jsonObject);
+            CommonDao.out(response,result);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

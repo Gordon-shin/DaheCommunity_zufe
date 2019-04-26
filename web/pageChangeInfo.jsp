@@ -14,7 +14,7 @@
             <table cellpadding="5" >
                 <tr>
                     <td>用户名:</td>
-                    <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
+                    <td><input class="easyui-textbox" type="text"  data-options="required:true" id="yonghuming"></td>
                 </tr>
                 <tr>
                     <td>密码:</td>
@@ -41,10 +41,10 @@
                     <td>真实姓名:</td>
                     <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <td>身份证号:</td>
                     <td><input class="easyui-textbox" type="text"  data-options="required:true"></td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>家庭住址:</td>
                     <td><input class="easyui-textbox"  data-options="multiline:true" style="height:60px"></td>
@@ -52,21 +52,27 @@
 
             </table>
             <div id="buttons">
-                <a href="javascript:void(0)" class="easyui-linkbutton">Submit</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton">提交</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton">Clear</a>
             </div>
         </div>
         <div id="right">
-            <div id="imgReview">
-                <img>
+            <div >
+                <img id="changeInfoImg" style="margin: 10px;height: 150px;width: 150px;">
             </div>
             <div>File1:</div>
-            <input class="easyui-filebox" id="file1" data-options="prompt:'请选择'" style="width:100%">
+            <input class="easyui-filebox" id="file1" data-options="prompt:'请选择'" style="width: 200px;">
         </div>
 
     </div>
 
 </div>
+<script>
+    $(function () {
+        $.ajax({
 
+        })
+    })
+</script>
 
 
