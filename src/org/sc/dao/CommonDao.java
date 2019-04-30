@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.ResultSetMetaData;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
 public class CommonDao {
@@ -56,13 +58,11 @@ public class CommonDao {
         }
         return array.toString();
     }
-
     public String CommonExecute(String sql){
 
 
         return "";
     }
-
     public JSONObject CommonAdd(String sql) {
 
         Connection connection = DBUtil.getConnection();
@@ -87,7 +87,6 @@ public class CommonDao {
             return json;
 
     }
-
     public String JSONQuery(PreparedStatement sql){
         JSONArray array =new JSONArray();
         ResultSet rs;
@@ -122,15 +121,11 @@ public class CommonDao {
 
         return array.toString();
     }
-
-
-
     public String CommonChange(String sql){
 
         return "";
     }
-    public String UpdateQuery(PreparedStatement sql)
-    {
+    public String UpdateQuery(PreparedStatement sql) {
         int result =0;
         String error ="插入查询执行失败";
         try {
@@ -149,8 +144,7 @@ public class CommonDao {
             return error;
         }
     }
-   public String  DataTableToJson(PreparedStatement sql)
-   {   JSONArray jsonArray ;
+   public String  DataTableToJson(PreparedStatement sql) {   JSONArray jsonArray ;
        String jsonString =JSONQuery(sql);
        jsonArray = JSONArray.fromObject(jsonString);
        JSONObject jsonobj;
@@ -190,6 +184,12 @@ public class CommonDao {
                jsonBuilder.append("}");
                return jsonBuilder.toString();
         }
+   }
+   public  static  String getNowdate(){
+       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+       LocalDateTime now = LocalDateTime.now();
+       String result = dtf.format(now);
+       return  result;
    }
 
 

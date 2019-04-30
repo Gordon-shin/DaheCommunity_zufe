@@ -38,14 +38,55 @@
 <body class="easyui-layout" id="layout" style="visibility:hidden;">
 
 <div region="north" id="header">
-    <img src="img/logo.png" class="logo" />
+    <img src="img/banner.png" class="logo" />
     <div class="top-btns">
         <span id="welcomeSpan">欢迎您，</span>
-        <a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>
+      <%--  <a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>--%>
         <a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'" id="logoutjs">退出系统</a>
     </div>
 </div>
 
+<script>
+    $(function () {
+        $('#AdminnavRepair').tree({
+            animate:true,
+            lines:true,
+            url:'NavServlet',
+            queryParams:{tabid:"9"},
+            onLoadSuccess : function (node, data) {
+                var _this = this;
+                if (data) {
+                    $(data).each(function (index, value) {
+                        if (this.state == 'closed') {
+                            $(_this).tree('expandAll');
+                        }
+                    });
+                }
+            },
+            onClick : function (node) {
+                var host= window.location.href;
+
+                if (node.url) {
+                    var tab = $('#tt').tabs('getSelected');
+                    console.log(tab);
+                    if ($('#tt').tabs('exists', node.text)) {
+                        $('#tt').tabs('select', node.text)
+                        var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
+                        tab.panel('refresh');
+                    } else {
+                        $('#tt').tabs('add', {
+                            title: node.text,
+                            closable: true,
+                            iconCls: node.iconCls,
+                            href: node.url,
+                        });
+                    }
+                }
+            }
+        })
+
+    })
+</script>
 <div region="west" split="true" title="菜单" id="naver" iconCls="icon-world">
     <div class="easyui-accordion" fit="true" id="navmenu">
         <div title="用户信息管理">
@@ -53,7 +94,7 @@
             </ul>
         </div>
         <div title="管理员维修报障管理">
-            <ul  id="navRepair">
+            <ul  id="AdminnavRepair">
             </ul>
         </div>
         <div title="管理员二手市场管理" >

@@ -38,21 +38,25 @@ public class RepairDao {
                 String repairtime = timeobj.getString("RepairTime");
                 String finishTime = timeobj.getString("FinishTime");
                 if (compareTime(chooseTime, finishTime) < 0 && compareTime(chooseTimeAfter, finishTime) > 0) {
+                    judge = false;
                     break;
                 } else if (compareTime(chooseTime, repairtime) < 0 && compareTime(chooseTimeAfter, finishTime) < 0) {
+                    judge = false;
                     break;
                 } else if (compareTime(chooseTime, repairtime) < 0 && compareTime(chooseTimeAfter, finishTime) > 0) {
+                    judge = false;
                     break;
                 } else if (compareTime(chooseTime, repairtime) > 0 && compareTime(chooseTimeAfter, finishTime) < 0) {
+                    judge = false;
                     break;
                 } else {
                     judge = true;
                 }
             }
         }
-        else {
+     /*   else {
             judge = true;
-        }
+        }*/
         return judge;
     }
     public String repairInfoQuery(JSONObject jsonobj/*RepairOrder repairOrder*/){
@@ -176,7 +180,7 @@ public class RepairDao {
         return result;
     }
     public String OrderQuery(String userid){
-        String sql = "select yyid 预约编号, userid 用户编号 ,(select userpersonname from tb_users where userid =?) 用户姓名,repairmanid 维修人员编号 , Staffname 维修人员姓名,starttime 预约开始时间,repairtime 预约时间,finishtime 预计完成时间 , tb_repair_order.state 状态 from tb_repair_order,tb_repair_staff_info where userid=? and id=repairmanid and  tb_repair_order.state='进行中'";
+        String sql = "select yyid 预约编号, tb_repair_order.userid 用户编号 ,(select userpersonname from tb_users where tb_users.userid =?) 用户姓名,repairmanid 维修人员编号 , Staffname 维修人员姓名,starttime 预约开始时间,repairtime 预约时间,finishtime 预计完成时间 , tb_repair_order.state 状态 from tb_repair_order,tb_repair_staff_info where tb_repair_order.userid=? and id=repairmanid and  tb_repair_order.state='进行中'";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result = null;

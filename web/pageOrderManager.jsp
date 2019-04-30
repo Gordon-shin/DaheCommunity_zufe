@@ -20,5 +20,14 @@
     <div class="ctrl-div">
         <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" id="Cancelyuyue">取消预约</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="addRepairSheet">完成预约，添加维修单</a>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#addRepairSheet').click(function () {
+            
+        })
+    })
+</script>

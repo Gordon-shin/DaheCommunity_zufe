@@ -259,10 +259,10 @@
 		%>
 
 		<div region="north" id="header">
-			<img src="img/logo.png" class="logo" />
+			<img src="img/banner.png" class="logo" />
 			<div class="top-btns">
 				<span id="welcomeSpan">欢迎您，</span>
-				<a href="#" class="easyui-linkbutton"  id="openChatZone"data-options="plain:true,iconCls:'icon-lock'">聊天室</a>
+				<a href="#" class="easyui-linkbutton"  id="openChatZone"data-options="plain:true,iconCls:'icon-chat'">聊天室</a>
 				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'" id="logoutjs">退出系统</a>
 			</div>
 		</div>

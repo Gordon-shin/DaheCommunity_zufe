@@ -24,6 +24,7 @@ function chaxunChart() {
     })
 }
 var gwcitemid=[];//记录选择的商品
+var dingdan
 $(function () {
     var zongjia = 0;
     var singlejiage=0;
@@ -103,7 +104,6 @@ $(function () {
         onClick:function () {
           var shuliang = new Array();
            shuliang  = $('#gwcManagerTable').datagrid('getChecked')
-
             if (shuliang.length==0) {
                 $.messager.alert('信息','请选择需要修改的商品',"error")
             }
@@ -208,14 +208,12 @@ $(function () {
                     success: function (result) {
                         if (result)
                         $.messager.alert('成功',null,"info")
-
                     }
                 })
-
             }
         })
     })
-    var dingdan = new Vue({
+    dingdan = new Vue({
         el:'#querendingdan',
         data:{
             zongjia:"",

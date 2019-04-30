@@ -39,7 +39,6 @@
             checkOnSelect : true,
             selectOnCheck:true,
             onBeforeOpen:function(){
-
             },
             onCheck:function (index,rowdata) {
                 //  $('#orderTable').datagrid('selectRow',index);

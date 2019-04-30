@@ -24,7 +24,7 @@
 
 
     <label>请选择需要预约的日期：</label>
-    <input   id="riqi">
+    <input   id="riqi" style="width: 200px;">
 
     <a href="#" iconCls="icon-search" id="orderSearch">搜索</a>
     <label>注意检修工作大约在3小时以内</label>

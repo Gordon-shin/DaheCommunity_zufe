@@ -1,6 +1,9 @@
 .icon-market{
 	background:url('icons/market.png') no-repeat center center;
 }
+.icon-chat{
+	background:url('icons/chat.png') no-repeat center center;
+}
 .icon-shopping{
 	background:url('icons/shopping.png') no-repeat center center;
 }

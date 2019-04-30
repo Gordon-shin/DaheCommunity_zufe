@@ -21,7 +21,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String json = request.getParameter("data");
-        System.out.println(json);
+       // System.out.println(json);
         JSONObject jsonObject = JSONObject.fromObject(json);
          String username = jsonObject.get("username").toString();
          String password = jsonObject.get("password").toString();
@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
          String address = jsonObject.get("address").toString();
          String sex = jsonObject.get("sex").toString();
          String sql = new StringBuilder().append("INSERT INTO tb_users ").append("(LoginUserName, LoginPassword,UserPersonName,UserAuth,UserEmail,UserGender,UserPhoneNumber,UserAddress) ").append("VALUES ('").append(username).append("'").append(",'").append(password).append("','").append(realname).append("',").append("'用户','").append(email).append("','").append(sex).append("','").append(phone).append("','").append(address).append("')").toString();
-         System.out.println(sql);
+         //System.out.println(sql);
 
         CommonDao add =  new CommonDao();
         UserDao userDao = new UserDao();

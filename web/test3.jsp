@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.time.ZonedDateTime" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %><%--
   Created by IntelliJ IDEA.
   User: Gordon
   Date: 2019/4/25
@@ -30,7 +33,11 @@
                   })
            })})
     </script>
-
+<%
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
+    System.out.println(dtf.format(now));
+%>
 </head>
 <body>
 <div id="right">

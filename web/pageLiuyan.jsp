@@ -22,11 +22,9 @@
             <div style="width: 200px; display: inline;" >
                 <select id="guanliyuancombobox" style="width: 200px;">
                     <option></option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="NY">New York</option>
-                    <option value="MD">Maryland</option>
-                    <option value="VA">Virginia</option>
+                    <option value="PA">admin</option>
+                    <option value="CT">赵六</option>
+
                 </select>
                 <button type="submit" class="btn btn-danger" >提交</button>
             </div>

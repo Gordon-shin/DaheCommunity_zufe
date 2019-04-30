@@ -27,12 +27,12 @@ $(function() {
         missingMessage:'请输入您的真实姓名',
         invalidMessage:'真实姓名不能为空',
 
-    });  $('#idcard').validatebox({
+    });  /*$('#idcard').validatebox({
         required:true,
         missingMessage:'请输入您的身份证号码',
         invalidMessage:'身份证号码不能为空',
 
-    });
+    });*/
 
 
     $('#form').panel({
@@ -70,7 +70,7 @@ $(function() {
                 data['email']=$('#email').val();
                 data['phone']=$('#phone').val();
                 data['realname']=$('#realname').val();
-                data['idcard']=$('#idcard').val();
+                data['idcard']="";
                 data['address']=$('#address').val();
                 data['sex']=$('#sex').combobox("getText");
                 var jsonobj=JSON.stringify(data);
@@ -127,8 +127,9 @@ $(function() {
             $('#password').validatebox('isValid')&&
             $('#email').validatebox('isValid')&&
             $('#phone').validatebox('isValid')&&
-            $('#realname').validatebox('isValid')&&
-            $('#idcard').validatebox('isValid')))
+            $('#realname').validatebox('isValid')
+            /*&&
+            $('#idcard').validatebox('isValid')*/))
         {return true;}
         else{
             if(!$('#username').validatebox('isValid'))
@@ -147,10 +148,10 @@ $(function() {
             }else if (!$('#realname').validatebox('isValid'))
             {
                 return 'realname';
-            }else if (!$('#idcard').validatebox('isValid'))
+            }/*else if (!$('#idcard').validatebox('isValid'))
             {
                 return 'idcard';
-            }
+            }*/
         }
 
     }
