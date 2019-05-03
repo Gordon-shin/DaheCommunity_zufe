@@ -132,4 +132,65 @@ public class AdminDao {
         }
         return result;
     }
+    public String updateRepairManTime(JSONObject jsonObject){
+        String up  = jsonObject.getString("up");
+        String down  = jsonObject.getString("down");
+        String id  = jsonObject.getString("id");
+        PreparedStatement pStatement ;
+        Connection connection = DBUtil.getConnection();
+        String sql ="update tb_repair_staff_info set SpareTime = ?," +
+                " NoSpareTime=? where id = ?";
+        String result = "false";
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,up);
+            pStatement.setString(2,down);
+            pStatement.setString(3,id);
+
+           if (pStatement.executeUpdate()>0){
+               result="true";
+           }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public  String AdminShopshengheQuery(){
+        String sql = "select  itemid 物品ID,ItemName 物品名称," +
+                " itemclass 物品分类, itemprice 物品单价," +
+                "itemunit 单位,itemstock 库存" +
+                ",userPersonname 供货人姓名,state " +
+                "as 物品状态  from tb_shop_items,tb_users where state='审核中' and offerUserId = tb_users.UserId";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            CommonDao commonDao =new CommonDao();
+            result = commonDao.DataTableToJson(pStatement);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public  String AdminShopPass(String id){
+        PreparedStatement pStatement ;
+        Connection connection = DBUtil.getConnection();
+        String sql ="update tb_shop_items set state = '在库'" +
+                "  where ItemId = ?";
+        String result = "false";
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,id);
+          if (pStatement.executeUpdate()>0){
+              result = "true";
+          }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

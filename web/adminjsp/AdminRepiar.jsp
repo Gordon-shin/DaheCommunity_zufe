@@ -20,7 +20,7 @@
     </div>
 </table>
 <div class="easyui-dialog" title="新增维修人员" iconCls="icon-save" modal="true" style="width: 550px"
-     closed="true"  id="RepairAddDaig"></div>
+     closed="true"  id="RepairAddDaig">
     <div id="formrepairadd" style="width: 498px; height: 520px;">
         <div id="left">
             <table cellpadding="5" style=" border-collapse:separate; border-spacing: 0 1em;">
@@ -89,27 +89,31 @@
             <input id="file1" data-options="prompt:'请选择'" style="width: 100%; display: none;" class="filebox-f textbox-f" textboxname="file2"><span class="textbox easyui-fluid filebox" style="width: 198px; height: 20px;"><a href="javascript:void(0)" class="textbox-button textbox-button-right l-btn l-btn-small" group="" id="" style="height: 20px; right: 0px;"><span class="l-btn-left" style="margin-top: -2px;"><span class="l-btn-text">Choose File</span></span><label class="filebox-label" for="filebox_file_id_1"></label></a><input type="text" class="textbox-text validatebox-text textbox-prompt" autocomplete="off" placeholder="请选择" readonly="readonly" style="margin-left: 0px; margin-right: 75px; padding-top: 0px; padding-bottom: 0px; height: 20px; line-height: 20px; width: 115px;"><input type="file" class="textbox-value" id="filebox_file_id_1" name="file2" accept=""></span>
         </div>
     </div>
-    </div>
+
+</div>
+
 <div class="easyui-dialog" title="编辑 维修人员时间" iconCls="icon-save" data-options="buttons:'#RepairEditDaigbb'" modal="true" style="width: 300px;height: 300px"
      closed="true"  id="RepairEditDaig"  >
     <div style="margin: auto;padding: 5px;width: 130px">
-        维修人员编号：<span></span><br>
-        维修人员姓名：<span></span>
+        维修人员编号：<span id="weixiurenyuan1"></span><br>
+        维修人员姓名：<span id="weixiurenyuan2"></span>
         <br>
        上班时间
-        <input class="easyui-datetimebox" id="#" title="">
+        <input class="easyui-datetimebox" id="uptimeshijian" title="">
         <br>
         下班时间
-        <input class="easyui-datetimebox" id="@" title="">
+        <input class="easyui-datetimebox" id="downtimeshijian" title="">
     </div>
     <div id="RepairEditDaigbb">
-        <a href="#" class="easyui-linkbutton">保存</a>
+        <a href="#" class="easyui-linkbutton" id="repaimanmodifybaocun">保存</a>
         <%--<a href="#" class="easyui-linkbutton">关闭</a>--%>
     </div>
 </div>
 
 
 <script>
+    var  currentrowid=null;
+    var  currentrowtotal = null;
     function AdminRepairQuery() {
         var result =null;
         $.ajax({
@@ -125,7 +129,7 @@
         return result;
     }
     $(function () {
-        var  currentrowid
+
         var AdminRepair = AdminRepairQuery();
         $('#AdminRepairManager').datagrid({
             toolbar:$('#AdminRepairToolBar'),
@@ -145,6 +149,7 @@
                 //  $('#orderTable').datagrid('selectRow',index);
                 //rows =  $('#orderTable').datagrid('getChecked');
                 currentrowid=rowdata.统一编号;
+                currentrowtotal =rowdata
             },})
         $('#AdminRepairManager').datagrid('loadData', AdminRepair.rows);
         $('#adminRepairAdd').linkbutton({
@@ -180,11 +185,7 @@
                })
             }
         })
-        $('#adminRepairEdit').linkbutton({
-            onClick:function () {
 
-            }
-        })
         function RepairManRefresh() {
             AdminRepair=AdminRepairQuery();
             $('#AdminRepairManager').datagrid('loadData', AdminRepair.rows);
@@ -245,16 +246,60 @@
                 })*/
             }
         })
-        $('#adminRepairEdit').linkbutton({
+        $('#repaimanmodifybaocun').linkbutton({
             onClick:function () {
+                if (($('#uptimeshijian').datetimebox("getValue").length>5)&&($('#downtimeshijian').datetimebox('getValue').length>5)){
+                 var up =   $('#uptimeshijian').datetimebox("getValue").toString();
+                  var down  =$('#downtimeshijian').datetimebox("getValue").toString();
+                    var data = {up:up,down:down,id:currentrowtotal.维修人员编号}
+                 if (up<down) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: 'JSON',
+                        async: false,
+                        url: "AdminServlet",
+                        data: { data:JSON.stringify(data) ,method: "updateRepairManTime"},
+                        success: function (e) {
+                            if (e===true) {
+                                $.messager.alert("信息","该维修人员时间更新成功","info")
+                            }
+                            else{
+                                $.messager.alert("信息","该维修人员时间更新失败","error")
 
+                            }
+                        }
+                     })
+                 }
+                }
+            else{
+                    $.messager.alert("信息","请检查输入的相关信息","info")
+                }
             }
         })
         $('#adminRepairEdit').linkbutton({
             onClick:function () {
-                
+                if (currentrowid==null){
+                    $.messager.alert("警告","请选择需要修改日期的维修人员","error")
+                    return;
+                }
+
+             $('#RepairEditDaig').dialog({
+                 closed:false,
+                 onBeforeOpen:function(){
+                     $('#weixiurenyuan1').append(currentrowtotal.维修人员编号)
+                     $('#weixiurenyuan2').append(currentrowtotal.维修人员姓名)
+
+                 },
+                 onBeforeClose:function () {
+                     $('#uptimeshijian').datetimebox('setValue',"");
+                     $('#downtimeshijian').datetimebox('setValue',"");
+                     $('#weixiurenyuan1').empty();
+                     $('#weixiurenyuan2').empty();
+                 }
+             })
             }
         })
+
     })
 </script>
 <style>

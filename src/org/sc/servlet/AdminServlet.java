@@ -34,6 +34,25 @@ public class AdminServlet extends HttpServlet {
            String result = adminDao.AdminDelRepairMan(jsonObject);
            CommonDao.out(response,result);
         }
+        else if ("updateRepairManTime".equals(method)){
+            JSONObject jsonObject = JSONObject.fromObject(request.getParameter("data"));
+            AdminDao adminDao = new AdminDao();
+            String result = adminDao.updateRepairManTime(jsonObject);
+            CommonDao.out(response,result);
+        }
+        else if ("AdminShopshengheQuery".equals(method)){
+            AdminDao adminDao = new AdminDao();
+            String result = adminDao.AdminShopshengheQuery();
+            CommonDao.out(response,result);
+        }
+        else if("AdminShopPass".equals(method)){
+
+            String shopid = request.getParameter("data");
+            AdminDao adminDao = new AdminDao();
+            String result = adminDao.AdminShopPass(shopid);
+            CommonDao.out(response,result);
+
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
