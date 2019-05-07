@@ -27,7 +27,7 @@
         $('#invoiceManager').datagrid({
             toolbar:$('#invoiceManagerToolBar'),
             columns:[shuju.title],
-            title:"维修预约",
+            title:"订单管理",
             striped:true,
             rownumbers:true,
             pagination:true,

@@ -54,9 +54,9 @@ public class RepairDao {
                 }
             }
         }
-     /*   else {
+        else {
             judge = true;
-        }*/
+        }
         return judge;
     }
     public String repairInfoQuery(JSONObject jsonobj/*RepairOrder repairOrder*/){
@@ -162,7 +162,6 @@ public class RepairDao {
 
         return result;
     }
-
     public String repairInfoUpdate(RepairMan repairMan){
         String sql = "update tb_repair_staff_info set state='1' where id=? ";
         Connection connection = DBUtil.getConnection();
@@ -221,5 +220,54 @@ public class RepairDao {
 
         return result;
     }
+    public String Createweixiudan(JSONObject jsonObject){
+        String sql = "Insert into tb_repair_sheet(userid, repairmanid, orderid, zzsname," +
+                " errordescription, sheetendtime, price) values" +
+                "(?,?,?,?,?,?,?)";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        String lastid =null;
+        String lastidQuery = "select last_insert_id() as lastid";
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(7,jsonObject.get("price").toString());
+            pStatement.setString(1,jsonObject.get("yuyuerenyuanid").toString());
+            pStatement.setString(2,jsonObject.get("weixiurenyuangonhao").toString());
+            pStatement.setString(3,jsonObject.get("yuyuebianhao").toString());
+            pStatement.setString(4,jsonObject.get("zzs").toString());
+            pStatement.setString(5,jsonObject.get("desc").toString());
+            pStatement.setString(6,jsonObject.get("addTime").toString());
+            if (pStatement.executeUpdate()>0){
+                pStatement = connection.prepareStatement(lastidQuery);
+                CommonDao commonDao = new CommonDao();
+                result = commonDao.SingleDataQuery(pStatement);
+                String stateupdate = "update tb_repair_order set state ='完成' where yyId = ?";
+                pStatement = connection.prepareStatement(stateupdate);
+                pStatement.setString(1,jsonObject.get("yuyuebianhao").toString());
+                pStatement.executeUpdate();
+            }
+            else {
+                result="false";
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public void Updateweixiudanimg(String lastid,String path){
+        String sql = "update tb_repair_sheet set ErrorPictureUrl = ? where SheetsId = ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,path);
+            pStatement.setString(2,lastid);
+            pStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

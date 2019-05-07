@@ -144,7 +144,7 @@ public class CommonDao {
             return error;
         }
     }
-   public String  DataTableToJson(PreparedStatement sql) {   JSONArray jsonArray ;
+    public String  DataTableToJson(PreparedStatement sql) {   JSONArray jsonArray ;
        String jsonString =JSONQuery(sql);
        jsonArray = JSONArray.fromObject(jsonString);
        JSONObject jsonobj;
@@ -185,12 +185,29 @@ public class CommonDao {
                return jsonBuilder.toString();
         }
    }
-   public  static  String getNowdate(){
+    public  static  String getNowdate(){
        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
        LocalDateTime now = LocalDateTime.now();
        String result = dtf.format(now);
        return  result;
    }
+    public String SingleDataQuery(PreparedStatement sql){
+        ResultSet rs = null;
+        ResultSetMetaData metaData= null;
+        String result = null;
+        try {
+            rs= sql.executeQuery();
+            metaData=rs.getMetaData();
+            rs.next();
+            String type = metaData.getColumnTypeName(1);
+            String columnName = metaData.getColumnLabel(1);
+            result = rs.getString(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
     public static void out(HttpServletResponse response, String result) throws IOException {

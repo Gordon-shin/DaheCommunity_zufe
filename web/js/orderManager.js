@@ -1,3 +1,4 @@
+var repairinfo = null
 $(function () {
     var rows ;
     var userid;
@@ -27,8 +28,9 @@ $(function () {
             userid=rowdata.用户编号;
             repairmanid=rowdata.维修人员编号;
             orderid=rowdata.预约编号;
-            console.log(userid);
-            console.log(repairmanid);
+         /*   console.log(userid);
+            console.log(repairmanid);*/
+         repairinfo = rowdata;
         },
     })
     dataload();
