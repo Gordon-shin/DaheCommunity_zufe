@@ -280,7 +280,12 @@
 				<div title="二手市场管理" >
 				<ul id="navShop">
 				</ul>
-			</div>
+			    </div>
+                <div title="医院预约管理" >
+                    <ul id="navYiYuan">
+
+                    </ul>
+                </div>
 				<div title="留言表单管理" >
 					<ul id="navliuyan">
 					</ul>

@@ -116,9 +116,6 @@ public class CommonDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
         return array.toString();
     }
     public String CommonChange(String sql){
@@ -153,7 +150,6 @@ public class CommonDao {
             return "[]";
         }
         else{
-
                int count = jsonArray.size();
                StringBuilder jsonBuilder = new StringBuilder();
                jsonBuilder.append("{\"total\"");

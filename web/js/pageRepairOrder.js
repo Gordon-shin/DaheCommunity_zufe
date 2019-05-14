@@ -61,7 +61,6 @@ $(function () {
                            });
                            duty=($('#chooseType').combobox("getValue"));
                            datetime=($('#riqi').datetimebox("getValue"));
-
                            function loaddata() {
                                $.ajax({
                                    type: "POST",
@@ -87,7 +86,6 @@ $(function () {
                    })
                 }
             })
-
         }
         }
     })
@@ -96,7 +94,6 @@ $(function () {
         url:"RepairManServlet",
         valueField: 'duties',
         textField: 'duties',
-
     })
     $('#riqi').datetimebox({
         editable: false

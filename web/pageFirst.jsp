@@ -14,29 +14,41 @@ else{
                 欢迎来到大河小区便民服务系统
             </div>
         </div>
-        <div title="系统公告">
-            <ul class="notice-list">
-                <li>
-                    <span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-                    <span class="date">2015-10-30</span>
-                </li>
-                <li>
-                    <span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-                    <span class="date">2015-10-30</span>
-                </li>
-                <li>
-                    <span>这是一条很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的系统公告</span>
-                    <span class="date">2015-10-30</span>
-                </li>
-                <li>
-                    <span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-                    <span class="date">2015-10-30</span>
-                </li>
-                <li>
-                    <span>这是一条系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告系统公告</span>
-                    <span class="date">2015-10-30</span>
+        <div title="系统公告" id="newslist">
+            <ul class="notice-list" >
+                <li v-for = "item in list" :key="item.newsid">
+                    <span>{{item.text}}</span>
+                    <span class="date">发布时间：{{item.adddate}}</span>
                 </li>
             </ul>
         </div>
     </div>
 
+<script>
+    var vmnews = new Vue({
+        el:'#newslist',
+        data:{
+            list:"",
+        },
+        methods:{
+            getNews:()=>{
+                $.ajax({
+                    url: "newsServlet",
+                    type: "post",
+                    async: false,
+                    data: {method: "getnews"},
+                    success: function (result) {
+                        vmnews.list = JSON.parse(result);
+                    }
+                });
+            }
+        }
+    })
+
+
+
+
+    $(function () {
+        vmnews.getNews();
+    })
+</script>

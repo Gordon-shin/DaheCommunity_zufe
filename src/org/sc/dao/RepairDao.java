@@ -92,7 +92,9 @@ public class RepairDao {
            }
         }
         System.out.println(allowid);
-        String sql2 = "select Id,StaffName,LoginName,Duties,Email,Phone,Company from tb_repair_staff_info where duties= ? and  Sparetime<? and NOSParetime>? and state='1'";
+        String sql2 = "select Id,StaffName,LoginName,Duties,Email,Phone,Company " +
+                "from tb_repair_staff_info where duties= ? and " +
+                " Sparetime<? and NOSParetime>? and state='1'";
         StringBuffer sBuffer = new StringBuffer(sql2);
         if (allowid.size()>0){
             for(int i = 0;i<allowid.size();i++)
@@ -196,7 +198,8 @@ public class RepairDao {
     }
     public String CancelOrder(String orderid,String repairmanid)
     {
-        String sql = "update tb_repair_order set state='用户取消' where yyid=? ";
+        String sql = "update tb_repair_order set " +
+                "state ='用户取消' where yyid=? ";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result = null;
@@ -206,7 +209,8 @@ public class RepairDao {
             CommonDao commonDao = new CommonDao();
             result =commonDao.UpdateQuery(pStatement);
             if ("true".equals(result)){
-                sql="update tb_repair_staff_info set state='1' where id=? ";
+                sql="update tb_repair_staff_info set " +
+                        "state='1' where id=? ";
                 pStatement=connection.prepareStatement(sql);
                 pStatement.setString(1,repairmanid);
                 result =commonDao.UpdateQuery(pStatement);
@@ -221,7 +225,8 @@ public class RepairDao {
         return result;
     }
     public String Createweixiudan(JSONObject jsonObject){
-        String sql = "Insert into tb_repair_sheet(userid, repairmanid, orderid, zzsname," +
+        String sql = "Insert into tb_repair_sheet" +
+                "(userid, repairmanid, orderid, zzsname," +
                 " errordescription, sheetendtime, price) values" +
                 "(?,?,?,?,?,?,?)";
         Connection connection = DBUtil.getConnection();
@@ -269,5 +274,20 @@ public class RepairDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public  String Queryweixiudan(String userid){
+        String sql = "select  * from 维修单视图 where 用户编号 =?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.DataTableToJson(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

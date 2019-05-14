@@ -54,14 +54,16 @@
         var weixiubiaodata;
 
         function weixiubiaoload() {
-            let data;
             $.ajax({
                 type: "POST",
-                dataType: 'JSON',
-                async: false,
-                url: "OrderQueryServlet",
-                data: {userid: sessionid},
+                url: "RepaiweixiudanServlet",
+                data: {userid: sessionid,method:"Queryweixiubiao"},
                 success: function (result) {
+                    console.log(result)
+                    var result = JSON.parse(result)
+                    $('#weixiuSheetchecker').datagrid({
+                        columns:[eval(result.title)]
+                    })
                    if (result.total==null) {
                        $.messager.alert("信息", "没有检索到相关信息,请先去预约", "info",function () {
                            return;
@@ -69,16 +71,17 @@
                    }
                    else {
                        $.messager.alert("信息", "找到了"+result.total+"条信息", "info")
-                       data = result
+
+                        console.log(result.rows)
+                       $('#weixiuSheetchecker').datagrid('loadData', eval(result.rows));
                    }
                 }
             })
-            return data;
         }
 
-        weixiubiaoload();
+       weixiubiaoload();
         $('#weixiuSheetchecker').datagrid({
-            toolbar:$('#toolbarweixiusheet'),
+            //toolbar:$('#toolbarweixiusheet'),
             title:"个人维修单查询",
             striped:true,
             rownumbers:true,

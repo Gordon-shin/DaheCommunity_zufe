@@ -120,6 +120,43 @@
                 }
             }
         })
+        $('#AdminnavNews').tree({
+            animate:true,
+            lines:true,
+            url:'NavServlet',
+            queryParams:{tabid:"11"},
+            onLoadSuccess : function (node, data) {
+                var _this = this;
+                if (data) {
+                    $(data).each(function (index, value) {
+                        if (this.state == 'closed') {
+                            $(_this).tree('expandAll');
+                        }
+                    });
+                }
+            },
+            onClick : function (node) {
+                var host= window.location.href;
+
+                if (node.url) {
+                    var tab = $('#tt').tabs('getSelected');
+                    console.log(tab);
+                    if ($('#tt').tabs('exists', node.text)) {
+                        $('#tt').tabs('select', node.text)
+                        var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
+                        tab.panel('refresh');
+                    } else {
+                        $('#tt').tabs('add', {
+                            title: node.text,
+                            closable: true,
+                            iconCls: node.iconCls,
+                            href: node.url,
+                        });
+                    }
+                }
+            }
+        })
+
 
     })
 </script>
@@ -135,6 +172,10 @@
         </div>
         <div title="管理员二手市场管理" >
             <ul id="AdminnavShop">
+            </ul>
+        </div>
+        <div title="管理员新闻管理" >
+            <ul  id="AdminnavNews">
             </ul>
         </div>
         <div title="管理员医院预约管理" >
