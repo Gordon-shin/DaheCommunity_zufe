@@ -6,10 +6,9 @@ function chaxunChart() {
         success: function (result) {
             var result=JSON.parse(result)
             var title=result.title;
-            console.log(result)
-            console.log(result.toString()!="")
             if (result.toString()!="")
-            {title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
+            {
+                title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true});
                 $('#gwcManagerTable').datagrid({
                     columns: [eval(title)]
                 });

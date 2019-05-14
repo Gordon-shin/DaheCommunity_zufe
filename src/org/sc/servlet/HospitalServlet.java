@@ -32,6 +32,20 @@ public class HospitalServlet extends HttpServlet {
             result =  hospDao.QuerydiseaseInfo(ksid);
             CommonDao.out(response,result);
         }
+        else if("ksdocinfoQuery".equals(method)){
+            String result ;
+            String ksid = request.getParameter("ks");
+            HospDao hospDao = new HospDao();
+            result = hospDao.ksdocinfoQuery(ksid);
+            CommonDao.out(response,result);
+        }
+        else if("diseasedocinfoQuery".equals(method)){
+            String result ;
+            String diseasenum = request.getParameter("diseasenum");
+            HospDao hospDao = new HospDao();
+            result = hospDao.diseasedocinfoQuery(diseasenum);
+            CommonDao.out(response,result);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

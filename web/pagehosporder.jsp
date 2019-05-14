@@ -14,7 +14,7 @@
             <label>查询相关疾病：</label>
             <input  style="width: 100px" id="hospchoosedisease">
             <label>请选择需要预约的日期：</label>
-            <input   id="hospriqi" style="width: 200px;">
+            <input id="hospriqi" style="width: 200px;">
 
             <a href="#" iconCls="icon-search" id="hosporderSearch">搜索</a>
            <%-- <label>注意检修工作大约在3小时以内</label>--%>
@@ -75,6 +75,60 @@
         })
         $('#hosporderSearch').linkbutton({
             beforeSend: function() {
+
+            },
+            onClick:function () {
+                var ks =  $('#hospchooseType').combobox("getValue")
+                var diseasenum = $('#hospchoosedisease').combobox("getValue")
+                if (diseasenum==0) {
+                  $.ajax({
+                      type: "POST",
+                      url:"HospitalServlet",
+                      data:{ks:ks,method:"ksdocinfoQuery"},
+                      success:function (result) {
+                          let tabledata = JSON.parse(result);
+                          let title = tabledata.title
+                          title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
+                          if (JSON.stringify(tabledata)=='[]'){
+                              $.messager.alert("信息","没有找到相关信息，请重新选择","info",function () {
+                                  return;
+                              })
+                          }
+                          else {
+                              $('#hosporderTable').datagrid({
+                                  columns:[title]
+                              })
+                              $('#hosporderTable').datagrid("loadData",tabledata.rows
+                              )
+                          }
+                      }
+                  })
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url:"HospitalServlet",
+                        data:{diseasenum:diseasenum,method:"diseasedocinfoQuery"},
+                        success:function (result) {
+                            let tabledata = JSON.parse(result);
+                            let title = tabledata.title
+                            title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
+                            if (JSON.stringify(tabledata)=='[]'){
+                                $.messager.alert("信息","没有找到相关信息，请重新选择","info",function () {
+                                    return;
+                                })
+                            }else{
+                                $('#hosporderTable').datagrid({
+                                    columns:[title]
+                                })
+                                $('#hosporderTable').datagrid("loadData",tabledata.rows
+                                )
+                            }
+
+
+                        }
+                    })
+                }
             }
             })
         $('#hospchoosedisease').combobox({
@@ -92,7 +146,10 @@
                     valueField: 'id',
                     textField: 'disName'
                 })
+                $('#hospchoosedisease').combobox('setValue',0)
             }
         })
+
+
     })
 </script>
