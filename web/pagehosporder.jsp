@@ -20,7 +20,7 @@
            <%-- <label>注意检修工作大约在3小时以内</label>--%>
         </div>
         <div class="ctrl-div">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="yuyue">预约</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="hospyuyue">预约</a>
             <%-- <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>--%>
             <%--<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">批量删除</a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-print" plain="true">打印</a>
@@ -49,6 +49,7 @@
             return new Date();
         }
     }
+    var hosprowdata=null;
     $(function () {
         $('#hospriqi').datebox({
             formatter:myformatter
@@ -70,7 +71,7 @@
             onCheck:function (index,rowdata) {
                 //  $('#orderTable').datagrid('selectRow',index);
                 //rows =  $('#orderTable').datagrid('getChecked');
-                rows=rowdata.Id;
+                hosprowdata=rowdata
             },
         })
         $('#hosporderSearch').linkbutton({
@@ -88,14 +89,17 @@
                       success:function (result) {
                           let tabledata = JSON.parse(result);
                           let title = tabledata.title
-                          title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
                           if (JSON.stringify(tabledata)=='[]'){
                               $.messager.alert("信息","没有找到相关信息，请重新选择","info",function () {
                                   return;
                               })
                           }
                           else {
+                              title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
                               $('#hosporderTable').datagrid({
+                                  onLoadSuccess:function(){
+                                      $('#hosporderTable').datagrid("selectRow", 0)
+                                  },
                                   columns:[title]
                               })
                               $('#hosporderTable').datagrid("loadData",tabledata.rows
@@ -112,20 +116,21 @@
                         success:function (result) {
                             let tabledata = JSON.parse(result);
                             let title = tabledata.title
-                            title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
                             if (JSON.stringify(tabledata)=='[]'){
                                 $.messager.alert("信息","没有找到相关信息，请重新选择","info",function () {
                                     return;
                                 })
                             }else{
+                                title.splice(0, 0, {field: 'ck', title: '选择', checkbox: true})
                                 $('#hosporderTable').datagrid({
+                                    onLoadSuccess:function(){
+                                        $('#hosporderTable').datagrid("selectRow", 0)
+                                    },
                                     columns:[title]
                                 })
                                 $('#hosporderTable').datagrid("loadData",tabledata.rows
                                 )
                             }
-
-
                         }
                     })
                 }
@@ -149,7 +154,50 @@
                 $('#hospchoosedisease').combobox('setValue',0)
             }
         })
-
-
+        $('#hospyuyue').linkbutton({
+            onClick:function () {
+                if ($('#hospriqi').datebox('getValue').length>0){
+                    if (hosprowdata!=null) {
+                        var hospguahaodata = {}
+                          hospguahaodata["userid"] = sessionid
+                          hospguahaodata["docid"] = hosprowdata.医师编号
+                          hospguahaodata["ksjc"] = hosprowdata.科室简称
+                          hospguahaodata["dicateid"] = hosprowdata.科室编号
+                          hospguahaodata["cost"] = hosprowdata.挂号价格
+                          hospguahaodata["date"] = $('#hospriqi').datebox('getValue')
+                        $.messager.confirm("信息","预约" +
+                            "将花费"+hosprowdata.挂号价格+"确" +
+                            "认继续吗？",function () {
+                            $.ajax({
+                                url: "HospitalServlet",
+                                type: "post",
+                                data: {data: JSON.stringify(hospguahaodata),method:"yiyuanyuye"},
+                                success: function (result) {
+                                     result=JSON.parse(result)
+                                    if (result.result>0) {
+                                        $.messager.alert("信息","预约成功,您的预约编号为"+result.bianhao+"请记住或者在预约管理中查看","info",function () {
+                                            return
+                                        })
+                                    }
+                                    else{
+                                        $.messager.alert("信息","预约失败","info")
+                                    }
+                                }
+                            })
+                        })
+                    }
+                    else{
+                        $.messager.alert("警告","请选择需要预约的医师","info",function () {
+                            return
+                        })
+                    }
+                }
+                else{
+                    $.messager.alert("警告","请输入预约的时间","info",function () {
+                        return
+                    })
+                }
+            }
+        })
     })
 </script>

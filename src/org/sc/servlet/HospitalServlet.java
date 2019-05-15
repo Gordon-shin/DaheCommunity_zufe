@@ -1,8 +1,8 @@
 package org.sc.servlet;
 
-import org.sc.HospDao;
+import net.sf.json.JSONObject;
+import org.sc.dao.HospDao;
 import org.sc.dao.CommonDao;
-import org.sc.util.DBUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 @WebServlet(name = "HospitalServlet",value = "/HospitalServlet")
 public class HospitalServlet extends HttpServlet {
@@ -46,6 +42,24 @@ public class HospitalServlet extends HttpServlet {
             result = hospDao.diseasedocinfoQuery(diseasenum);
             CommonDao.out(response,result);
         }
+        else if ("yiyuanyuye".equals(method)){
+            String result;
+            JSONObject jsonObject = JSONObject.fromObject(request.getParameter("data"));
+            HospDao hospDao = new HospDao();
+            String docid = jsonObject.getString("docid");
+            String ksjc = jsonObject.getString("ksjc");
+            String dicateid = jsonObject.getString("dicateid");
+            String date = jsonObject.getString("date");
+            String userid = jsonObject.getString("userid");
+            String cost =jsonObject.getString("cost");
+            result = hospDao.hospcodeGenerator(docid,ksjc,dicateid,date);
+            JSONObject object = new JSONObject();
+            object.put("bianhao",result);
+            int j = hospDao.yiyuanyuyueAdd(docid,ksjc,dicateid,date,result,cost,userid);
+            object.put("result",Integer.toString(j));
+            CommonDao.out(response,object.toString());
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
