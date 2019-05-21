@@ -31,7 +31,7 @@
 </div>
 <div class="ctrl-div">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="yuyue">预约</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
+<%--    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>--%>
     <%--<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">批量删除</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-print" plain="true">打印</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-back" plain="true">导入</a>

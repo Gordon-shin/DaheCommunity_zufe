@@ -1,6 +1,20 @@
 .icon-market{
 	background:url('icons/market.png') no-repeat center center;
 }
+.icon-repairorder{
+	background:url('icons/repairorder.png') no-repeat center center;
+}
+.icon-repairtool{
+	background:url('icons/repairtool.png') no-repeat center center;
+}.icon-check{
+	background:url('icons/check.png') no-repeat center center;
+}.icon-upload{
+	background:url('icons/upload.png') no-repeat center center;
+}.icon-hospital{
+	background:url('icons/hospital.png') no-repeat center center;
+}.icon-rommannager{
+	background:url('icons/rommanager.png') no-repeat center center;
+}
 .icon-chat{
 	background:url('icons/chat.png') no-repeat center center;
 }

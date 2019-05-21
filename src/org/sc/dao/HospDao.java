@@ -110,7 +110,8 @@ public class HospDao {
         return result;
     }
     public  int  yiyuanyuyueAdd(String docid,String
-            ksjc,String dicateid,String date,String yuyuenumber,String cost,String userid){
+            ksjc,String dicateid,String date,String
+            yuyuenumber,String cost,String userid){
         int result =0 ;//2019-05-15
         String sql = "insert into tb_hosp_order" +
                 "(orderbianhao, docId, userId," +
@@ -135,4 +136,21 @@ public class HospDao {
         }
         return result;
     }
+
+    public String queryyuyuebyuserid (String userid){
+        String sql = "select * from 医院挂号单信息 where 用户id =?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result=commonDao.DataTableToJson(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  result;
+    }
+
 }

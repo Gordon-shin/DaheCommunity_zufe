@@ -39,7 +39,7 @@
     }
     $(function () {
         var AdminShop=AdminShopshengheQuery()
-        console.log(AdminShop)
+       // console.log(AdminShop)
         $('#AdminShopManager').datagrid({
             toolbar:$('#AdminShopBar'),
             columns:[AdminShop.title],

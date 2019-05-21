@@ -29,11 +29,115 @@
     <link rel="stylesheet" type="text/css" href="css/semantic.css" />
     <script src="js/vue.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" charset="utf-8" src="plugin/kindeditor/kindeditor-all.js"></script>
     <script>
         var sessionname= Base64.decode($.cookie('PersonName'));
-        var sessionid = Base64.decode($.cookie('username'))
-        
+        var sessionid='<%=session.getAttribute("userid")%>';
     </script>
+    <script>
+        function chatNoAnime(element,imgSrc,Content) {
+            var $user=element;
+            var $imgHead=imgSrc;
+            var $content=Content;
+            var $box=$('.bubbleDiv');
+            var $boxHeght=$box.height();
+            var $sectionHeght=$(".chat-box").height();
+            var $elvHeght=Math.abs($boxHeght - $sectionHeght);
+            if ($user === "leftBubble") {
+                $box.append(createdoct($imgHead, $content));
+                //  console.log($box.height())
+            } else if ($user === "rightBubble") {
+                $box.append(createuser($content));
+            } else {
+                console.log("出错了!")
+            }
+        }
+        function createdoct($doctextContent) {
+            var $textContent = $doctextContent;
+            /*var $imgSrc = imgSrc;*/
+            var block;
+            if($textContent == ''|| $textContent == 'null'){
+                return;
+            }
+            block= '<div class="bubbleItem">' +
+                /* '<div class="doctor-head">' +
+                 '<img src="'+ imgSrc +'" alt="doctor"/>' +
+                 '</div>' +*/
+                '<span class="bubble leftBubble">' + $textContent + '<span class="topLevel"></span></span>' +
+                '</div>';
+            return block;
+        }
+        function createuser($textContent ) {
+            var $textContent = $textContent;
+            var block;
+            if($textContent == ''|| $textContent == 'null'){
+                return;
+            }
+            block = '<div class="bubbleItem clearfix">' +
+                '<span class="bubble rightBubble">' + $textContent + '<span class="topLevel"></span></span>' +
+                '</div>';
+            return block;
+        };
+        function chat (element,imgSrc,Content){
+            var $user = element;
+            var $imgHead = imgSrc;
+            var $content = Content;
+            var $box = $('.bubbleDiv');
+            var $boxHeght = $box.height();
+            var $sectionHeght = $(".chat-box").height();
+            var $elvHeght = Math.abs($boxHeght-$sectionHeght);
+            if ($user === "leftBubble") {
+                $box.append(createdoct($imgHead,$content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
+                console.log($box.height())
+            }
+            else if ($user ==="rightBubble") {
+                $box.append(createuser($content)).animate({scrollTop:$('.bubbleDiv')[0].scrollHeight }, 150);
+            }
+            else{
+                console.log("出错了!")
+            }
+        }
+        function queryDiagByUserid(userid){
+            let result = null
+            $.ajax({
+                type: "POST",
+                dataType: 'JSON',
+                async:false,
+                url: "MessageServlet",
+                data: {userid: userid,method: "queryDiagByUserid"},
+                success:function (e) {
+                    result =e
+                }
+            })
+            return null;
+        }
+        /*$(function () {
+            /!*$('.send-btn').click(function () {
+                let text = liaotianeditor.text()
+                let user = "rightBubble";
+                chat(user,"",text)
+            })
+            $('#ChatSeller').dialog({
+                onOpen:function () {
+                    liaotianeditor=KindEditor.create('#liaotiankuang', {
+                        allowPreviewEmoticons: false,
+                        uploadJson: 'jspFunction/upload_json.jsp',
+                        urlType: 'absolute',
+                        width:"99%",
+                        resizeType: 0,  //文本框不可拖动
+                        items: [
+                            /!* 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                             'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                             'insertunorderedlist', '|', 'emoticons', 'image', 'link']*!/
+                            'emoticons', 'image']
+                    });
+                }
+            })
+    *!/
+
+        })*/
+    </script>
+
 </head>
 <body class="easyui-layout" id="layout" style="visibility:hidden;">
 
@@ -41,7 +145,7 @@
     <img src="img/banner.png" class="logo" />
     <div class="top-btns">
         <span id="welcomeSpan">欢迎您，</span>
-      <%--  <a href="#" class="easyui-linkbutton"  id="changePassword"data-options="plain:true,iconCls:'icon-lock'">修改密码</a>--%>
+        <a href="#" class="easyui-linkbutton"  id="openChatZone"data-options="plain:true,iconCls:'icon-chat'">聊天室</a>
         <a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'" id="logoutjs">退出系统</a>
     </div>
 </div>
@@ -197,7 +301,43 @@
 
 
 <!-- 弹出框 -->
-<div class="easyui-dialog" title="新增/编辑" iconCls="icon-save" modal="true"
+<div class="easyui-dialog" title="聊天室" iconCls="icon-save" modal="true"
+     closed="true"  id="dlg" style="width: 400px">
+    <div id="selectLiaotian">
+        <table class="table table-bordered table-hover table-striped">
+            <div style="margin: 0px 0px 10px 0px">
+                <div style="margin: 0px 0px 10px 10px;display: inline ">用户编号:<input style="width:50px;height:20px;margin: 0px 0px 0px 30px" class="textbox" type="text" id="liaotianyhonghubianhao" ></div>
+                <div style="margin: 0px 0px 10px 10px;display: inline ">用户姓名:<input style="width:60px;height:20px;margin: 0px 0px 0px 30px" class="textbox" type="text"  id="liaotianyonghuming" ></div>
+                <a href="#" style="margin: 0px 0px 0px 10px"  iconCls="icon-ok" id="liaotianrentianjia">添加聊天人</a>
+            </div>
+            <thead>
+            <tr>
+                <th>对话ID</th>
+                <th>对话发起人</th>
+                <th>对话人</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for = "item in list" :key ="item.id">
+                <td>{{item.id}}</td>
+                <td>{{item.userpersonname}}</td>
+                <td>{{item.userpersonname2}}</td>
+                <td><button class="continueChat" @click="chatcontinue(item.id)">继续聊天</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <%--<ul class="list-group">
+            <li class="list-group-item" id="chatlist" v-for="item in list" :key="item.id">
+                <span class="badge">数量： {{item.number}}</span>
+                {{item.userpersonname2}} ------{{item.userpersonname}}
+                <button class="continueChat">继续聊天</button>
+            </li>
+        </ul>--%>
+    </div>
+</div>
+
+<%--<div class="easyui-dialog" title="新增/编辑" iconCls="icon-save" modal="true"
      closed="true" buttons="#dlg-btns" id="dlg">
     <form id="fm" method="post">
         <div class="fitem">
@@ -234,7 +374,104 @@
             <input class="easyui-textbox" multiline="true" style="width:452px;height:52px;" value="考核项目的实际利润情况"  />
         </div>
     </form>
+</div>--%>
+<div class="easyui-dialog" title="与***聊天中" iconCls="icon-save" modal="true" closed="true" id="ChatSeller" style="width: 450px;height: 600px">
+    <div class="chat-bg" >
+        <div class="chat-box">
+            <div class="bubbleDiv"></div>
+        </div>
+        <div class="chat-edit clearfix">
+            <textarea id="liaotiankuang"></textarea>
+            <button class="send-btn fr" >发送</button>
+            <button class="send-btn fr" id="qkltk">清空</button>
+        </div>
+    </div>
 </div>
+<script >
+    $("#openChatZone").click(function () {
+        $("#dlg").dialog({
+            closed:false,
+            onBeforeOpen:function () {
+
+                selectLiaotian1.getDiag(sessionid);
+                console.log(selectLiaotian1)
+            }
+        });
+    })
+    var selectLiaotian1 = new Vue({
+        el:'#selectLiaotian',
+        data:{
+            list:""
+        },
+        methods:{
+            queryMessageById(data){
+                var result = null
+                $.ajax({
+                    type: "POST",
+                    dataType: 'JSON',
+                    async:false,
+                    url: "MessageServlet",
+                    data: {digid: data,method: "queryMessageById"},
+                    success:function (e) {
+                        result =e
+                    }
+                })
+                return result
+            },
+            chatcontinue(id){
+                console.log(id)
+                DiagId = id;
+                $('#ChatSeller').dialog({
+                    closed:false,
+                    onBeforeOpen:function(){
+                        liaotianeditor=KindEditor.create('#liaotiankuang', {
+                            allowPreviewEmoticons: false,
+                            uploadJson: 'jspFunction/upload_json.jsp',
+                            urlType: 'absolute',
+                            width:"99%",
+                            resizeType: 0,  //文本框不可拖动
+                            items: [
+                                'emoticons', 'image']
+                        });
+                    },
+                    onBeforeClose:function () {
+                        liaotianeditor.text("")
+                        KindEditor.remove($('#liaotiankuang'))
+                        $('.bubbleItem').remove()
+                    }
+                })
+                let message =new Array();
+                message  =this.queryMessageById(id)
+                console.log(message)
+                for (let i = 0; i < message.length;i++ )
+                {
+                    if (message[i].MessageUser.toString()==sessionid)
+                    {
+                        chatNoAnime("rightBubble","",message[i].MessageText)
+                    }
+                    else {
+                        chatNoAnime("leftBubble",message[i].MessageText)
+                    }
+                }
+            },
+            getDiag(id){
+                let result
+                let data = {id:id}
+                $.ajax({
+                    type: "POST",
+                    dataType: 'JSON',
+                    async:false,
+                    url: "MessageServlet",
+                    data: {data: JSON.stringify(data),method: "queryliaotianshi"},
+                    success:function (e) {
+                        result=e
+                    }
+                })
+                this.list = result
+            }
+        }
+    })
+</script>
 <!-- /弹出框 -->
 </body>
 </html>

@@ -221,7 +221,7 @@
   </div>
     <div class="ctrl-div">
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="addgouwuche">加入购物车</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>
+       <%-- <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="editBtn">编辑</a>--%>
         <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="contactSeller">联系卖家</a>
     </div>
 </div>
@@ -260,5 +260,6 @@
 <div id="dlg-btns">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="gouwuchesaveBtn">添加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" id="cancelBtn">取消</a>
-</div>></div>
+</div>
+</div>
 </div>

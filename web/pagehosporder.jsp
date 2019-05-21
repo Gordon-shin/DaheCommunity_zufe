@@ -175,7 +175,8 @@
                                 success: function (result) {
                                      result=JSON.parse(result)
                                     if (result.result>0) {
-                                        $.messager.alert("信息","预约成功,您的预约编号为"+result.bianhao+"请记住或者在预约管理中查看","info",function () {
+                                        $.messager.alert("信息","预约成功,您的预约编号为"+result.bianhao+"<br>" +
+                                            "请记住或者在预约管理中查看","info",function () {
                                             return
                                         })
                                     }

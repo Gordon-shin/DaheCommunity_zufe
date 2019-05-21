@@ -21,22 +21,22 @@ public class ShopServlet extends HttpServlet {
             String key = request.getParameter("data");
             ShopDao shopDao = new ShopDao();
             result =  shopDao.ShopQuery(key);
-            System.out.println(result);
+           // System.out.println(result);
             CommonDao.out(response,result);
         }
         else if ("queryiteminfo".equals(method)) {
             String result = null;
             String key = request.getParameter("itemid");
-            System.out.println(key);
+          //  System.out.println(key);
             ShopDao shopDao = new ShopDao();
             result =  shopDao.getDetail(key);
             result= JSONDao.JSONArrayToObject(result);
-            System.out.println(result);
+            //System.out.println(result);
             CommonDao.out(response,result);
         }
         else if ("addgouwuche".equals(method)){
             String data = request.getParameter("data");
-            System.out.println(request.getParameter("data"));
+           // System.out.println(request.getParameter("data"));
             JSONObject jsonObject =  JSONObject.fromObject(data);
             ShopDao shopDao = new ShopDao();
             String result = shopDao.addGouWuChe(jsonObject);
@@ -71,9 +71,9 @@ public class ShopServlet extends HttpServlet {
         }
         else if ("deletewgc".equals(method)){
             JSONArray jsonArray;
-            System.out.println(request.getParameter("data"));
+           // System.out.println(request.getParameter("data"));
             jsonArray = JSONArray.fromObject(request.getParameter("data"));
-            System.out.println(jsonArray);
+            //System.out.println(jsonArray);
             String userid = request.getParameter("userid");
             ShopDao shopDao = new ShopDao();
             String result = shopDao.deletegwc(jsonArray,userid);
@@ -86,7 +86,8 @@ public class ShopServlet extends HttpServlet {
             ShopDao shopDao = new ShopDao();
             JSONObject jsonObject ;
             jsonObject = JSONObject.fromObject(request.getParameter("data"));
-            shopDao.querenfukuan(jsonObject);
+           CommonDao.out(response, shopDao.querenfukuan(jsonObject));
+
         }
         else if ("queryalldingdan".equals(method)){
            JSONObject jsonObject = JSONObject.fromObject(request.getParameter("data"));
@@ -99,6 +100,16 @@ public class ShopServlet extends HttpServlet {
             ShopDao shopDao =new ShopDao();
             result =  shopDao.shopchaxundingdan(jsonObject);
             CommonDao.out(response,result);
+        }
+        else if ("gouwuchexiugaiBtn".equals(method)){
+            String result;
+            String itemid = request.getParameter("itemid");
+            String number = request.getParameter("number");
+            String userid = request.getParameter("userid");
+            ShopDao shopDao =new ShopDao();
+            result =  shopDao.gouwuchexiugaiBtn(itemid,number,userid);
+            CommonDao.out(response,result);
+
         }
     }
 

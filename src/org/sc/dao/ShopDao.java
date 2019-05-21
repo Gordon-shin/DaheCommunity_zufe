@@ -10,11 +10,14 @@ import javax.management.Query;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+@SuppressWarnings("all")
 public class ShopDao {
     public String ShopQuery(String value){
         ShopQuery shopQuery = new ShopQuery();
-        String sql = "select  itemid 物品ID,ItemName 物品名称, itemclass 物品分类, itemprice 物品单价,itemunit 单位,itemstock 库存,offeruserid 供货人ID,userPersonname 供货人姓名 from tb_shop_items,tb_users where itemname  like ? and offeruserid =userid";
+        String sql = "select  itemid 物品ID,ItemName 物品名称, " +
+                "itemclass 物品分类, itemprice 物品单价,itemunit 单位,itemstock 库存," +
+                "offeruserid 供货人ID,userPersonname 供货人姓名 from tb_shop_items," +
+                "tb_users where itemname  like ? and offeruserid =userid";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -69,7 +72,8 @@ public class ShopDao {
 
     }
     public String addGouWuChe(JSONObject jsonObject){
-        String sql = "Insert into tb_shop_items_order(itemid,userid,itemnumber,orderdate,paystatus) values(?,?,?,?,?)";
+        String sql = "Insert into tb_shop_items_order(itemid,userid," +
+                "itemnumber,orderdate,paystatus) values(?,?,?,?,?)";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -88,7 +92,11 @@ public class ShopDao {
         return result;
     }
     public String QueryGWC(String userid){
-        String sql = "select tb_shop_items.ItemId 物品编号,ItemName 物品名称,ItemPrice 物品单价,ItemNumber 物品数量,CONVERT(CONVERT((ItemNumber*ItemPrice),DECIMAL(10,2)),char) 总价,OrderDate 加入购物车日期 from tb_shop_items_order,tb_shop_items where tb_shop_items_order.ItemId=tb_shop_items.ItemId and UserId =?";
+        String sql = "select tb_shop_items.ItemId 物品编号,ItemName 物品名称,ItemPrice 物品单价" +
+                ",ItemNumber 物品数量,CONVERT(CONVERT((ItemNumber*ItemPrice),DECIMAL(10,2)),char) " +
+                "总价,OrderDate 加入购物车日期 from tb_shop_items_order" +
+                ",tb_shop_items where tb_shop_items_order.ItemId=tb_shop_items.ItemId " +
+                "and UserId =? and payStatus ='购物车中'";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -104,7 +112,9 @@ public class ShopDao {
         return  result;
     }
     public String ItemInfoCreate(JSONObject jsonObject){
-        String sql = "Insert into tb_shop_items(itemname, itemclass, itemprice, itemunit, itemserialno, itemstock, offeruserid, state, description, addtime,phone)  values(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "Insert into tb_shop_items(itemname, itemclass," +
+                " itemprice, itemunit, itemserialno, itemstock, " +
+                "offeruserid, state, description, addtime,phone)  values(?,?,?,?,?,?,?,?,?,?,?)";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -160,9 +170,27 @@ public class ShopDao {
         String zongjia =jsonObject.get("zongjia").toString();
         String goumairen = jsonObject.get("goumairen").toString();
         String invoicedate = jsonObject.get("invoicedate").toString();
-        System.out.println(jsonArray);
+        for (int j = 0; j<jsonArray.size();j++){
+            String sql = "select  ItemStock from tb_shop_items where ItemId = ? ";
+            Connection connection = DBUtil.getConnection();
+            PreparedStatement pStatement = null;
+            try {
+                pStatement = connection.prepareStatement(sql);
+                pStatement.setString(1, jsonArray.getJSONObject(j).getString("id"));
+                CommonDao commonDao = new CommonDao();
+                int number =Integer.parseInt(jsonArray.getJSONObject(j).getString("number")) ;
+                int stocknumber= Integer.parseInt(commonDao.SingleDataQuery(pStatement));
+                if (stocknumber-number<0){
+                   return "2";//2表示库存不足
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         for (int i =0 ;i<jsonArray.size();i++){
-            String sql = "insert into tb_shop_items_invoices(invoiceDate, userId, itemId, itemNumber, total, state) values (?,?,?,?,?,?) ";
+            String sql = "insert into tb_shop_items_invoices(invoiceDate," +
+                    " userId, itemId, itemNumber, total, state) values (?,?,?,?,?,?) ";
             Connection connection = DBUtil.getConnection();
             PreparedStatement pStatement = null;
             try {
@@ -177,7 +205,6 @@ public class ShopDao {
                if (j<=0){
                    return "false";
                }
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -187,12 +214,21 @@ public class ShopDao {
                 pStatement.setString(1, jsonArray.getJSONObject(i).getString("number"));
                 pStatement.setString(2,jsonArray.getJSONObject(i).getString("id"));
                 int j = pStatement.executeUpdate();
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            sql = "update tb_shop_items_order set payStatus = '已支付' where ItemId=? and userid = ?" ;//delete from  tb_shop_items_order where ItemId=? and userid = ?
+            try {
+                pStatement =  connection.prepareStatement(sql);
+                pStatement.setString(2, goumairen);
+                pStatement.setString(1,jsonArray.getJSONObject(i).getString("id"));
+                int j = pStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
-        return "true";
+        return "0"; //0表示成功
     }
     public String queryalldingdan(JSONObject jsonObject){
 
@@ -214,5 +250,23 @@ public class ShopDao {
             e.printStackTrace();
         }
         return result;
+    }
+    public String gouwuchexiugaiBtn(String itemid, String number,String userid){
+        String sql = "update tb_shop_items_order set ItemNumber = ? where UserId=? and itemid =?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        try {
+            pStatement= connection.prepareStatement(sql);
+            pStatement.setString(1,number);
+            pStatement.setString(2,userid);
+            pStatement.setString(3,itemid);
+           if (pStatement.executeUpdate()<1){
+               return "0";
+           }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "1";
     }
 }

@@ -1,5 +1,6 @@
 package org.sc.servlet;
 
+import net.sf.json.JSONObject;
 import org.sc.dao.CommonDao;
 import org.sc.dao.NewsDao;
 
@@ -18,6 +19,19 @@ public class newsServlet extends HttpServlet {
            String result = null;
            NewsDao newsDao  = new NewsDao();
            result =  newsDao.getNews();
+           CommonDao.out(response,result);
+       }
+       else if ("reviewNews".equals(method)){
+           String result = null;
+           NewsDao newsDao  = new NewsDao();
+           result =  newsDao.reviewNews();
+           CommonDao.out(response,result);
+       }
+       else if ("addNews".equals(method)){
+           String result;
+           JSONObject jsonObject = JSONObject.fromObject(request.getParameter("data"));
+           NewsDao newsDao  = new NewsDao();
+           result =  Integer.toString(newsDao.addNews(jsonObject));
            CommonDao.out(response,result);
        }
     }

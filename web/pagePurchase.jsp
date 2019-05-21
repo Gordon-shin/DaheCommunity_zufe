@@ -39,7 +39,7 @@
 }
 .btn_nav{height:36px; line-height:36px; margin:20px auto;}
 .prev,.next{width:100px; height:32px; line-height:32px;
-repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
+/*repeat-x bottom*/; border:1px solid #d3d3d3; cursor:pointer}
     #sub{
         color: #fff;
         background-color: red;
@@ -183,7 +183,7 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
     </div>
 </div>
 <div id="dlg-xiugaibtns">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="gouwuchexiugaiBtn">添加</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="gouwuchexiugaiBtn">修改</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" id="cancelgwcxiugaiBtn">取消</a>
 </div>
 
@@ -201,7 +201,7 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
                 <div class="page">
                     <div id="querendingdan">
                         <ul class="list-group">
-                            <li class="list-group-item" id="displaylist" v-for="item in list" :key="item.id">
+                            <li class="list-group-item" id="displaylist" v-for="item in list" >
                                 <span class="badge" style="color: red">小计： {{item.xiaoji}}</span>
                                 <span class="badge">数量： {{item.number}}</span>
                                 {{item.itemname}}
@@ -224,7 +224,7 @@ repeat-x bottom; border:1px solid #d3d3d3; cursor:pointer}
                     将从您的账户中扣除 <span class="dingdanquerenzongjia2"></span>
                     <div class="btn_nav">
                         <input type="button" class="prev" style="float:left" value="«上一步" />
-                        <input type="button" class="next right" id="sub" value="付款" />
+                        <input type="button" class="next right" id="shopsub" value="付款" />
                     </div>
                 </div>
             </div>

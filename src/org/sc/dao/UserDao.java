@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@SuppressWarnings("all")
 public class UserDao {
     public User query(String LoginUserName) {
         Connection connection = DBUtil.getConnection();

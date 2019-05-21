@@ -1,5 +1,6 @@
 package org.sc.dao;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.sc.util.DBUtil;
 
@@ -113,6 +114,34 @@ public class MessageDao {
             pStatement.setString(2,jsonObject.getString("id"));
             CommonDao commonDao = new CommonDao();
             result = commonDao.JSONQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public  String checkpeoplebyid(String userid,String sessionid){
+        String sql = "select * from tb_dialog where diaguser =?  and contactuserid =?" +
+                " or contactuserid=? and diaguser= ? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement ;
+        String result = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            pStatement.setString(2,sessionid);
+            pStatement.setString(3,userid);
+            pStatement.setString(4,sessionid);
+            CommonDao commonDao = new CommonDao();
+            JSONArray jsonArray = JSONArray.fromObject(commonDao.JSONQuery(pStatement));
+            if (jsonArray.size()<1){
+                sql = "select UserPersonName from tb_users where UserId  =?";
+                pStatement = connection.prepareStatement(sql);
+                pStatement.setString(1,userid);
+                result =commonDao.SingleDataQuery(pStatement);
+            }
+            else {
+                result =  "2";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

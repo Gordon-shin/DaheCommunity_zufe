@@ -17,7 +17,7 @@ else{
         <div title="系统公告" id="newslist">
             <ul class="notice-list" >
                 <li v-for = "item in list" :key="item.newsid">
-                    <span>{{item.text}}</span>
+                    <div style="width: 800px" v-html = "item.text">{{item.text}}</div>
                     <span class="date">发布时间：{{item.adddate}}</span>
                 </li>
             </ul>

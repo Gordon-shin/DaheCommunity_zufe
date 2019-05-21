@@ -3,8 +3,9 @@
 
 <html>
 	<head>
-		<script src="js/Newdate.js"></script>
 
+		<script src="js/Newdate.js"></script>
+		<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 		<script>
 			function chatNoAnime(element,imgSrc,Content) {
 				var $user=element;
@@ -225,7 +226,7 @@
 				var sessionname='<%=session.getAttribute("username")%>';
 				var sessionid='<%=session.getAttribute("userid")%>';
 			</script>
-		<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta charset="utf-8" />
 		<title>大河小区便民服务管理系统</title>
@@ -305,10 +306,66 @@
 
 
 		<!-- 弹出框 -->
+		<script>
+			$(function () {
+				$('#liaotianyonghuming').textbox({
+					disabled:true
+				});
+				$('#liaotianrentianjia').linkbutton({
+					onClick:function () {
+						$('#liaotianyonghuming').textbox('setValue',"")
+						if ($('#liaotianyhonghubianhao').val()=="")
+						{
+							$.messager.alert("信息","请输入想要聊天的用户编号","info")
+						}
+						else{
+							$.ajax({
+								type: "POST",
+								async:false,
+								url: "MessageServlet",
+								data: {userid: $('#liaotianyhonghubianhao').val(),sessionid:sessionid,method: "checkpeoplebyid"},
+								success:function (e) {
+
+									if (e=="2"){
+										$.messager.alert("信息","您已经与该用户建立了会话","info")
+									}
+									else{
+										$('#liaotianyonghuming').textbox('setValue',e);
+										$.messager.confirm("信息","您确认要与"+e+"建立会话吗",function (r) {
+											if (r){
+												var diagdata = {};
+												diagdata["userid"]=$('#liaotianyhonghubianhao').val()
+												diagdata["seller"]=sessionid
+												diagdata["time"]=getNowFormatDate();
+												$.ajax({
+													type:"post",
+													url:"MessageServlet",
+													data:{data:JSON.stringify(diagdata),method:"liaotianshitianjiadiag"},
+													success:function (e) {
+														$.messager.alert("信息",e,"info")
+														selectLiaotian1.getDiag(sessionid)
+													}
+												})
+											}
+										})
+									}
+								}
+							})
+						}
+
+					}
+				})
+			})
+		</script>
 		<div class="easyui-dialog" title="聊天室" iconCls="icon-save" modal="true"
 			 closed="true"  id="dlg" style="width: 400px">
 			<div id="selectLiaotian">
 				<table class="table table-bordered table-hover table-striped">
+					<div style="margin: 0px 0px 10px 0px">
+						<div style="margin: 0px 0px 10px 10px;display: inline ">用户编号:<input style="width:50px;height:20px;margin: 0px 0px 0px 30px" class="textbox" type="text" id="liaotianyhonghubianhao" ></div>
+						<div style="margin: 0px 0px 10px 10px;display: inline ">用户姓名:<input style="width:60px;height:20px;margin: 0px 0px 0px 30px" class="textbox" type="text"  id="liaotianyonghuming" ></div>
+						<a href="#" style="margin: 0px 0px 0px 10px"  iconCls="icon-ok" id="liaotianrentianjia">添加聊天人</a>
+					</div>
 					<thead>
 					<tr>
 						<th>对话ID</th>

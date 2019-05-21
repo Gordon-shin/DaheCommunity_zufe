@@ -10,6 +10,7 @@ function addmessage(data){
         }
         })
 }
+var selectLiaotian1
 $(function() {
     $('.send-btn').click(function () {
         let text = liaotianeditor.text()
@@ -40,7 +41,7 @@ $(function() {
 
             if (node.url) {
                 var tab = $('#tt').tabs('getSelected');
-                console.log(tab);
+                //console.log(tab);
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
                     var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
@@ -116,7 +117,7 @@ $(function() {
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
                     var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
-                    tab.panel('refresh');
+                   // tab.panel('update');
                 } else {
                     $('#tt').tabs('add', {
                         title: node.text,
@@ -149,7 +150,7 @@ $(function() {
 
             if (node.url) {
                 var tab = $('#tt').tabs('getSelected');
-                console.log(tab);
+                //console.log(tab);
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
                     var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
@@ -194,15 +195,10 @@ $(function() {
             var host= window.location.href;
             if (node.url) {
                 if ($('#tt').tabs('exists', node.text)) {
-
                     $('#tt').tabs('select', node.text)
+                    var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
+                  //  tab.panel('refresh');
 
-                    $('#tt').tabs('update',{
-                        tab:node.text,
-                        options:{
-                            href:node.url
-                        }
-                    })
                 } else {
                     $('#tt').tabs('add', {
                         title: node.text,
@@ -264,7 +260,7 @@ $(function() {
             }
         });
     })
-    var selectLiaotian1 = new Vue({
+     selectLiaotian1 = new Vue({
         el:'#selectLiaotian',
         data:{
             list:""

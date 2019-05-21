@@ -59,6 +59,13 @@ public class HospitalServlet extends HttpServlet {
             object.put("result",Integer.toString(j));
             CommonDao.out(response,object.toString());
         }
+        else if ("yiyuanordermanager".equals(method)){
+            String userid = request.getParameter("data");
+            String result;
+            HospDao hospDao = new HospDao();
+            result =hospDao.queryyuyuebyuserid(userid);
+            CommonDao.out(response,result);
+        }
 
     }
 

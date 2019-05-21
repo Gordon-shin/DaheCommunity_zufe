@@ -134,9 +134,9 @@ $(function () {
                                         value:number
                                     })
                                 }
+
                             }
                         })
-                        console.log(result)
                     }
                 })
              $('#xiugaiPurchase').dialog({
@@ -196,7 +196,7 @@ $(function () {
         return newArr;
     }
 
-    $('#sub').click(function () {
+    $('#shopsub').click(function () {
         $.messager.confirm('确认','确认付款',function (r){
             if (r==true) {
                 var wupingdata = {itemdetail:gwcitemid,zongjia:zongjia,goumairen:sessionid,invoicedate:getNowFormatDate()}
@@ -205,14 +205,19 @@ $(function () {
                     url: "ShopServlet",
                     data: {data: JSON.stringify(wupingdata), method: "querenfukuan"},
                     success: function (result) {
-                        if (result)
-                        $.messager.alert('成功',null,"info")
+                        alert(result)
+                        if (result=="2"){
+                            $.messager.alert('失败',"物品库存不足","info")
+                        }
+                        else if (result=="0") {
+                            $.messager.alert('成功',"物品支付成功,请去订单管理处查看","info")
+                        }
                     }
                 })
             }
         })
     })
-    dingdan = new Vue({
+     dingdan = new Vue({
         el:'#querendingdan',
         data:{
             zongjia:"",
@@ -232,13 +237,37 @@ $(function () {
             }
         }
     })
+
+    $('#gouwuchexiugaiBtn').linkbutton({
+        onClick:function () {
+
+
+            $.ajax({
+                type: "POST",
+                url:"ShopServlet",
+                data:{itemid:gwcitemid[0].id,
+                    number:$('#xiugaiweitiao').numberspinner('getValue'),
+                    userid:sessionid,
+                    method:"gouwuchexiugaiBtn"},
+                success:function (result) {
+                    if (result="1") {
+                        $.messager.alert("信息","数量编辑成功","info")
+                        chaxunChart();
+                    }
+                    else {
+                        $.messager.alert("信息","数量编辑失败","info")
+                    }
+                }})
+        }
+    })
     $('#zhifujiesuan').linkbutton({
         onClick:function () {
             if (gwcitemid.length===0){
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
-                console.log(dingdan)
+                dingdan.$forceUpdate();
+                //console.log(dingdan)
                 $('#zhifujiesuanform').dialog({
                     onBeforeOpen:function(){
                         dingdan.add();
@@ -247,7 +276,7 @@ $(function () {
                     },
                     closed:false,
                     onBeforeClose:function () {
-                        $('.dingdanquerenzongjia2').empty();
+                       $('.dingdanquerenzongjia2').empty();
                     }
                 })
             }
