@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static org.sc.util.FunctionUtil.compareTime;
-
+@SuppressWarnings("all")
 public class RepairDao {
     public static Boolean RepairTimeJudge (String repairmanid, String chooseTime, String chooseTimeAfter ){//判断时间块冲突函数
         //符合时间的id
@@ -285,6 +285,27 @@ public class RepairDao {
             pStatement.setString(1,userid);
             CommonDao commonDao = new CommonDao();
             result = commonDao.DataTableToJson(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String UpdateReview(String repairid,String review){
+        String sql = "update tb_repair_sheet set Review = ? where SheetsId = ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,review);
+            pStatement.setString(2,repairid);
+            int judge = pStatement.executeUpdate();
+            if (judge>0){
+                result = "success";
+            }
+            else{
+                result = "failed";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

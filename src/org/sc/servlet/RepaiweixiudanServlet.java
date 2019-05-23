@@ -19,6 +19,13 @@ public class RepaiweixiudanServlet extends HttpServlet {
             String  result =  repairDao.Queryweixiudan(request.getParameter("userid"));
             CommonDao.out(response,result);
         }
+         else if ("UpdateReview".equals(method)){
+             String review = request.getParameter("review");
+             String weixiuid = request.getParameter("weixiuid");
+             RepairDao repairDao = new RepairDao();
+             String  result =  repairDao.UpdateReview(weixiuid,review);
+             CommonDao.out(response,result);
+         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -233,20 +233,17 @@
 		<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
 	    <link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
 	    <link rel="stylesheet" type="text/css" href="css/common.css" />
-
+		<link rel="stylesheet" type="text/css" href="css/star-rating.css">
 	    <script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
-
-
 	<%--	<script type="text/javascript" src="./css/semantic.min.js"></script>--%>
 		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
 		<script type="text/javascript"  charset="UTF-8" src="js/index.js"></script>
 		<script type="text/javascript"  charset="UTF-8" src="js/base64.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/semantic.css" />
 		<script type="text/javascript" charset="utf-8" src="plugin/kindeditor/kindeditor-all.js"></script>
-
 		<script src="js/vue.js"></script>
-
+		<script src="js/star-rating.js"></script>
 
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
@@ -262,6 +259,7 @@
 			<img src="img/banner.png" class="logo" />
 			<div class="top-btns">
 				<span id="welcomeSpan">欢迎您，</span>
+				<a href="#" class="easyui-linkbutton"  id="openyue"data-options="plain:true,iconCls:'icon-user'">我的余额</a>
 				<a href="#" class="easyui-linkbutton"  id="openChatZone"data-options="plain:true,iconCls:'icon-chat'">聊天室</a>
 				<a href="LogoutServlet" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-clear'" id="logoutjs">退出系统</a>
 			</div>
@@ -302,6 +300,11 @@
 		<!-- 弹出框 -->
 		<script>
 			$(function () {
+				$('#openyue').linkbutton({
+					onClick:function () {
+						alert(1)
+					}
+				})
 				$('#liaotianyonghuming').textbox({
 					disabled:true
 				});
@@ -437,5 +440,7 @@
 				</div>
 			</div>
 		</div>
+
+
 	</body>
 </html>

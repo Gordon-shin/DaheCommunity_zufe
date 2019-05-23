@@ -15,9 +15,6 @@
 
             <label>按时间查询：</label>
             <input   id="sellerdingdanriqichaxun">
-
-
-
         </div>
         <div class="ctrl-div">
             <%-- <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="!">预约</a>--%>
