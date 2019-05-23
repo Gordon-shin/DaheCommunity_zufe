@@ -22,11 +22,13 @@
         return result;
     }
     var shuju
+    var invoicedata;
     $(function () {
         shuju =  JSON.parse(queryshopdingdan());
+
         $('#invoiceManager').datagrid({
             toolbar:$('#invoiceManagerToolBar'),
-            columns:[shuju.title],
+
             title:"订单管理",
             striped:true,
             rownumbers:true,
@@ -43,11 +45,17 @@
             onCheck:function (index,rowdata) {
                 //  $('#orderTable').datagrid('selectRow',index);
                 //rows =  $('#orderTable').datagrid('getChecked');
-                rows=rowdata.Id;
-                console.log(rows);
+                invoicedata=rowdata;
             },
         })
-        $('#invoiceManager').datagrid('loadData', shuju.rows);
+        if (JSON.stringify(shuju)!="[]") {
+            $('#invoiceManager').datagrid({columns:[shuju.title]})
+            $('#invoiceManager').datagrid('loadData', shuju.rows);
+            $('#invoiceManager').datagrid('selectRow',0)
+        }
+        else{
+            $.messager.alert("信息","没有找到相关的信息","info")
+        }
         $('#shopdingdanriqichaxun').datetimebox({
           editable:false
         })
@@ -71,7 +79,40 @@
 
             }
         })
-
+        $('#compeleteinvoice').linkbutton({
+            onClick:function () {
+                if (invoicedata.货物状态=="等待发货") {
+                    $.messager.alert("信息","对方还没有发货请不要确认收货","error")
+                }
+                else if (invoicedata.货物状态=="已确认收货") {
+                    $.messager.alert("信息","该商品您已确认收货","error")
+                }
+                else {
+                    $.messager.confirm("信息","请确认有没有收到货，<br>该操作不可逆",function (r) {
+                        if (r==true){
+                            $.ajax({
+                                url: "ShopServlet",
+                                async:false,
+                                type: "post",
+                                data: {userid:sessionid,itemid:invoicedata.编号, method: "querenshouhuo"},
+                                success: function (e) {
+                                    $.messager.alert("信息",e,"error")
+                                    shuju =  JSON.parse(queryshopdingdan());
+                                    if (JSON.stringify(shuju)!="[]") {
+                                        $('#invoiceManager').datagrid({columns:[shuju.title]})
+                                        $('#invoiceManager').datagrid('loadData', shuju.rows);
+                                        $('#invoiceManager').datagrid('selectRow',0)
+                                    }
+                                    else{
+                                        $.messager.alert("信息","没有找到相关的信息","info")
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        })
     })
 </script>
 <table id="invoiceManager">
@@ -91,8 +132,8 @@
 
         </div>
         <div class="ctrl-div">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="!">预约</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="@">编辑</a>
+           <%-- <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="!">预约</a>--%>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" plain="true" id="compeleteinvoice">收货成功</a>
         </div>
     </div>
 </table>

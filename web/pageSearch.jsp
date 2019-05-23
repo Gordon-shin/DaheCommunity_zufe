@@ -211,12 +211,7 @@
 <div class="toolbar" id="toolbarItemSearch">
   <div style="background-color: white">
       <div class="search-div"  style="margin: auto; width: 300px" id="searchbarbar">
-
           <input  style="width: 300px;height:28px " id="wupinsousuo" >
-
-
-
-
       </div>
   </div>
     <div class="ctrl-div">

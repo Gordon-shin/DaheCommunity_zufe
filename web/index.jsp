@@ -258,7 +258,6 @@
 			System.out.println(user.getPassword());
 		}
 		%>
-
 		<div region="north" id="header">
 			<img src="img/banner.png" class="logo" />
 			<div class="top-btns">
@@ -296,15 +295,10 @@
 		
 		<div region="center" id="content">
 			<div class="easyui-tabs" fit="true" id="tt">
-
-
-
 			</div>
 		</div>
 		
 		<div region="south" id="footer">&copy;大河小区便民服务管理系统 V1.0</div>
-
-
 		<!-- 弹出框 -->
 		<script>
 			$(function () {
@@ -358,7 +352,7 @@
 			})
 		</script>
 		<div class="easyui-dialog" title="聊天室" iconCls="icon-save" modal="true"
-			 closed="true"  id="dlg" style="width: 400px">
+			 closed="true" id="dlg" style="width: 400px">
 			<div id="selectLiaotian">
 				<table class="table table-bordered table-hover table-striped">
 					<div style="margin: 0px 0px 10px 0px">

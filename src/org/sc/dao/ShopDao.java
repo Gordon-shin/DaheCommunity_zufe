@@ -7,6 +7,7 @@ import org.sc.bean.ShopQuery;
 import org.sc.util.DBUtil;
 
 import javax.management.Query;
+import javax.servlet.http.Part;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -208,7 +209,8 @@ public class ShopDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            sql ="update tb_shop_items set ItemStock = ItemStock-? where  ItemId = ?";
+            sql ="update tb_shop_items set ItemStock = ItemStock-? " +
+                    "where  ItemId = ?";
             try {
                 pStatement =  connection.prepareStatement(sql);
                 pStatement.setString(1, jsonArray.getJSONObject(i).getString("number"));
@@ -236,7 +238,7 @@ public class ShopDao {
     }
     public String shopchaxundingdan(JSONObject jsonObject){
         String userid =  jsonObject.get("userid").toString();
-        String sql = "select * from  view_shop_invoice where userid =? ";
+        String sql = "select * from  view_shop_invoice where 用户编号 =? ";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         String result=null;
@@ -252,7 +254,8 @@ public class ShopDao {
         return result;
     }
     public String gouwuchexiugaiBtn(String itemid, String number,String userid){
-        String sql = "update tb_shop_items_order set ItemNumber = ? where UserId=? and itemid =?";
+        String sql = "update tb_shop_items_order set" +
+                " ItemNumber = ? where UserId=? and itemid =?";
         Connection connection = DBUtil.getConnection();
         PreparedStatement pStatement = null;
         try {
@@ -268,5 +271,129 @@ public class ShopDao {
             e.printStackTrace();
         }
         return "1";
+    }
+    public String UploadItemqueryBysellerid(String userid){
+        String sql = "select itemid, itemname, itemclass, imgurl, " +
+                "itemprice, itemunit, itemserialno, itemstock," +
+                " offeruserid, state, description, addtime, " +
+                "address, phone from tb_shop_items where offerUserId = ?";
+        Connection connection = DBUtil.getConnection();
+        String result = null;
+        PreparedStatement pStatement = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.DataTableToJson(pStatement);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String modifyitemdata (JSONObject jsonObject,String imagePath){
+        String sql = "update tb_shop_items set ItemName =? ,itemclass=?," +
+                "ItemPrice=?,ItemUnit=?,ItemSerialNo=?," +
+                "ItemStock=?,state='审核中',description=?,Phone=? where ItemId=?";
+        Connection connection = DBUtil.getConnection();
+        String result = null;
+        PreparedStatement pStatement = null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1 ,jsonObject.getString("itemtitle1"));
+            pStatement.setString(2 ,jsonObject.getString("itemclass1"));
+            pStatement.setString(3 ,jsonObject.getString("priceView1"));
+            pStatement.setString(4 ,jsonObject.getString("barunit1"));
+            pStatement.setString(5 ,jsonObject.getString("barcode1"));
+            pStatement.setString(6 ,jsonObject.getString("num1"));
+            pStatement.setString(7 ,jsonObject.getString("description"));
+            pStatement.setString(8 ,jsonObject.getString("phone1"));
+            pStatement.setString(9 ,jsonObject.getString("itemid"));
+            int judge = pStatement.executeUpdate();
+            if (judge>0){
+                if (!"noImage".equals(imagePath)){
+                    sql = "update tb_shop_items set imgurl = ? where ItemId =?";
+                    pStatement = connection.prepareStatement(sql);
+                    pStatement.setString(1,imagePath);
+                    pStatement.setString(2,jsonObject.getString("itemid"));
+                    judge= pStatement.executeUpdate();
+                    if (judge<1){
+                        result ="xiugaituxiangshibai";
+                    }
+                    else{
+                        result ="success";
+                    }
+                }
+                else {
+                    result ="success";
+                }
+            }
+            else {
+                result="xiugaishibai";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String querenshouhuo(String userid, String itemid){
+        String sql = "update tb_shop_items_invoices set" +
+                " itemstate ='已确认收货',state='已完成' " +
+                "where Id = ? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,itemid);
+            int judge =  pStatement.executeUpdate();
+            if (judge>0){
+                result ="success";
+            }
+            else {
+                result ="failed";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String sellerqueryfahuo(String sellerid){
+        String sql = "SELECT * from view_shop_invoice WHERE 卖家编号= ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,sellerid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.DataTableToJson(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String sellerfahuo(String fahuobianhao){
+        String sql = "update tb_shop_items_invoices set" +
+                " itemstate ='已发货' " +
+                "where Id = ? ";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,fahuobianhao);
+            int judge =  pStatement.executeUpdate();
+            if (judge>0){
+                result ="success";
+            }
+            else {
+                result ="failed";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

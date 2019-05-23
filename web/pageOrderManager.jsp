@@ -51,7 +51,7 @@
         <div style="width:380px; "><textarea id="weixiudandes"></textarea></div>
         </div>
     </div>
-</div>
+
 <div id="dlg-addRepairSheetdiag">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" id="subRepairSheetBtn">提交</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" id="cancelBtn">取消</a>

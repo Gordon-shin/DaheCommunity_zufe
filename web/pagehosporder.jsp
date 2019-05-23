@@ -167,24 +167,27 @@
                           hospguahaodata["date"] = $('#hospriqi').datebox('getValue')
                         $.messager.confirm("信息","预约" +
                             "将花费"+hosprowdata.挂号价格+"确" +
-                            "认继续吗？",function () {
-                            $.ajax({
-                                url: "HospitalServlet",
-                                type: "post",
-                                data: {data: JSON.stringify(hospguahaodata),method:"yiyuanyuye"},
-                                success: function (result) {
-                                     result=JSON.parse(result)
-                                    if (result.result>0) {
-                                        $.messager.alert("信息","预约成功,您的预约编号为"+result.bianhao+"<br>" +
-                                            "请记住或者在预约管理中查看","info",function () {
-                                            return
-                                        })
-                                    }
-                                    else{
-                                        $.messager.alert("信息","预约失败","info")
-                                    }
-                                }
-                            })
+                            "认继续吗？",function (r) {
+                           if (r == true) {
+                               $.ajax({
+                                   url: "HospitalServlet",
+                                   type: "post",
+                                   data: {data: JSON.stringify(hospguahaodata),method:"yiyuanyuye"},
+                                   success: function (result) {
+                                       result=JSON.parse(result)
+                                       if (result.result>0) {
+                                           $.messager.alert("信息","预约成功,您的预约编号为"+result.bianhao+"<br>" +
+                                               "请记住或者在预约管理中查看","info",function () {
+                                               return
+                                           })
+                                       }
+                                       else{
+                                           $.messager.alert("信息","预约失败","info")
+                                       }
+                                   }
+                               })
+                           }
+                           else {return}
                         })
                     }
                     else{

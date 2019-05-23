@@ -26,8 +26,11 @@ public class DaoTest {
 */
        // JSONObject jsonObject = new JSONObject();
       // NewsDao newsDao = new NewsDao();
-        MessageDao messageDao =new MessageDao();
-         result = messageDao.checkpeoplebyid("0","1");
+        //MessageDao messageDao =new MessageDao();
+
+        JSONObject jsonObject = JSONObject.fromObject("{userid:1}");
+        ShopDao shopDao = new ShopDao();
+        result = shopDao.shopchaxundingdan(jsonObject);
 
 
 

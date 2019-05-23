@@ -23,7 +23,7 @@ public class upItemImgServlet extends HttpServlet {
            ImageDao imageDao = new ImageDao();
            String name = imageDao.WriteImage(part,fileName,request,"item");
            String lastid = jsonObject.get("lastitemid").toString();
-           System.out.println(lastid);
+          // System.out.println(lastid);
            String result  = imageDao.updateItemImagePath("img/upload/item/"+name,lastid);
           CommonDao.out(response,result);
        }

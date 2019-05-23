@@ -8,12 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <link rel="stylesheet" href="./css/bootstrap.css">
-
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <title>大河小区便民服务管理系统</title>
@@ -30,6 +27,8 @@
     <script src="js/vue.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
     <script type="text/javascript" charset="utf-8" src="plugin/kindeditor/kindeditor-all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/Newdate.js"></script>
+
     <script>
         var sessionname= Base64.decode($.cookie('PersonName'));
         var sessionid='<%=session.getAttribute("userid")%>';
@@ -137,7 +136,114 @@
 
         })*/
     </script>
+    <style>
+        .continueChat{
+            padding: 0.3rem 0.6rem;
+            border: 0;
+            background: red;
+            color: #fff;
+            min-width: 4rem;
+            border-radius: 0.4rem;
+            margin-left: 3%;
+            position: absolute;
+            right: 1.7rem;
+        }
+        .chat-bg{
+            width: 435px;
+        }
+        .header-title{
+            background: #6F83FF;
+            height: 30px;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+            font-size: 15px;
+            color: #fff;
+            z-index: 3;
+        }
+        .bubbleDiv {
+            width: 435px;
+            margin: 0 auto;
+            overflow: auto;
+            height: 94%;
+            /*padding: 0 3%;*/
+        }
 
+        .chat-box {
+            width: 435px;
+            height: 370px;
+            /*background-color: red;*/
+            overflow-y: hidden;
+            position: relative;
+        }
+        .send-btn{
+            padding: 0.6rem 1rem;
+            border: 0;
+            background: red;
+            color: #fff;
+            min-width: 4rem;
+            border-radius: 0.4rem;
+            margin-left: 3%;
+            position: absolute;
+            left: 0.1rem;
+            bottom: 0.5rem;
+        }
+        .bubble {
+            line-height: 19px;
+            border-radius: 0.8rem;
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            font-size: 11px;
+            margin-left: 15rem;
+        }
+        .rightBubble {
+            position: relative;
+            margin-right: 0.6rem;
+            float: right;
+            background-color: #6F83FF;
+            color: #fff;
+        }
+        #qkltk{
+            position: absolute;
+            left: 4.5rem;
+            bottom: 0.5rem;
+            background: #6F83FF;
+        }
+        .rightBubble .topLevel {
+            position: absolute;
+            top: 1rem;
+            right: -8px;
+            border-bottom: 10px solid #6F83FF;
+            border-right: 10px solid transparent;
+        }
+        .doctor-head {
+            width: 4rem;
+            box-sizing: border-box;
+            position: absolute;
+            height: 4rem;
+            top: 2rem;
+        }
+        .doctor-head img {
+            width: 100%;
+            border-radius: 50rem;
+            box-sizing: border-box;
+            border: 1px solid #e5e5e5;
+            height: 100%;
+        }
+        .leftBubble .topLevel {
+            position: absolute;
+            top: 1rem;
+            left: -9px;
+            border-bottom: 10px solid #EFF6F9;
+            border-left: 10px solid transparent;
+        }
+        .leftBubble {
+            position: relative;
+            background-color: #EFF6F9;
+            margin-left: 1rem;
+        }
+    </style>
 </head>
 <body class="easyui-layout" id="layout" style="visibility:hidden;">
 
@@ -152,6 +258,53 @@
 
 <script>
     $(function () {
+        $('#liaotianyonghuming').textbox({
+            disabled:true
+        });
+        $('#liaotianrentianjia').linkbutton({
+            onClick:function () {
+                $('#liaotianyonghuming').textbox('setValue',"")
+                if ($('#liaotianyhonghubianhao').val()=="")
+                {
+                    $.messager.alert("信息","请输入想要聊天的用户编号","info")
+                }
+                else{
+                    $.ajax({
+                        type: "POST",
+                        async:false,
+                        url: "MessageServlet",
+                        data: {userid: $('#liaotianyhonghubianhao').val(),sessionid:sessionid,method: "checkpeoplebyid"},
+                        success:function (e) {
+
+                            if (e=="2"){
+                                $.messager.alert("信息","您已经与该用户建立了会话","info")
+                            }
+                            else{
+                                $('#liaotianyonghuming').textbox('setValue',e);
+                                $.messager.confirm("信息","您确认要与"+e+"建立会话吗",function (r) {
+                                    if (r){
+                                        var diagdata = {};
+                                        diagdata["userid"]=$('#liaotianyhonghubianhao').val()
+                                        diagdata["seller"]=sessionid
+                                        diagdata["time"]=getNowFormatDate();
+                                        $.ajax({
+                                            type:"post",
+                                            url:"MessageServlet",
+                                            data:{data:JSON.stringify(diagdata),method:"liaotianshitianjiadiag"},
+                                            success:function (e) {
+                                                $.messager.alert("信息",e,"info")
+                                                selectLiaotian1.getDiag(sessionid)
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+
+            }
+        })//添加联系人会话
         $('#AdminnavRepair').tree({
             animate:true,
             lines:true,
