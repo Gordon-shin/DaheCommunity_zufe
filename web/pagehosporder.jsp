@@ -50,6 +50,7 @@
         }
     }
     var hosprowdata=null;
+    ksid =1
     $(function () {
         $('#hospriqi').datebox({
             formatter:myformatter
@@ -145,7 +146,9 @@
             valueField: 'Id',
             textField: 'cateName',
             onSelect:function () {
-                let ksid = $('#hospchooseType').combobox("getValue")
+                 ksid = $('#hospchooseType').combobox("getValue")
+                console
+                console.log("HospitalServlet?method=querydiseaseinfo&ksid="+ksid)
                 $('#hospchoosedisease').combobox({
                     url:"HospitalServlet?method=querydiseaseinfo&ksid="+ksid,
                     valueField: 'id',

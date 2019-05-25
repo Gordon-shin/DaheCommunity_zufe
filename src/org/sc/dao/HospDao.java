@@ -152,5 +152,25 @@ public class HospDao {
         }
         return  result;
     }
+    public  String deletehosporder(String hospid){
+        String sql = "delete from tb_hosp_order where id = ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement =connection.prepareStatement(sql);
+            pStatement.setString(1,hospid);
+            int judge =  pStatement.executeUpdate();
+            if (judge>0){
+                result = "success";
+            }
+            else {
+                result = "failed";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }

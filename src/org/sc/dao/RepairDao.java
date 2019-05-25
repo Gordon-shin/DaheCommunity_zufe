@@ -92,7 +92,7 @@ public class RepairDao {
            }
         }
         System.out.println(allowid);
-        String sql2 = "select Id,StaffName,LoginName,Duties,Email,Phone,Company " +
+        String sql2 = "select Id,StaffName,LoginName,Duties,Email,Phone,Company,AVGReview " +
                 "from tb_repair_staff_info where duties= ? and " +
                 " Sparetime<? and NOSParetime>? and state='1'";
         StringBuffer sBuffer = new StringBuffer(sql2);

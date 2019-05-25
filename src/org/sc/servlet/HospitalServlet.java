@@ -66,6 +66,15 @@ public class HospitalServlet extends HttpServlet {
             result =hospDao.queryyuyuebyuserid(userid);
             CommonDao.out(response,result);
         }
+        else if ("cancelorder".equals(method)){
+            String userid = request.getParameter("userid");
+            String hospid = request.getParameter("hospid");
+            String result;
+            HospDao hospDao = new HospDao();
+            result =hospDao.deletehosporder(hospid);
+            CommonDao.out(response,result);
+
+        }
 
     }
 

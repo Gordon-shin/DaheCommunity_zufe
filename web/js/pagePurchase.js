@@ -53,6 +53,26 @@ $(function () {
 
     })
     chaxunChart();
+     dingdan = new Vue({
+        el:'#querendingdan',
+        data:{
+            zongjia:"",
+            list: gwcitemid
+        },
+        methods:{
+            zongjiage(){
+                this.zongjia = zongjia
+            },
+            add(){
+                this.list = gwcitemid
+            },
+            del(){
+                this.list.some((item,i)=>{
+                    this.list.splice(i,1)
+                })
+            }
+        }
+    })
     $("#wizard").scrollable({
         onSeek:function (event,i) {
             $("#status li").removeClass("active").eq(i).addClass("active");
@@ -64,6 +84,7 @@ $(function () {
             zongjia=FloatAdd(singlejiage,zongjia)
             gwcitemid.push({id:row.物品编号,itemname:row.物品名称,key:row.物品编号,xiaoji:row.总价,number:row.物品数量})
             zongjiage();
+
         },
         onUncheck:function(index,row){
             singlejiage=parseFloat(row.总价);
@@ -196,6 +217,11 @@ $(function () {
         return newArr;
     }
 
+    $('#shuaxingouwuche').linkbutton({
+        onClick:function () {
+            chaxunChart()
+        }
+    })
     $('#shopsub').click(function () {
         $.messager.confirm('确认','确认付款',function (r){
             if (r==true) {
@@ -211,32 +237,15 @@ $(function () {
                         }
                         else if (result=="0") {
                             $.messager.alert('成功',"物品支付成功,请去订单管理处查看","info")
+                            chaxunChart();
+                            zongjia=0
                         }
                     }
                 })
             }
         })
     })
-     dingdan = new Vue({
-        el:'#querendingdan',
-        data:{
-            zongjia:"",
-            list: gwcitemid
-        },
-        methods:{
-            zongjiage(){
-                this.zongjia = zongjia
-            },
-            add(){
-                this.list = gwcitemid
-            },
-            del(){
-                this.list.some((item,i)=>{
-                    this.list.splice(i,1)
-                })
-            }
-        }
-    })
+
 
     $('#gouwuchexiugaiBtn').linkbutton({
         onClick:function () {
@@ -266,10 +275,10 @@ $(function () {
                 $.messager.alert('信息','请选择需要支付的商品',"error")
             }
             else{
-                dingdan.$forceUpdate();
                 //console.log(dingdan)
                 $('#zhifujiesuanform').dialog({
                     onBeforeOpen:function(){
+
                         dingdan.add();
                         dingdan.zongjiage()
                         $('.dingdanquerenzongjia2').append(zongjia)
@@ -277,6 +286,7 @@ $(function () {
                     closed:false,
                     onBeforeClose:function () {
                        $('.dingdanquerenzongjia2').empty();
+
                     }
                 })
             }

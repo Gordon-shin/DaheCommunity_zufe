@@ -7,6 +7,7 @@
 		<script src="js/Newdate.js"></script>
 		<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 		<script>
+
 			function chatNoAnime(element,imgSrc,Content) {
 				var $user=element;
 				var $imgHead=imgSrc;
@@ -242,9 +243,9 @@
 		<script type="text/javascript"  charset="UTF-8" src="js/base64.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/semantic.css" />
 		<script type="text/javascript" charset="utf-8" src="plugin/kindeditor/kindeditor-all.js"></script>
-		<script src="js/vue.js"></script>
-		<script src="js/star-rating.js"></script>
 
+		<script src="js/star-rating.js"></script>
+        <script src="js/vue.js"></script>
 	</head>
 	<body class="easyui-layout" id="layout" style="visibility:hidden;">
 		<% if((session.getAttribute("User"))==null){
@@ -302,9 +303,16 @@
 			$(function () {
 				$('#openyue').linkbutton({
 					onClick:function () {
-						alert(1)
-					}
-				})
+						$.ajax({
+							type: "POST",
+							async: false,
+							url: "AdminServlet",
+							data: {sessionid: sessionid, method: "querygerenyuebyid"},
+							success: function (e) {
+								alert("您的余额为"+e)
+							}
+						})
+					}})
 				$('#liaotianyonghuming').textbox({
 					disabled:true
 				});

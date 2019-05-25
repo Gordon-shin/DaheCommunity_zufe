@@ -190,10 +190,22 @@ public class ShopDao {
         }
 
         for (int i =0 ;i<jsonArray.size();i++){
-            String sql = "insert into tb_shop_items_invoices(invoiceDate," +
-                    " userId, itemId, itemNumber, total, state) values (?,?,?,?,?,?) ";
+            String sql ="update tb_shop_items set ItemStock = ItemStock-? " +
+                    "where  ItemId = ?";
             Connection connection = DBUtil.getConnection();
             PreparedStatement pStatement = null;
+            try {
+                pStatement =  connection.prepareStatement(sql);
+                pStatement.setString(1, jsonArray.getJSONObject(i).getString("number"));
+                pStatement.setString(2,jsonArray.getJSONObject(i).getString("id"));
+                int j = pStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+             sql = "insert into tb_shop_items_invoices(invoiceDate," +
+                    " userId, itemId, itemNumber, total, state) values (?,?,?,?,?,?) ";
+
             try {
                pStatement =  connection.prepareStatement(sql);
                pStatement.setString(1,invoicedate);
@@ -209,17 +221,8 @@ public class ShopDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            sql ="update tb_shop_items set ItemStock = ItemStock-? " +
-                    "where  ItemId = ?";
-            try {
-                pStatement =  connection.prepareStatement(sql);
-                pStatement.setString(1, jsonArray.getJSONObject(i).getString("number"));
-                pStatement.setString(2,jsonArray.getJSONObject(i).getString("id"));
-                int j = pStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            sql = "update tb_shop_items_order set payStatus = '已支付' where ItemId=? and userid = ?" ;//delete from  tb_shop_items_order where ItemId=? and userid = ?
+
+            sql = "delete from tb_shop_items_order  where ItemId=? and userid = ?" ;//delete from  tb_shop_items_order where ItemId=? and userid = ?
             try {
                 pStatement =  connection.prepareStatement(sql);
                 pStatement.setString(2, goumairen);

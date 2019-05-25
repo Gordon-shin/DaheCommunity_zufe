@@ -153,6 +153,8 @@
                             $('#zhizaoshang').empty();
                             document.getElementById("weixiutupian").src ="";
                             weixiudandes.html("");
+                            KindEditor.remove($('#weixiudandes'))
+
                         }
                     })
                 }
@@ -186,6 +188,14 @@
                                 $('#addRepairSheetdiag').dialog({
                                     closed: true
                                 })
+                                $('#yuyebianhao').empty()
+                                $('#weixiurenyuangonhao').empty()
+                                $('#weixiurenyuanxingming').empty()
+                                $('#yuyuerenyuanxingming').empty()
+                                $('#zhizaoshang').empty();
+                                document.getElementById("weixiutupian").src ="";
+                                weixiudandes.html("");
+                                KindEditor.remove($('#weixiudandes'))
                                 dataload();
                             })
                         }

@@ -1,5 +1,5 @@
 /*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.9
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -2548,8 +2548,8 @@
     prevSlots
   ) {
     var res;
+    var isStable = slots ? !!slots.$stable : true;
     var hasNormalSlots = Object.keys(normalSlots).length > 0;
-    var isStable = slots ? !!slots.$stable : !hasNormalSlots;
     var key = slots && slots.$key;
     if (!slots) {
       res = {};
@@ -3633,9 +3633,7 @@
 
     if (owner && !isDef(factory.owners)) {
       var owners = factory.owners = [owner];
-      var sync = true;
-      var timerLoading = null;
-      var timerTimeout = null
+      var sync = true
 
       ;(owner).$on('hook:destroyed', function () { return remove(owners, owner); });
 
@@ -3646,14 +3644,6 @@
 
         if (renderCompleted) {
           owners.length = 0;
-          if (timerLoading !== null) {
-            clearTimeout(timerLoading);
-            timerLoading = null;
-          }
-          if (timerTimeout !== null) {
-            clearTimeout(timerTimeout);
-            timerTimeout = null;
-          }
         }
       };
 
@@ -3700,8 +3690,7 @@
             if (res.delay === 0) {
               factory.loading = true;
             } else {
-              timerLoading = setTimeout(function () {
-                timerLoading = null;
+              setTimeout(function () {
                 if (isUndef(factory.resolved) && isUndef(factory.error)) {
                   factory.loading = true;
                   forceRender(false);
@@ -3711,8 +3700,7 @@
           }
 
           if (isDef(res.timeout)) {
-            timerTimeout = setTimeout(function () {
-              timerTimeout = null;
+            setTimeout(function () {
               if (isUndef(factory.resolved)) {
                 reject(
                   "timeout (" + (res.timeout) + "ms)"
@@ -4258,21 +4246,16 @@
   // timestamp can either be hi-res (relative to page load) or low-res
   // (relative to UNIX epoch), so in order to compare time we have to use the
   // same timestamp type when saving the flush timestamp.
-  // All IE versions use low-res event timestamps, and have problematic clock
-  // implementations (#9632)
-  if (inBrowser && !isIE) {
-    var performance = window.performance;
-    if (
-      performance &&
-      typeof performance.now === 'function' &&
-      getNow() > document.createEvent('Event').timeStamp
-    ) {
-      // if the event timestamp, although evaluated AFTER the Date.now(), is
-      // smaller than it, it means the event is using a hi-res timestamp,
-      // and we need to use the hi-res version for event listener timestamps as
-      // well.
-      getNow = function () { return performance.now(); };
-    }
+  if (
+    inBrowser &&
+    window.performance &&
+    typeof performance.now === 'function' &&
+    document.createEvent('Event').timeStamp <= performance.now()
+  ) {
+    // if the event timestamp is bigger than the hi-res timestamp
+    // (which is evaluated AFTER) it means the event is using a lo-res timestamp,
+    // and we need to use the lo-res version for event listeners as well.
+    getNow = function () { return performance.now(); };
   }
 
   /**
@@ -5437,7 +5420,7 @@
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.6.10';
+  Vue.version = '2.6.9';
 
   /*  */
 
@@ -7599,11 +7582,10 @@
     }
 
     for (key in oldProps) {
-      if (!(key in props)) {
+      if (isUndef(props[key])) {
         elm[key] = '';
       }
     }
-
     for (key in props) {
       cur = props[key];
       // ignore children if the node has textContent or innerHTML,
@@ -10720,7 +10702,7 @@
 
   /*  */
 
-  var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
+  var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
   var fnInvokeRE = /\([^)]*?\);*$/;
   var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 

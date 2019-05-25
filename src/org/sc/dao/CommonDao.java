@@ -220,6 +220,21 @@ public class CommonDao {
         result = date.substring(0,4)+date.substring(5,7)+date.substring(8);
         return result;
     }
+    public String querygerenyuebyid(String userid){
+        String sql = "SELECT UserMoney from tb_users WHERE UserId= ?";
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement pStatement = null;
+        String result=null;
+        try {
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1,userid);
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.SingleDataQuery(pStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
 
 

@@ -116,8 +116,8 @@ $(function() {
          //       console.log(tab);
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
-                    var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
-                   // tab.panel('update');
+                    var tab = $('#tt').tabs('getSelected');// 获取选择的面板
+
                 } else {
                     $('#tt').tabs('add', {
                         title: node.text,
@@ -197,7 +197,7 @@ $(function() {
                 if ($('#tt').tabs('exists', node.text)) {
                     $('#tt').tabs('select', node.text)
                     var tab = $('#tt').tabs('getSelected');  // 获取选择的面板
-                  //  tab.panel('refresh');
+                    tab.panel('refresh');
 
                 } else {
                     $('#tt').tabs('add', {

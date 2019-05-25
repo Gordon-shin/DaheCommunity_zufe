@@ -91,6 +91,7 @@
         <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" id="addgouwuche">下架该商品</a>
 
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" id="modifyItemInfo">修改商品信息</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true" id="refreshshangpxx">刷新商品信息</a>
     </div>
 </div>
 <div id="dlg-itemModify">
@@ -101,6 +102,29 @@
     var itemModifydata
     var descmodify
     var reader
+
+    function shopmodfyshangpxx() {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "ShopServlet",
+            data: {userid: sessionid, method: "UploadItemqueryBysellerid"},
+            success: function (result) {
+
+                if (result == "[]") {
+                    $.messager.alert("信息", "没有找到相关信息", "info");
+                } else {
+                    result = JSON.parse(result)
+                    $('#uploadItemManagerTable').datagrid({
+                        columns: [result.title]
+                    });
+                    $('#uploadItemManagerTable').datagrid('loadData', result);
+                    $('#uploadItemManagerTable').datagrid('selectRow', 0);
+                }
+            }
+        })
+    }
+
     $(function () {
         $('#fileitem1').filebox({
             onChange: function () {
@@ -133,24 +157,10 @@
                 itemModifydata = rowdata
             },
         })
-        $.ajax({
-            type: "POST",
-            async:false,
-            url: "ShopServlet",
-            data: {userid:sessionid,method: "UploadItemqueryBysellerid"},
-            success:function (result) {
-
-                if (result=="[]"){
-                    $.messager.alert("信息","没有找到相关信息","info");
-                }
-                else{
-                    result = JSON.parse(result)
-                    $('#uploadItemManagerTable').datagrid({
-                        columns:[result.title]
-                    });
-                    $('#uploadItemManagerTable').datagrid('loadData',result);
-                    $('#uploadItemManagerTable').datagrid('selectRow',0);
-                }
+        shopmodfyshangpxx();
+        $('#refreshshangpxx').linkbutton({
+            onClick:function () {
+                shopmodfyshangpxx();
             }
         })
         $('#modifyItemInfo').linkbutton({

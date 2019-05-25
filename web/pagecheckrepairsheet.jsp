@@ -82,6 +82,8 @@
                 data: {userid: sessionid,method:"Queryweixiubiao"},
                 success: function (result) {
                     var result = JSON.parse(result)
+                    result.title[6].width = 300;
+                    console.log(result)
                     $('#weixiuSheetchecker').datagrid({
                         columns:[eval(result.title)]
                     })
@@ -159,6 +161,10 @@
                   data: {weixiuid: repairsheetinfo.维修单编号,review:$('#kartik').val(),method:"UpdateReview"},
                   success: function (result) {
                     alert(result)
+                      $('#weixiupingjia').dialog({
+                          closed:true,
+                      })
+                      weixiubiaoload();
                   }
               })
           }

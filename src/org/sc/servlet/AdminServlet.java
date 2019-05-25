@@ -53,6 +53,13 @@ public class AdminServlet extends HttpServlet {
             CommonDao.out(response,result);
 
         }
+        else if ("querygerenyuebyid".equals(method)){
+            String userid = request.getParameter("sessionid");
+            String result;
+            CommonDao commonDao = new CommonDao();
+            result = commonDao.querygerenyuebyid(userid);
+            CommonDao.out(response,result);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

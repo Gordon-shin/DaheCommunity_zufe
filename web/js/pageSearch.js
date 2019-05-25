@@ -81,7 +81,7 @@ $(function () {
                     title[3]["formatter"]=function(value,row,index){
                         return  '<span style="color:red">'+value+'</span>';
                     }
-                    console.log(title)
+               //     console.log(title)
                     $.messager.progress('close');
                     if (result.total == 0) {
                         $.messager.alert('信息', '没有相关信息', "error", function () {
@@ -161,6 +161,9 @@ $(function () {
     $('#addgouwuche').linkbutton({
         onClick:function () {
             if (itemid==null){
+            }
+            else if (sessionid == itemSellerid) {
+                $.messager.alert("信息","请不要将自己上架的商品加入购物车","error")
             }
             else{
                 $.ajax({

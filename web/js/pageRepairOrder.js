@@ -15,6 +15,9 @@ $(function () {
             {field:'Email',title:'电子邮箱',width:100},
             {field:'Phone',title:'电话',width:100},
             {field:'Company',title:'所属物业公司',width:100},
+            {field:'AVGReview',title:'用户评价',width:100,formatter:function(value,row,index){
+                    return  '<span style="color:red">'+value+'</span>';
+                }}
         ]],
       //  url:"data/data.json",
         title:"维修预约",
